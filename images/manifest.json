@@ -1,0 +1,209 @@
+[
+  {
+    "poi_id": "balintore-castle",
+    "image": "balintore-castle.png",
+    "square_px": 596,
+    "photo_w": 510,
+    "photo_h": 596,
+    "kb": 642.2,
+    "cropped": true
+  },
+  {
+    "poi_id": "bamburgh-castle",
+    "image": "bamburgh-castle-1.png",
+    "square_px": 505,
+    "photo_w": 290,
+    "photo_h": 505,
+    "kb": 181.2,
+    "cropped": true
+  },
+  {
+    "poi_id": "bamburgh-castle",
+    "image": "bamburgh-castle-2.png",
+    "square_px": 462,
+    "photo_w": 287,
+    "photo_h": 462,
+    "kb": 246.9,
+    "cropped": true
+  },
+  {
+    "poi_id": "black-friar-pub",
+    "image": "black-friar-pub.png",
+    "square_px": 443,
+    "photo_w": 372,
+    "photo_h": 443,
+    "kb": 330.2,
+    "cropped": false
+  },
+  {
+    "poi_id": "british-museum-rosetta",
+    "image": "british-museum-rosetta.png",
+    "square_px": 608,
+    "photo_w": 566,
+    "photo_h": 608,
+    "kb": 654.3,
+    "cropped": true
+  },
+  {
+    "poi_id": "canongate-kirkyard",
+    "image": "canongate-kirkyard.png",
+    "square_px": 504,
+    "photo_w": 485,
+    "photo_h": 504,
+    "kb": 370.7,
+    "cropped": true
+  },
+  {
+    "poi_id": "castle-combe",
+    "image": "castle-combe.png",
+    "square_px": 505,
+    "photo_w": 290,
+    "photo_h": 505,
+    "kb": 214.1,
+    "cropped": true
+  },
+  {
+    "poi_id": "denbigh-asylum",
+    "image": "denbigh-asylum.png",
+    "square_px": 518,
+    "photo_w": 518,
+    "photo_h": 318,
+    "kb": 280.0,
+    "cropped": true
+  },
+  {
+    "poi_id": "edinburgh-old-town",
+    "image": "edinburgh-old-town.png",
+    "square_px": 502,
+    "photo_w": 414,
+    "photo_h": 502,
+    "kb": 426.8,
+    "cropped": true
+  },
+  {
+    "poi_id": "hadrians-wall",
+    "image": "hadrians-wall.png",
+    "square_px": 507,
+    "photo_w": 507,
+    "photo_h": 377,
+    "kb": 325.7,
+    "cropped": true
+  },
+  {
+    "poi_id": "ian-curtis-memorial",
+    "image": "ian-curtis-memorial-1.png",
+    "square_px": 635,
+    "photo_w": 420,
+    "photo_h": 635,
+    "kb": 529.0,
+    "cropped": true
+  },
+  {
+    "poi_id": "ian-curtis-memorial",
+    "image": "ian-curtis-memorial-2.png",
+    "square_px": 677,
+    "photo_w": 677,
+    "photo_h": 533,
+    "kb": 702.7,
+    "cropped": true
+  },
+  {
+    "poi_id": "kenna-power-stations",
+    "image": "kenna-power-stations.png",
+    "square_px": 338,
+    "photo_w": 338,
+    "photo_h": 328,
+    "kb": 109.8,
+    "cropped": true
+  },
+  {
+    "poi_id": "king-alfreds-tower",
+    "image": "king-alfreds-tower.png",
+    "square_px": 514,
+    "photo_w": 288,
+    "photo_h": 514,
+    "kb": 149.3,
+    "cropped": true
+  },
+  {
+    "poi_id": "lewis-chess-pieces",
+    "image": "lewis-chess-pieces.png",
+    "square_px": 732,
+    "photo_w": 732,
+    "photo_h": 616,
+    "kb": 503.1,
+    "cropped": true
+  },
+  {
+    "poi_id": "little-solsbury-hill",
+    "image": "little-solsbury-hill.png",
+    "square_px": 834,
+    "photo_w": 834,
+    "photo_h": 644,
+    "kb": 651.2,
+    "cropped": true
+  },
+  {
+    "poi_id": "manchester-bridge",
+    "image": "manchester-bridge.png",
+    "square_px": 1080,
+    "photo_w": 1080,
+    "photo_h": 1080,
+    "kb": 966.5,
+    "cropped": false
+  },
+  {
+    "poi_id": "merstham-phonebox-graveyard",
+    "image": "merstham-phonebox-graveyard.png",
+    "square_px": 497,
+    "photo_w": 497,
+    "photo_h": 255,
+    "kb": 265.1,
+    "cropped": true
+  },
+  {
+    "poi_id": "tate-turner",
+    "image": "tate-turner.png",
+    "square_px": 1032,
+    "photo_w": 1032,
+    "photo_h": 760,
+    "kb": 1418.8,
+    "cropped": true
+  },
+  {
+    "poi_id": "worcestershire-churches",
+    "image": "worcestershire-churches-1.png",
+    "square_px": 519,
+    "photo_w": 519,
+    "photo_h": 284,
+    "kb": 309.8,
+    "cropped": true
+  },
+  {
+    "poi_id": "worcestershire-churches",
+    "image": "worcestershire-churches-2.png",
+    "square_px": 518,
+    "photo_w": 518,
+    "photo_h": 296,
+    "kb": 379.8,
+    "cropped": true
+  },
+  {
+    "poi_id": "york-shambles",
+    "image": "york-shambles-1.png",
+    "square_px": 507,
+    "photo_w": 386,
+    "photo_h": 507,
+    "kb": 418.8,
+    "cropped": true
+  },
+  {
+    "poi_id": "york-shambles",
+    "image": "york-shambles-2.png",
+    "square_px": 446,
+    "photo_w": 260,
+    "photo_h": 446,
+    "kb": 221.2,
+    "cropped": true
+  }
+]
