@@ -102,13 +102,12 @@
     food:       { label: 'Food & drink',       glyph: G.food }
   };
 
+  // Two-segment control. UK matches macroRegion 'uk'; Europe matches anything else.
   const REGIONS = [
-    { id: 'uk',       label: 'UK & Ireland',   macro: 'uk',       bounds: [[49.8, -11.0], [60.9, 2.0]] },
-    { id: 'west-eu',  label: 'Western EU',     macro: 'west-eu',  bounds: [[43.0, -5.0], [54.0, 10.0]] },
-    { id: 'south-eu', label: 'Southern EU',    macro: 'south-eu', bounds: [[36.0, -10.0], [47.0, 28.0]] },
-    { id: 'north-eu', label: 'Northern EU',    macro: 'north-eu', bounds: [[54.0, 4.0], [71.0, 31.0]] },
-    { id: 'east-eu',  label: 'Eastern EU',     macro: 'east-eu',  bounds: [[44.0, 12.0], [56.0, 40.0]] },
-    { id: 'all',      label: 'All',            macro: null,       bounds: null }
+    { id: 'uk',     label: 'UK & Ireland', bounds: [[49.8, -11.0], [60.9, 2.0]],
+      match: p => p.macroRegion === 'uk' },
+    { id: 'europe', label: 'Europe',       bounds: [[34.5, -11.0], [71.0, 40.0]],
+      match: p => p.macroRegion !== 'uk' }
   ];
 
   const SCOTLAND_FOOD = ['Haggis, neeps & tatties', 'Cock-a-leekie', 'Cullen skink', 'Cranachan',
@@ -196,11 +195,11 @@
     .filter(t => THEMES[t])
     .sort((a, b) => Object.keys(THEMES).indexOf(a) - Object.keys(THEMES).indexOf(b));
   const activeThemes = new Set(presentThemes);
-  let activeMacro = null; // null = all
+  let activeRegion = REGIONS[0]; // UK & Ireland by default
 
   function passes(poi) {
     if (!activeCats.has(poi.category)) return false;
-    if (activeMacro && poi.macroRegion !== activeMacro) return false;
+    if (!activeRegion.match(poi)) return false;
     const themes = poi.themes && poi.themes.length ? poi.themes : [];
     if (themes.length && !themes.some(t => activeThemes.has(t))) return false;
     return true;
@@ -232,23 +231,17 @@
     regionEl.querySelectorAll('button').forEach(b => b.classList.remove('is-active'));
     btn.classList.add('is-active');
 
-    // Swap base layer if the macro region wants a different provider.
-    const next = baseLayerFor(r.macro || 'uk');
+    // Swap base layer if this region wants a different tile provider.
+    const next = baseLayerFor(r.id === 'uk' ? 'uk' : 'eu');
     if (next.options.attribution !== baseLayer.options.attribution) {
       map.removeLayer(baseLayer);
       baseLayer = next.addTo(map);
       baseLayer.bringToBack();
     }
 
-    activeMacro = r.macro;            // doubles as a coarse filter
+    activeRegion = r;                 // segmented control doubles as a coarse filter
     applyFilters();
-
-    if (r.bounds) {
-      map.fitBounds(r.bounds, { padding: [20, 20] });
-    } else {
-      const group = L.featureGroup(ENTRIES.filter(e => passes(e.poi)).map(e => e.marker));
-      if (group.getLayers().length) map.fitBounds(group.getBounds(), { padding: [40, 40] });
-    }
+    map.fitBounds(r.bounds, { padding: [20, 20] });
   }
 
   /* ----------------------------------------------------------------------- *
@@ -404,9 +397,9 @@
     setTimeout(() => { backdrop.hidden = true; }, 320);
   }
 
-  // Fit to the UK collection on load.
-  const all = L.featureGroup(ENTRIES.map(e => e.marker));
-  if (all.getLayers().length) map.fitBounds(all.getBounds(), { padding: [40, 40] });
+  // Fit to the default region (UK & Ireland) on load.
+  const startFG = L.featureGroup(ENTRIES.filter(e => passes(e.poi)).map(e => e.marker));
+  if (startFG.getLayers().length) map.fitBounds(startFG.getBounds(), { padding: [40, 40] });
 
   } // end init(RAW)
 
