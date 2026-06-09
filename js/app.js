@@ -33,6 +33,14 @@
   const STADIA_KEY        = '';   // ← optional, for the EU layer (Stamen Terrain)
 
   const TILES = {
+    // Keyless default: Esri World Topographic — English labels everywhere
+    // (incl. seas/oceans), terrain/relief, touring-map feel.
+    esriTopo: {
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+      opts: { maxZoom: 19,
+        attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, USGS, NOAA, and the GIS community' }
+    },
+    // Alternative keyless base (labels in local language): CARTO Voyager.
     cartoVoyager: {
       url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
       opts: { subdomains: 'abcd', maxZoom: 20,
@@ -58,7 +66,7 @@
   function baseLayerFor(macroRegion) {
     if (macroRegion === 'uk' && THUNDERFOREST_KEY) return makeLayer('thunderforestOutdoors');
     if (macroRegion && macroRegion !== 'uk' && STADIA_KEY) return makeLayer('stadiaTerrain');
-    return makeLayer('cartoVoyager');
+    return makeLayer('esriTopo');
   }
 
   /* ----------------------------------------------------------------------- *

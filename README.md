@@ -10,7 +10,9 @@ paper, contour hairlines, engraved labels, inked category tones.
 ## Stack
 
 Vanilla HTML/CSS/JS + [Leaflet](https://leafletjs.com/). No build step. Base
-tiles are keyless [CARTO Voyager](https://carto.com/basemaps/) for now.
+tiles are keyless **Esri World Topographic** (English labels incl. seas/oceans;
+terrain/touring-map look). CARTO Voyager is kept in `js/app.js` as an
+alternative.
 
 ## Run locally
 
@@ -65,9 +67,10 @@ nudging — `grep '"approx": true' data.json` to find them.
 
 ## Base tiles — swapping in Thunderforest
 
-Keyless CARTO Voyager renders now. When a Thunderforest key is available, paste
-it into `THUNDERFOREST_KEY` at the top of `js/app.js` — GB automatically switches
-to OS-style Outdoors tiles. `STADIA_KEY` does the same for the EU presets.
+Keyless Esri World Topographic renders now. When a Thunderforest key is
+available, paste it into `THUNDERFOREST_KEY` at the top of `js/app.js` — GB
+automatically switches to OS-style Outdoors tiles. `STADIA_KEY` does the same
+for the EU presets.
 
 ## Images
 
