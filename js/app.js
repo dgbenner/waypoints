@@ -405,6 +405,22 @@
     setTimeout(() => { backdrop.hidden = true; }, 320);
   }
 
+  // Expose a hook so the add-flow (add.js) can drop a newly-created pin live,
+  // without waiting for the data.json redeploy.
+  window.Waypoints = {
+    categories: CATEGORIES,
+    themes: THEMES,
+    addLive: function (rec) {
+      if (!rec || typeof rec.lat !== 'number' || typeof rec.lng !== 'number') return;
+      const m = L.marker([rec.lat, rec.lng], { icon: markerIcon(rec), title: rec.name, riseOnHover: true });
+      m.on('click', () => openPanel(rec));
+      ENTRIES.push({ poi: rec, marker: m });
+      if (passes(rec)) cluster.addLayer(m);
+      map.setView([rec.lat, rec.lng], Math.max(map.getZoom(), 9), { animate: true });
+      openPanel(rec);
+    }
+  };
+
   // Fit to the default region (UK & Ireland) on load.
   const startFG = L.featureGroup(ENTRIES.filter(e => passes(e.poi)).map(e => e.marker));
   if (startFG.getLayers().length) map.fitBounds(startFG.getBounds(), { padding: [40, 40] });

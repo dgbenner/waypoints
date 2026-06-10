@@ -80,19 +80,43 @@ record's `images` array.
 ⚠️ `images/kenna-power-stations.png` is © **Michael Kenna** (living photographer).
 Fine for personal use; **replace before any public/commercial publish.**
 
-## Planned (stubbed, not built) — in-app "add a place"
+## In-app "Add a waypoint"
 
-Deferred by choice. The intended flow, when built:
+The corner-bracket **+ Add waypoint** button (lower-left, above the legend)
+opens a modal: drop an image, paste a link, or type a description
+(e.g. "Ian Curtis's grave, Macclesfield"). It calls `/api/draft`, which uses
+Claude (`claude-opus-4-8`, structured output + vision) to draft the record,
+Nominatim to geocode it, shows you a preview, then commits the pin (and image)
+to `data.json` via the GitHub API. The new pin also drops on the map live.
 
-- A password-gated `add.html` where you drop a **link / image / text** (any
-  combination).
-- A serverless `/api/draft.js` (Vercel, `@anthropic-ai/sdk`, `claude-opus-4-8`,
-  structured output + vision) drafts the record fields from the input.
-- Nominatim (keyless) geocodes the name → `lat`/`lng`.
-- The function commits the new record to `data.json` (and the image into
-  `/images`) via the GitHub API; Vercel redeploys and the pin goes live.
+**This needs a backend** — GitHub Pages can't run it. The function lives in
+`api/draft.js` (Vercel). The map can stay on Pages and just call the Vercel URL.
 
-Until then, adding a pin = editing `data.json` and redeploying.
+### Backend setup (one time)
+
+1. Import this repo as a project on [Vercel](https://vercel.com/new) (Framework
+   preset: **Other**; no build command — it serves the static files and the
+   `/api` function).
+2. Add three Environment Variables in the Vercel project settings:
+   - `ANTHROPIC_API_KEY` — your Anthropic key (drafting).
+   - `GITHUB_TOKEN` — a fine-grained PAT with **Contents: Read and write** on
+     `dgbenner/waypoints` (so it can commit the pin + image).
+   - `WAYPOINTS_ADD_SECRET` — any passphrase; the modal's "Access key" must match
+     it. (Stops strangers spending your API credits on the public URL.)
+   - Optional: `GITHUB_REPO` (default `dgbenner/waypoints`), `GITHUB_BRANCH` (default `main`).
+3. Deploy. Then either use the **Vercel URL** for the whole site, **or** keep the
+   map on GitHub Pages and set `API_BASE` at the top of `js/add.js` to your
+   Vercel URL (e.g. `https://waypoints-xxxx.vercel.app`).
+
+Quick test once deployed:
+
+```sh
+curl -s -X POST https://<your-vercel-url>/api/draft \
+  -H 'Content-Type: application/json' \
+  -d '{"action":"draft","password":"<secret>","kind":"text","text":"Ian Curtis grave, Macclesfield"}'
+```
+
+Adding a pin by hand still works any time — edit `data.json` and push.
 
 ## Roadmap
 

@@ -1,0 +1,9 @@
+{
+  "name": "waypoints",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cartographic map for gathering places to visit. Static site + /api/draft serverless function (Vercel).",
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  }
+}
