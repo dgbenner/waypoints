@@ -28,6 +28,7 @@
   function open() {
     modal.hidden = false; backdrop.hidden = false;
     showStep('input'); resetInput();
+    keyEl.value = getKey();
     textEl.focus();
   }
   function close() {
@@ -63,24 +64,66 @@
     if (f) handleFile(f);
   });
 
-  function handleFile(file) {
-    if (!/^image\//.test(file.type)) { setStatus(status1, 'That’s not an image.', true); return; }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        // Downscale to ~480px long edge, export WebP to keep the upload small.
-        const max = 480, scale = Math.min(1, max / Math.max(img.width, img.height));
-        const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
-        const c = document.createElement('canvas'); c.width = w; c.height = h;
-        c.getContext('2d').drawImage(img, 0, 0, w, h);
-        const dataUrl = c.toDataURL('image/webp', 0.82);
-        dropped = { base64: dataUrl.split(',')[1], mediaType: 'image/webp', name: 'upload.webp' };
-        dropInner.innerHTML = '<img src="' + dataUrl + '" alt="preview">';
+  // Downscale to ~480px long edge, export WebP to keep the upload small.
+  function resizeImage(file) {
+    return new Promise((resolve, reject) => {
+      if (!/^image\//.test(file.type)) { reject(new Error('not-image')); return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const max = 480, scale = Math.min(1, max / Math.max(img.width, img.height));
+          const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+          const c = document.createElement('canvas'); c.width = w; c.height = h;
+          c.getContext('2d').drawImage(img, 0, 0, w, h);
+          const dataUrl = c.toDataURL('image/webp', 0.82);
+          resolve({ base64: dataUrl.split(',')[1], mediaType: 'image/webp', name: 'upload.webp', dataUrl });
+        };
+        img.onerror = () => reject(new Error('bad-image'));
+        img.src = reader.result;
       };
-      img.src = reader.result;
-    };
-    reader.readAsDataURL(file);
+      reader.onerror = () => reject(new Error('read-fail'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function handleFile(file) {
+    resizeImage(file)
+      .then(img => { dropped = img; dropInner.innerHTML = '<img src="' + img.dataUrl + '" alt="preview">'; })
+      .catch(() => setStatus(status1, 'That’s not a usable image.', true));
+  }
+
+  /* ------------------------- quick drag-drop on the button --------------- */
+  // Drop an image straight onto the Add-waypoint button to auto-submit
+  // (draft + commit), skipping the modal. Click still opens the modal.
+  const addBtn = $('add-waypoint');
+  ['dragenter', 'dragover'].forEach(ev => addBtn.addEventListener(ev, e => { e.preventDefault(); addBtn.classList.add('is-over'); }));
+  ['dragleave', 'dragend'].forEach(ev => addBtn.addEventListener(ev, e => { e.preventDefault(); addBtn.classList.remove('is-over'); }));
+  addBtn.addEventListener('drop', e => {
+    e.preventDefault(); addBtn.classList.remove('is-over');
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) quickDrop(f);
+  });
+
+  async function quickDrop(file) {
+    let img;
+    try { img = await resizeImage(file); } catch (e) { toast('That’s not a usable image.', true); return; }
+    const key = getKey();
+    if (!key) {
+      // No saved access key yet — fall back to the modal with the image loaded.
+      open(); dropped = img; dropInner.innerHTML = '<img src="' + img.dataUrl + '" alt="preview">';
+      setStatus(status1, 'Enter your access key, then “Draft it”.', false); keyEl.focus();
+      return;
+    }
+    toast('Reading image…');
+    try {
+      const d = await api({ action: 'draft', password: key, kind: 'image', imageBase64: img.base64, mediaType: img.mediaType });
+      toast('Adding “' + d.record.name + '”…');
+      const c = await api({ action: 'commit', password: key, record: d.record, imageBase64: img.base64, imageName: img.name, imageUrl: '' });
+      const rec = (c && c.record) || d.record;
+      if (window.Waypoints && window.Waypoints.addLive) window.Waypoints.addLive(rec);
+      toast('Added: ' + rec.name);
+    } catch (err) { toast(errMsg(err), true); }
   }
 
   /* ---------------------------------- draft ------------------------------ */
@@ -101,6 +144,7 @@
     draftBtn.disabled = true; draftBtn.textContent = 'Drafting…'; setStatus(status1, 'Asking Claude…');
     try {
       const res = await api({ action: 'draft', password: keyEl.value, ...p });
+      saveKey(keyEl.value);
       currentRecord = res.record;
       suggestedImageUrl = res.suggestedImageUrl || '';
       renderPreview();
@@ -146,6 +190,7 @@
         imageName: dropped ? dropped.name : '',
         imageUrl: dropped ? '' : suggestedImageUrl
       });
+      saveKey(keyEl.value);
       if (window.Waypoints && window.Waypoints.addLive) window.Waypoints.addLive(res.record || currentRecord);
       close();
     } catch (err) {
@@ -164,6 +209,17 @@
     return data;
   }
   function setStatus(el, msg, isErr) { el.textContent = msg; el.classList.toggle('is-error', !!isErr); }
+
+  // Remember the access key so quick-drop can auto-submit without the modal.
+  function getKey() { try { return localStorage.getItem('wp_addkey') || ''; } catch (e) { return ''; } }
+  function saveKey(k) { try { if (k) localStorage.setItem('wp_addkey', k); } catch (e) {} }
+
+  let toastEl;
+  function toast(msg, isErr) {
+    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'aw-toast'; document.body.appendChild(toastEl); }
+    toastEl.textContent = msg; toastEl.classList.toggle('is-error', !!isErr); toastEl.classList.add('show');
+    clearTimeout(toastEl._t); toastEl._t = setTimeout(() => toastEl.classList.remove('show'), isErr ? 5000 : 3500);
+  }
   function errMsg(err) {
     const m = String(err && err.message || err);
     if (/HTTP 404|Failed to fetch|NetworkError/i.test(m)) return 'Backend not reachable yet — deploy /api to Vercel (see README).';
