@@ -43,8 +43,10 @@
     "hours": "Daily, timed tours (book ahead)",
     "officialUrl": "https://www.realmarykingsclose.com",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "mary-kings-close.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -66,8 +68,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "royal-mile-cockburn.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -89,8 +93,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "princes-st-gardens.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -135,8 +141,10 @@
     "hours": "Daily (verify)",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "scott-monument.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -277,8 +285,10 @@
     "hours": "Daily (donation; tower tours ticketed)",
     "officialUrl": "https://stgilescathedral.org.uk",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "st-giles-cathedral.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -323,8 +333,10 @@
     "hours": "Daily 10:00–17:00 (free)",
     "officialUrl": "https://www.nationalgalleries.org",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "scottish-national-gallery.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -394,8 +406,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "arthurs-seat.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -417,8 +431,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "calton-hill.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -440,8 +456,10 @@
     "hours": "Daily (HES — seasonal)",
     "officialUrl": "https://www.historicenvironment.scot",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "craigmillar-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -463,8 +481,10 @@
     "hours": "Daily (timed entry)",
     "officialUrl": "https://www.royalyachtbritannia.co.uk",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "royal-yacht-britannia.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -486,8 +506,10 @@
     "hours": "Mon–Sat (free; tours)",
     "officialUrl": "https://www.parliament.scot",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "scottish-parliament.png"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -509,8 +531,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "dean-village.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -533,8 +557,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "isle-of-skye.png"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -556,8 +582,10 @@
     "hours": "Daily (donation)",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "st-conans-kirk.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -579,8 +607,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "dunure-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -602,8 +632,10 @@
     "hours": "Daily (HES — seasonal)",
     "officialUrl": "https://www.historicenvironment.scot",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "caerlaverock-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -626,8 +658,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "machir-bay.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -674,8 +708,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "limekilns.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -697,8 +733,10 @@
     "hours": "Daily (seasonal)",
     "officialUrl": "https://www.nationalwallacemonument.com",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "wallace-monument.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -720,8 +758,10 @@
     "hours": "Park open daily (tours ticketed)",
     "officialUrl": "https://www.thehelix.co.uk",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "the-kelpies.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -743,8 +783,10 @@
     "hours": "Daily (boat trips timed)",
     "officialUrl": "https://www.scottishcanals.co.uk/falkirk-wheel",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "falkirk-wheel.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -766,8 +808,10 @@
     "hours": "Daily (seasonal)",
     "officialUrl": "https://theblackwatch.co.uk",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "black-watch-castle.png"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -790,8 +834,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "glasgow.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -814,8 +860,10 @@
     "hours": "",
     "officialUrl": "https://www.carlowriecastle.co.uk",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "carlowrie-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -837,8 +885,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "loch-ness.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -911,8 +961,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "aberdeen.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1035,8 +1087,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "lake-district.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1106,8 +1160,10 @@
     "hours": "Open select hours (verify)",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "salford-lads-club.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1157,8 +1213,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "liverpool.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1180,8 +1238,10 @@
     "hours": "Daily (seasonal)",
     "officialUrl": "https://www.warwick-castle.com",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "warwick-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1230,8 +1290,10 @@
     "hours": "Daily, timed entry (EH)",
     "officialUrl": "https://www.english-heritage.org.uk/visit/places/stonehenge",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "stonehenge.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1329,8 +1391,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "crawley-the-cure.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1352,8 +1416,10 @@
     "hours": "Daily (seasonal — closed winter)",
     "officialUrl": "https://www.arundelcastle.org",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "arundel-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1401,8 +1467,10 @@
     "hours": "Tearoom hours (verify)",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "crooked-house-windsor.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1425,8 +1493,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "oxfordshire.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1692,8 +1762,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "isle-of-man.png"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1934,8 +2006,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "dublin.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2244,8 +2318,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "sigmaringen-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2294,8 +2370,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "neuschwanstein.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2630,8 +2708,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "brandenburg-gate.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2654,8 +2734,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "berlin-wall.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2704,8 +2786,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "erholungspark-marzahn-chinese-garden.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2928,8 +3012,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "prague-astronomical-clock.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3050,8 +3136,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "sevilla-plaza-de-espana.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3278,8 +3366,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "palais-garnier.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3302,8 +3392,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "pont-alexandre-iii.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3430,8 +3522,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "jardin-de-la-roseraie.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3504,8 +3598,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "tour-saint-gobain.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3683,8 +3779,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "brittany-region.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3836,8 +3934,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "bourges-cathedral.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4110,8 +4210,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "chateau-de-pierrefonds.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4444,8 +4546,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "mausoleum-of-hadrian-castel-santangelo.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4728,8 +4832,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "florence.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4752,8 +4858,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "santa-maria-del-fiore-floor-mosaic.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -5052,8 +5160,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "torno-lake-como.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -5231,8 +5341,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "pompeii-mount-vesuvius.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -5255,8 +5367,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "villa-del-balbianello-lenno.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -5279,8 +5393,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "cinque-terre.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
