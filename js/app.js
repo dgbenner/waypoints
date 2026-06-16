@@ -117,7 +117,7 @@
       match: p => p.country === 'Ireland' },
     { id: 'uk', flag: 'gb.svg', label: 'United Kingdom', bounds: [[49.5, -7.6], [58.9, 1.9]],
       match: p => p.macroRegion === 'uk' && p.country !== 'Ireland' },
-    { id: 'eu', flag: 'eu.svg', label: 'Europe', bounds: [[40.0, -2.0], [54.0, 13.5]],
+    { id: 'eu', flag: 'eu.svg', label: 'Europe', bounds: [[40.0, -2.0], [54.0, 13.5]], zoomBump: 1,
       match: p => p.macroRegion === 'eu' }
   ];
 
@@ -254,7 +254,11 @@
 
     activeRegion = r;                 // segmented control doubles as a coarse filter
     applyFilters();
-    map.fitBounds(r.bounds, { padding: [20, 20] });
+    // Fit the bounds, then optionally zoom one whole level tighter (zoomBump).
+    const b = L.latLngBounds(r.bounds);
+    let z = map.getBoundsZoom(b, false, L.point(20, 20));
+    if (r.zoomBump) z += r.zoomBump;
+    map.setView(b.getCenter(), z, { animate: true });
   }
 
   /* ----------------------------------------------------------------------- *
