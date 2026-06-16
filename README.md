@@ -53,7 +53,10 @@ push to it) and redeploy. The map reads it at load.
   "link": "",                    // freeform reference link
   "images": ["edinburgh-old-town.png"],  // filenames in /images ([] if none)
   "source": "manual",
-  "status": "want-to-see"        // want-to-see | maybe | done
+  "status": "want-to-see",       // want-to-see | maybe | done
+  "parent": ""                   // optional: id of a container pin (e.g. an artwork
+                                 //   nested inside "the-louvre"). Children cluster at
+                                 //   the parent; the panel shows "Inside (N)" / "Part of".
 }
 ```
 

@@ -377,6 +377,18 @@
              '<p class="p-food__list">' + SCOTLAND_FOOD.map(esc).join(' &middot; ') + '</p></div>';
     }
 
+    // nested relationships (children clustered at this pin, or its parent)
+    const kids = ENTRIES.filter(e => e.poi.parent === poi.id);
+    const parentEntry = poi.parent ? ENTRIES.find(e => e.poi.id === poi.parent) : null;
+    let nest = '';
+    if (parentEntry) nest += '<p class="p-partof"><span class="p-row__label">Part of</span> ' +
+      '<a href="#" class="p-link p-nav" data-id="' + esc(parentEntry.poi.id) + '">' + esc(parentEntry.poi.name) + ' &uarr;</a></p>';
+    if (kids.length) nest += '<div class="p-inside"><p class="p-inside__title">Inside (' + kids.length + ')</p>' +
+      kids.map(k => '<a href="#" class="p-inside__item p-nav" data-id="' + esc(k.poi.id) + '">' +
+        ((k.poi.images && k.poi.images.length) ? '<img src="images/' + esc(k.poi.images[0]) + '" alt="">'
+          : '<span class="p-inside__dot" style="background:' + ((CATEGORIES[k.poi.category] || {}).color || '#888') + '"></span>') +
+        '<span>' + esc(k.poi.name) + '</span></a>').join('') + '</div>';
+
     panelBody.innerHTML =
       thumbs +
       '<div class="p-pad">' +
@@ -385,7 +397,7 @@
         '<div class="p-chips">' + catChip + themeChips +
           '<span class="p-status">' + esc(statusLabel) + '</span></div>' +
         (poi.blurb ? '<p class="p-blurb">' + esc(poi.blurb) + '</p>' : '') +
-        rows +
+        rows + nest +
       '</div>' +
       flags + food;
 
@@ -399,6 +411,13 @@
         setTimeout(() => cEl.classList.remove('copied'), 1100);
       });
     });
+
+    // navigate to a nested child / parent
+    panelBody.querySelectorAll('.p-nav').forEach(a => a.addEventListener('click', ev => {
+      ev.preventDefault();
+      const t = ENTRIES.find(e => e.poi.id === a.dataset.id);
+      if (t) { map.setView([t.poi.lat, t.poi.lng], Math.max(map.getZoom(), 14), { animate: true }); openPanel(t.poi); }
+    }));
 
     panel.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
@@ -421,6 +440,7 @@
   window.Waypoints = {
     categories: CATEGORIES,
     themes: THEMES,
+    listPins: () => ENTRIES.map(e => ({ id: e.poi.id, name: e.poi.name })),
     addLive: function (rec, previewSrc) {
       try {
         if (!rec || typeof rec.lat !== 'number' || typeof rec.lng !== 'number') return;

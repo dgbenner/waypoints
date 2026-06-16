@@ -16,6 +16,8 @@
   const inputStep = $('aw-input-step'), previewStep = $('aw-preview-step');
   const drop = $('aw-drop'), fileInput = $('aw-file'), dropInner = $('aw-drop-inner');
   const textEl = $('aw-text'), keyEl = $('aw-key');
+  const parentEl = $('aw-parent'), parentList = $('aw-parent-list');
+  let parentMap = {}; // lowercased pin name -> id
   const draftBtn = $('aw-draft'), commitBtn = $('aw-commit');
   const status1 = $('aw-status'), status2 = $('aw-status2');
   const previewEl = $('aw-preview');
@@ -29,7 +31,20 @@
     modal.hidden = false; backdrop.hidden = false;
     showStep('input'); resetInput();
     keyEl.value = getKey();
+    populateParents();
     textEl.focus();
+  }
+  function populateParents() {
+    parentMap = {};
+    const pins = (window.Waypoints && window.Waypoints.listPins) ? window.Waypoints.listPins() : [];
+    parentList.innerHTML = pins.map(p => {
+      parentMap[p.name.toLowerCase()] = p.id;
+      return '<option value="' + esc(p.name) + '"></option>';
+    }).join('');
+  }
+  function resolveParent() {
+    const v = parentEl.value.trim();
+    return v ? (parentMap[v.toLowerCase()] || '') : '';
   }
   function close() {
     modal.hidden = true; backdrop.hidden = true;
@@ -40,7 +55,8 @@
   }
   function resetInput() {
     dropped = null; currentRecord = null; suggestedImageUrl = '';
-    textEl.value = ''; status1.textContent = ''; status1.classList.remove('is-error');
+    textEl.value = ''; if (parentEl) parentEl.value = '';
+    status1.textContent = ''; status1.classList.remove('is-error');
     status2.textContent = ''; status2.classList.remove('is-error');
     dropInner.innerHTML = '<span class="aw-drop-icon">⤓</span>' +
       '<span class="aw-drop-text">Drop an image here, or click to upload</span>';
@@ -143,7 +159,7 @@
     if (!p) { setStatus(status1, 'Drop an image, paste a link, or type a description first.', true); return; }
     draftBtn.disabled = true; draftBtn.textContent = 'Drafting…'; setStatus(status1, 'Asking Claude…');
     try {
-      const res = await api({ action: 'draft', password: keyEl.value, ...p });
+      const res = await api({ action: 'draft', password: keyEl.value, parentId: resolveParent(), ...p });
       saveKey(keyEl.value);
       currentRecord = res.record;
       suggestedImageUrl = res.suggestedImageUrl || '';
@@ -172,7 +188,8 @@
       '<div class="aw-pv-chips"><span class="aw-pv-chip" style="background:' + cat.color + '">' + esc(cat.label) + '</span>' + themeChips + '</div>' +
       '<p class="aw-pv-blurb">' + esc(r.blurb || '') + '</p>' +
       '<p class="aw-pv-coords">' + r.lat.toFixed(4) + ', ' + r.lng.toFixed(4) + (r.approx ? ' · ~approx' : '') +
-        (r.timeGated ? ' · timed/ticketed' : '') + '</p>';
+        (r.timeGated ? ' · timed/ticketed' : '') + '</p>' +
+      (resolveParent() ? '<p class="aw-pv-coords">↳ inside ' + esc(parentEl.value) + '</p>' : '');
   }
 
   /* ---------------------------------- commit ----------------------------- */
@@ -186,6 +203,7 @@
         action: 'commit',
         password: keyEl.value,
         record: currentRecord,
+        parentId: resolveParent(),
         imageBase64: dropped ? dropped.base64 : '',
         imageName: dropped ? dropped.name : '',
         imageUrl: dropped ? '' : suggestedImageUrl

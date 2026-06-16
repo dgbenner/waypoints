@@ -308,6 +308,16 @@ html, body {
   color: var(--ink-soft); margin: 0 0 8px; }
 .p-food__list { font-size: 13px; line-height: 1.6; margin: 0; color: var(--ink); }
 
+/* Nested pins: "Part of" link + "Inside (N)" list */
+.p-partof { font-size: 13px; margin: 12px 0 0; padding-top: 10px; border-top: 1px solid rgba(58,50,38,0.14); }
+.p-inside { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(58,50,38,0.14); }
+.p-inside__title { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; }
+.p-inside__item { display: flex; align-items: center; gap: 9px; padding: 5px 4px; border-radius: 4px;
+  color: var(--ink); text-decoration: none; font-size: 14px; }
+.p-inside__item:hover { background: var(--paper-deep); }
+.p-inside__item img { width: 34px; height: 34px; object-fit: cover; border-radius: 4px; flex: 0 0 auto; background: var(--paper-deep); }
+.p-inside__dot { width: 12px; height: 12px; border-radius: 50%; flex: 0 0 auto; margin: 0 11px; box-shadow: 0 0 0 1px rgba(58,50,38,0.3); }
+
 /* --------------------- Add-waypoint button (corner brackets) ------------- */
 .add-waypoint {
   width: 132px; height: 132px; position: relative;

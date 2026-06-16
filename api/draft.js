@@ -138,6 +138,7 @@ async function draft(body) {
   if (body.kind !== 'image' && !suggestedImageUrl) {
     suggestedImageUrl = await findImage(record.name, record.region, record.country);
   }
+  if (body.parentId) record.parent = body.parentId; // nested under an existing pin
   return { record, suggestedImageUrl };
 }
 
@@ -187,6 +188,24 @@ async function commit(body) {
       body: JSON.stringify({ message: 'Add image for ' + id, content: imageBase64, branch })
     });
     if (put.ok) { record.images = [file]; record.source = 'screenshot'; }
+  }
+
+  // Nesting: cluster the child around its parent in a small golden-angle spiral
+  // so siblings group at the parent and fan out (don't overlap) when zoomed in.
+  const parentId = record.parent || body.parentId;
+  if (parentId) {
+    const parent = data.find(r => r.id === parentId);
+    if (parent && typeof parent.lat === 'number') {
+      record.parent = parentId;
+      const sibs = data.filter(r => r.parent === parentId).length;
+      const ang = sibs * 2.39996323;            // golden angle (rad)
+      const radM = 25 + sibs * 6;               // metres from parent
+      record.lat = +(parent.lat + (radM * Math.cos(ang)) / 111320).toFixed(6);
+      record.lng = +(parent.lng + (radM * Math.sin(ang)) / (111320 * Math.cos(parent.lat * Math.PI / 180))).toFixed(6);
+      record.approx = false;
+    } else {
+      delete record.parent;                     // parent not found — keep as a normal pin
+    }
   }
 
   data.push(record);
