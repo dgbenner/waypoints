@@ -5309,5 +5309,30 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "sagrada-familia",
+    "name": "Sagrada Família",
+    "macroRegion": "eu",
+    "region": "Catalonia",
+    "subregion": "Barcelona",
+    "country": "Spain",
+    "lat": 41.4035046,
+    "lng": 2.1744283,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "cathedral",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Gaudí's unfinished basilica, under construction since 1882 and a UNESCO World Heritage masterpiece of Catalan modernism.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [],
+    "source": "manual",
+    "status": "want-to-see"
   }
 ]
