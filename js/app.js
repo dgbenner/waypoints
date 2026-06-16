@@ -117,7 +117,7 @@
       match: p => p.country === 'Ireland' },
     { id: 'uk', flag: 'gb.svg', label: 'United Kingdom', bounds: [[49.5, -7.6], [58.9, 1.9]],
       match: p => p.macroRegion === 'uk' && p.country !== 'Ireland' },
-    { id: 'eu', flag: 'eu.svg', label: 'Europe', bounds: [[36.0, -10.0], [54.0, 13.5]],
+    { id: 'eu', flag: 'eu.svg', label: 'Europe', bounds: [[40.0, -2.0], [54.0, 13.5]],
       match: p => p.macroRegion === 'eu' }
   ];
 

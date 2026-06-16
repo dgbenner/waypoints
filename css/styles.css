@@ -48,6 +48,12 @@ html, body {
 
 /* Tame Leaflet's default white-blue chrome into paper tones ---------------- */
 .leaflet-container { font-family: var(--serif); background: var(--paper); }
+
+/* Soften the Esri raster basemap (stays fully opaque — no see-through).
+   Tunable: saturate = colour intensity (mutes green/blue), brightness =
+   lightness (lightens water + gray land), sepia = warmth toward the paper tone.
+   Raster tiles can't be recoloured per-feature, so this is a global wash. */
+.leaflet-tile-pane { filter: saturate(0.66) brightness(1.06) sepia(0.08); }
 .leaflet-bar a,
 .leaflet-bar a:hover {
   background: var(--cream); color: var(--ink);
