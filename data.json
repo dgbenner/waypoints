@@ -5331,8 +5331,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "sagrada-familia.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   }
 ]
