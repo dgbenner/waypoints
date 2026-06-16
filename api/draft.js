@@ -136,7 +136,7 @@ async function draft(body) {
   // No image yet (typed text, or a link with no preview image)? Auto-find one
   // from Wikipedia's lead photo for the place — big time-saver for text adds.
   if (body.kind !== 'image' && !suggestedImageUrl) {
-    suggestedImageUrl = await wikiImage(record.name);
+    suggestedImageUrl = await findImage(record.name, record.region, record.country);
   }
   return { record, suggestedImageUrl };
 }
@@ -237,6 +237,41 @@ async function wikiImage(query) {
     }
   } catch (e) { /* best-effort */ }
   return '';
+}
+
+// Wikipedia full-text search → lead image of the top result (keyless).
+async function wikiSearch(q) {
+  if (!q) return '';
+  try {
+    const url = 'https://en.wikipedia.org/w/api.php?action=query&format=json' +
+      '&generator=search&gsrlimit=1&gsrsearch=' + encodeURIComponent(q) +
+      '&prop=pageimages&piprop=thumbnail&pithumbsize=640';
+    const r = await fetch(url, { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
+    const j = await r.json();
+    const pages = j && j.query && j.query.pages;
+    if (pages) for (const k in pages) {
+      const p = pages[k];
+      if (p && p.thumbnail && p.thumbnail.source) return p.thumbnail.source;
+    }
+  } catch (e) { /* best-effort */ }
+  return '';
+}
+
+// Robust image finder: try title variants, then a search fallback. The user
+// reviews the result in the preview, so an approximate hit is fine.
+function titleCandidates(name) {
+  const base = String(name || '').replace(/\s*\([^)]*\)/g, '').trim();
+  const out = [];
+  const add = s => { s = (s || '').trim(); if (s.length > 2 && !out.includes(s)) out.push(s); };
+  if (base.includes(' — ')) { const [a, b] = base.split(' — '); add(b); add(a); }
+  add(base.split(' / ')[0]);
+  add(base);
+  out.slice().forEach(c => { if (c.includes(',')) add(c.split(',')[0]); });
+  return out;
+}
+async function findImage(name, region, country) {
+  for (const c of titleCandidates(name)) { const img = await wikiImage(c); if (img) return img; }
+  return await wikiSearch(name + (region ? ' ' + region : country ? ' ' + country : ''));
 }
 
 async function geocode(q) {
