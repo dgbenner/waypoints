@@ -107,17 +107,18 @@ html, body {
 }
 .region-control button {
   appearance: none; border: none; background: transparent;
-  font-family: var(--serif); font-size: 11px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--ink-soft);
-  padding: 9px 13px; cursor: pointer; white-space: nowrap;
+  padding: 7px 12px; cursor: pointer; line-height: 0;
   border-right: 1px solid rgba(58,50,38,0.14);
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s;
 }
 .region-control button:last-child { border-right: none; }
-.region-control button:hover { background: var(--paper-deep); color: var(--ink); }
-.region-control button.is-active {
-  background: var(--ink); color: var(--cream);
+.region-control button img {
+  height: 16px; width: auto; display: block; border-radius: 2px;
+  border: 1px solid rgba(58,50,38,0.25); opacity: 0.5; transition: opacity 0.15s;
 }
+.region-control button:hover img { opacity: 0.85; }
+.region-control button.is-active { background: var(--paper-deep); }
+.region-control button.is-active img { opacity: 1; }
 
 /* ------------------------------ Legend ----------------------------------- */
 /* Lower-left stack: Add button sits above the legend */
@@ -309,8 +310,8 @@ html, body {
   color: var(--ink-soft); transition: color 0.15s, background 0.15s;
   border-radius: 6px;
 }
-.add-waypoint:hover { color: var(--c-personal); background: rgba(251, 246, 233, 0.35); }
-.add-waypoint.is-over { color: var(--c-personal); background: rgba(178, 58, 110, 0.12); }
+.add-waypoint:hover { color: var(--line); background: rgba(251, 246, 233, 0.35); }
+.add-waypoint.is-over { color: var(--line); background: rgba(185, 130, 79, 0.14); }
 
 /* Quick-drop toast (auto-submit feedback, shown without the modal) */
 .aw-toast {
@@ -326,14 +327,15 @@ html, body {
   filter: drop-shadow(0 1px 1px rgba(58,50,38,0.25)); }
 .add-waypoint .aw-corners { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
 .add-waypoint .aw-plus   { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
-.add-waypoint .aw-label {
-  position: absolute; left: 0; right: 0; top: 60%; bottom: 6%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  line-height: 1.18; text-align: center;
+.add-waypoint .aw-lbl {
+  position: absolute; left: 0; right: 0; text-align: center;
+  display: flex; align-items: center; justify-content: center;
   font-family: var(--serif); font-size: 11px; letter-spacing: 0.18em;
   text-transform: uppercase; color: var(--ink);
   text-shadow: 0 1px 0 var(--cream);
 }
+.add-waypoint .aw-lbl--top    { top: 6%;  bottom: 60%; }   /* above the plus */
+.add-waypoint .aw-lbl--bottom { top: 60%; bottom: 6%;  }   /* below the plus */
 
 /* ------------------------------ Add modal -------------------------------- */
 .aw-modal-backdrop {
@@ -402,7 +404,7 @@ html, body {
 @media (max-width: 640px) {
   .lower-left { top: 64px; bottom: auto; }
   .add-waypoint { width: 104px; height: 104px; }
-  .add-waypoint .aw-label { font-size: 10px; }
+  .add-waypoint .aw-lbl { font-size: 10px; }
   .masthead h1 { font-size: 23px; }
   .legend { width: 168px; bottom: auto; top: 64px; }
   .compass { width: 48px; height: 48px; bottom: auto; top: 70px; right: 14px; }

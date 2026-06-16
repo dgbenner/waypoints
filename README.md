@@ -35,7 +35,8 @@ push to it) and redeploy. The map reads it at load.
 {
   "id": "edinburgh-castle",      // kebab-case unique key
   "name": "Edinburgh Castle",
-  "macroRegion": "uk",           // "uk" or "eu" — drives the UK/Europe segmented control
+  "macroRegion": "uk",           // "uk" or "eu". Flag control: Ireland (country:"Ireland"),
+                                 //   UK (macroRegion uk, not Ireland), Europe (macroRegion eu)
   "region": "Edinburgh",
   "subregion": "Old Town",
   "country": "Scotland",

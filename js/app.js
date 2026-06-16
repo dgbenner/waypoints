@@ -110,12 +110,15 @@
     food:       { label: 'Food & drink',       glyph: G.food }
   };
 
-  // Two-segment control. UK matches macroRegion 'uk'; Europe matches anything else.
+  // Three flag-only segments, west → east. Each filters its own pins + zooms.
+  // EU is framed around central Europe (no Scandinavia), per request.
   const REGIONS = [
-    { id: 'uk',     label: 'UK & Ireland', bounds: [[49.8, -11.0], [60.9, 2.0]],
-      match: p => p.macroRegion === 'uk' },
-    { id: 'europe', label: 'Europe',       bounds: [[34.5, -11.0], [71.0, 40.0]],
-      match: p => p.macroRegion !== 'uk' }
+    { id: 'ie', flag: 'ie.svg', label: 'Ireland', bounds: [[51.3, -10.8], [55.5, -5.3]],
+      match: p => p.country === 'Ireland' },
+    { id: 'uk', flag: 'gb.svg', label: 'United Kingdom', bounds: [[49.5, -7.6], [58.9, 1.9]],
+      match: p => p.macroRegion === 'uk' && p.country !== 'Ireland' },
+    { id: 'eu', flag: 'eu.svg', label: 'Europe', bounds: [[36.0, -10.0], [54.0, 19.0]],
+      match: p => p.macroRegion === 'eu' }
   ];
 
   const SCOTLAND_FOOD = ['Haggis, neeps & tatties', 'Cock-a-leekie', 'Cullen skink', 'Cranachan',
@@ -203,7 +206,7 @@
     .filter(t => THEMES[t])
     .sort((a, b) => Object.keys(THEMES).indexOf(a) - Object.keys(THEMES).indexOf(b));
   const activeThemes = new Set(presentThemes);
-  let activeRegion = REGIONS[0]; // UK & Ireland by default
+  let activeRegion = REGIONS[1]; // United Kingdom by default
 
   function passes(poi) {
     if (!activeCats.has(poi.category)) return false;
@@ -228,8 +231,10 @@
   const regionEl = document.getElementById('region-control');
   REGIONS.forEach(r => {
     const btn = document.createElement('button');
-    btn.textContent = r.label;
+    btn.innerHTML = '<img src="images/' + r.flag + '" alt="' + r.label + '">';
     btn.dataset.id = r.id;
+    btn.title = r.label;
+    btn.setAttribute('aria-label', r.label);
     if (r.id === 'uk') btn.classList.add('is-active');
     btn.addEventListener('click', () => selectRegion(r, btn));
     regionEl.appendChild(btn);
@@ -240,7 +245,7 @@
     btn.classList.add('is-active');
 
     // Swap base layer if this region wants a different tile provider.
-    const next = baseLayerFor(r.id === 'uk' ? 'uk' : 'eu');
+    const next = baseLayerFor(r.id === 'eu' ? 'eu' : 'uk');
     if (next.options.attribution !== baseLayer.options.attribution) {
       map.removeLayer(baseLayer);
       baseLayer = next.addTo(map);
