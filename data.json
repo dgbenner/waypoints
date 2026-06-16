@@ -5574,5 +5574,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "denge-sound-mirrors",
+    "name": "Denge Sound Mirrors",
+    "macroRegion": "uk",
+    "region": "Kent",
+    "subregion": "Dungeness",
+    "country": "United Kingdom",
+    "lat": 50.9469,
+    "lng": 0.9419,
+    "approx": true,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "coast"
+    ],
+    "prominence": "signature",
+    "blurb": "Concrete acoustic 'listening ears' built in the 1920s-30s to detect approaching aircraft before radar, near Dungeness.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "denge-sound-mirrors.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
