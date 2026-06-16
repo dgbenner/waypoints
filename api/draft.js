@@ -125,7 +125,7 @@ async function draft(body) {
     lat, lng, approx,
     category: CATS.includes(d.category) ? d.category : 'heritage',
     themes: (d.themes || []).filter(t => THEMES.includes(t)),
-    prominence: d.prominence === 'standard' ? 'standard' : 'signature',
+    prominence: 'signature', // your adds are personal picks → always the prominent (large) marker
     blurb: d.blurb || '',
     timeGated: !!d.timeGated, hours: d.hours || '', officialUrl: d.officialUrl || '',
     link: body.kind === 'link' ? body.url : '',

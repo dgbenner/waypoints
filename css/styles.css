@@ -87,19 +87,19 @@ html, body {
   pointer-events: none;
 }
 .masthead h1 {
-  margin: 0; font-weight: 500; font-size: 30px; letter-spacing: 0.02em;
+  margin: 0; font-weight: 500; font-size: 30px; line-height: 1; letter-spacing: 0.02em;
   color: var(--ink);
   text-shadow: 0 1px 0 var(--cream), 0 0 14px rgba(244,236,216,0.9);
 }
 .masthead__sub {
-  margin: 2px 0 0; font-size: 11px; letter-spacing: 0.26em;
+  margin: 3px 0 0; font-size: 11px; letter-spacing: 0.26em;
   text-transform: uppercase; color: var(--ink-soft);
   text-shadow: 0 1px 0 var(--cream);
 }
 
 /* ------------------------- Region segmented control ---------------------- */
 .region-control {
-  position: fixed; top: 78px; left: 16px;
+  position: fixed; top: 50%; left: 16px; transform: translateY(-50%);
   z-index: 600; display: flex; gap: 0;
   background: var(--cream); border: 1px solid rgba(58,50,38,0.30);
   border-radius: var(--radius); box-shadow: var(--shadow-soft);
@@ -306,7 +306,7 @@ html, body {
 /* --------------------- Add-waypoint button (corner brackets) ------------- */
 .add-waypoint {
   width: 132px; height: 132px; position: relative;
-  background: rgba(251, 246, 233, 0.0); border: none; cursor: pointer;
+  background: rgba(255, 255, 255, 0.2); border: none; cursor: pointer;
   color: var(--ink-soft); transition: color 0.15s, background 0.15s;
   border-radius: 6px;
 }
@@ -408,7 +408,7 @@ html, body {
   .masthead h1 { font-size: 23px; }
   .legend { width: 168px; bottom: auto; top: 64px; }
   .compass { width: 48px; height: 48px; bottom: auto; top: 70px; right: 14px; }
-  .region-control { top: auto; bottom: 16px; }
+  .region-control { top: auto; bottom: 16px; transform: none; }
 
   /* Panel becomes a bottom sheet */
   .panel {
