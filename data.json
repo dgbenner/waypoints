@@ -118,8 +118,10 @@
     "hours": "Daily (seasonal hours — verify)",
     "officialUrl": "https://www.camera-obscura.co.uk",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "camera-obscura.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -166,8 +168,10 @@
     "hours": "Daily 10:00– (glasshouses ticketed)",
     "officialUrl": "https://www.rbge.org.uk",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "royal-botanic-garden-edinburgh.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -189,8 +193,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "heart-of-midlothian.png"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -310,8 +316,10 @@
     "hours": "Daily (closed during royal visits)",
     "officialUrl": "https://www.rct.uk/visit/palace-of-holyroodhouse",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "holyrood-palace.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -383,8 +391,10 @@
     "hours": "Evenings (seasonal — verify)",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "literary-walking-tour.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1063,8 +1073,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "newcastle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1594,8 +1606,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "camden.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1617,8 +1631,10 @@
     "hours": "Daily (observatory ticketed)",
     "officialUrl": "https://www.rmg.co.uk/royal-observatory",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "greenwich-gmt.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1641,8 +1657,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "mach-loop.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1664,8 +1682,10 @@
     "hours": "Mon–Sat (free)",
     "officialUrl": "https://www.moma.cymru",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "moma-machynlleth.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1688,8 +1708,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "st-davids-head.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1712,8 +1734,10 @@
     "hours": "Seasonal boats (book ahead)",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "skomer.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1934,8 +1958,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "kylemore-abbey.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1958,8 +1984,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "rock-of-cashel.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -1982,8 +2010,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "cahir-castle.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2838,8 +2868,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "bmw-building-munich.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2862,8 +2894,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "bauhaus-dessau.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -2938,8 +2972,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "computer-museum-paderborn.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3088,8 +3124,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "alhambra-granada.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3112,8 +3150,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "temple-expiatori-del-sagrat-cor-tibidabo.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3162,8 +3202,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "medina-of-essaouira.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3548,8 +3590,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "espaces-dabraxas.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3729,8 +3773,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "chateau-de-brissac.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -3986,8 +4032,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "grand-marnier-bourg-charente.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4010,8 +4058,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "saint-paul-de-vence.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4034,8 +4084,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "relics-mary-magdalene.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4058,8 +4110,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "gaumont-de-funes-museum.png"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4186,8 +4240,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "musee-de-picardie.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4236,8 +4292,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "cadaver-tomb-rene-of-chalon.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4908,8 +4966,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "palaia.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -4958,8 +5018,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "positano.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -5086,8 +5148,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "piazzale-loreto-milan.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -5136,8 +5200,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "castello-di-vezio-lake-como.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
@@ -5213,8 +5279,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "castello-di-torrechiara-parma.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   },
   {
