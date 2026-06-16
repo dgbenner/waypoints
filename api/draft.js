@@ -269,9 +269,37 @@ function titleCandidates(name) {
   out.slice().forEach(c => { if (c.includes(',')) add(c.split(',')[0]); });
   return out;
 }
+// Wikimedia Commons file search → top image (keyless). The broadest source:
+// has photos for graves, statues, small towns, etc. that lack a Wikipedia page.
+async function wikiCommons(query) {
+  if (!query) return '';
+  try {
+    const url = 'https://commons.wikimedia.org/w/api.php?action=query&format=json' +
+      '&generator=search&gsrnamespace=6&gsrlimit=1&gsrsearch=' + encodeURIComponent(query) +
+      '&prop=imageinfo&iiprop=url&iiurlwidth=720';
+    const r = await fetch(url, { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
+    const j = await r.json();
+    const pages = j && j.query && j.query.pages;
+    if (pages) for (const k in pages) {
+      const p = pages[k];
+      if (p && p.imageinfo && p.imageinfo[0] && p.imageinfo[0].thumburl) return p.imageinfo[0].thumburl;
+    }
+  } catch (e) { /* best-effort */ }
+  return '';
+}
+
 async function findImage(name, region, country) {
-  for (const c of titleCandidates(name)) { const img = await wikiImage(c); if (img) return img; }
-  return await wikiSearch(name + (region ? ' ' + region : country ? ' ' + country : ''));
+  const ctx = region ? ' ' + region : country ? ' ' + country : '';
+  const tryWiki = async () => {
+    for (const c of titleCandidates(name)) { const img = await wikiImage(c); if (img) return img; }
+    return await wikiSearch(name + ctx);
+  };
+  const tryCommons = async () => (await wikiCommons(name + ctx)) || (await wikiCommons(name));
+  // For specific objects, Commons (an actual photo of the thing) beats the
+  // Wikipedia article image (often a portrait or generic city shot).
+  const specific = /grave|tomb|cemeter|statue|sculptur|memorial|mural|relic|colossus|fountain|obelisk/i.test(name);
+  if (specific) return (await tryCommons()) || (await tryWiki());
+  return (await tryWiki()) || (await tryCommons());
 }
 
 async function geocode(q) {

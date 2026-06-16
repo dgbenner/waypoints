@@ -5542,8 +5542,10 @@
     "hours": "",
     "officialUrl": "",
     "link": "",
-    "images": [],
-    "source": "manual",
+    "images": [
+      "jim-morrison-s-grave.jpg"
+    ],
+    "source": "screenshot",
     "status": "want-to-see"
   }
 ]
