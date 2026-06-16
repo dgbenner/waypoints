@@ -99,7 +99,7 @@ html, body {
 
 /* ------------------------- Region segmented control ---------------------- */
 .region-control {
-  position: fixed; top: 64px; left: 16px;
+  position: fixed; top: 78px; left: 16px;
   z-index: 600; display: flex; gap: 0;
   background: var(--cream); border: 1px solid rgba(58,50,38,0.30);
   border-radius: var(--radius); box-shadow: var(--shadow-soft);
