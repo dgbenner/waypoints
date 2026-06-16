@@ -321,7 +321,9 @@
     // thumbnails
     let thumbs = '';
     const imgs = poi.images || [];
-    if (imgs.length === 1) {
+    if (poi._previewSrc) {
+      thumbs = '<img class="p-thumb" src="' + poi._previewSrc + '" alt="' + esc(poi.name) + '" loading="lazy">';
+    } else if (imgs.length === 1) {
       thumbs = '<img class="p-thumb" src="images/' + esc(imgs[0]) + '" alt="' + esc(poi.name) + '" loading="lazy">';
     } else if (imgs.length > 1) {
       thumbs = '<div class="p-thumb-strip">' + imgs.map(f =>
@@ -415,14 +417,23 @@
   window.Waypoints = {
     categories: CATEGORIES,
     themes: THEMES,
-    addLive: function (rec) {
-      if (!rec || typeof rec.lat !== 'number' || typeof rec.lng !== 'number') return;
-      const m = L.marker([rec.lat, rec.lng], { icon: markerIcon(rec), title: rec.name, riseOnHover: true });
-      m.on('click', () => openPanel(rec));
-      ENTRIES.push({ poi: rec, marker: m });
-      if (passes(rec)) cluster.addLayer(m);
-      map.setView([rec.lat, rec.lng], Math.max(map.getZoom(), 9), { animate: true });
-      openPanel(rec);
+    addLive: function (rec, previewSrc) {
+      try {
+        if (!rec || typeof rec.lat !== 'number' || typeof rec.lng !== 'number') return;
+        if (previewSrc) rec._previewSrc = previewSrc; // show the just-uploaded image before redeploy
+        // Switch to the segment that contains this pin so it isn't filtered out.
+        const region = REGIONS.find(r => r.match(rec));
+        if (region && region !== activeRegion) {
+          activeRegion = region;
+          regionEl.querySelectorAll('button').forEach(b => b.classList.toggle('is-active', b.dataset.id === region.id));
+        }
+        const m = L.marker([rec.lat, rec.lng], { icon: markerIcon(rec), title: rec.name, riseOnHover: true });
+        m.on('click', () => openPanel(rec));
+        ENTRIES.push({ poi: rec, marker: m });
+        applyFilters();                        // rebuild cluster incl. the new pin
+        map.setView([rec.lat, rec.lng], Math.max(map.getZoom(), 11), { animate: true });
+        openPanel(rec);
+      } catch (e) { console.error('addLive failed', e); }
     }
   };
 

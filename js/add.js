@@ -121,7 +121,7 @@
       toast('Adding “' + d.record.name + '”…');
       const c = await api({ action: 'commit', password: key, record: d.record, imageBase64: img.base64, imageName: img.name, imageUrl: '' });
       const rec = (c && c.record) || d.record;
-      if (window.Waypoints && window.Waypoints.addLive) window.Waypoints.addLive(rec);
+      if (window.Waypoints && window.Waypoints.addLive) window.Waypoints.addLive(rec, img.dataUrl);
       toast('Added: ' + rec.name);
     } catch (err) { toast(errMsg(err), true); }
   }
@@ -191,7 +191,9 @@
         imageUrl: dropped ? '' : suggestedImageUrl
       });
       saveKey(keyEl.value);
-      if (window.Waypoints && window.Waypoints.addLive) window.Waypoints.addLive(res.record || currentRecord);
+      const rec = res.record || currentRecord;
+      const previewSrc = dropped ? dropped.dataUrl : (suggestedImageUrl || '');
+      if (window.Waypoints && window.Waypoints.addLive) window.Waypoints.addLive(rec, previewSrc);
       close();
     } catch (err) {
       setStatus(status2, errMsg(err), true);
