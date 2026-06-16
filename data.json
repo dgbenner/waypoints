@@ -5548,5 +5548,31 @@
     "source": "screenshot",
     "status": "want-to-see",
     "parent": "pere-lachaise"
+  },
+  {
+    "id": "eiffel-tower",
+    "name": "Eiffel Tower",
+    "macroRegion": "eu",
+    "region": "Île-de-France",
+    "subregion": "Paris",
+    "country": "France",
+    "lat": 48.8582599,
+    "lng": 2.2945006,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Iconic 330m wrought-iron lattice tower built by Gustave Eiffel for the 1889 World's Fair.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "eiffel-tower.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
