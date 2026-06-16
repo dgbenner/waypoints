@@ -99,11 +99,10 @@ html, body {
 
 /* ------------------------- Region segmented control ---------------------- */
 .region-control {
-  position: fixed; top: 50%; left: 16px; transform: translateY(-50%);
-  z-index: 600; display: flex; gap: 0;
+  display: flex; gap: 0; align-self: flex-start;
   background: var(--cream); border: 1px solid rgba(58,50,38,0.30);
   border-radius: var(--radius); box-shadow: var(--shadow-soft);
-  overflow: hidden; max-width: calc(100vw - 32px);
+  overflow: hidden; max-width: 100%;
 }
 .region-control button {
   appearance: none; border: none; background: transparent;
@@ -408,7 +407,6 @@ html, body {
   .masthead h1 { font-size: 23px; }
   .legend { width: 168px; bottom: auto; top: 64px; }
   .compass { width: 48px; height: 48px; bottom: auto; top: 70px; right: 14px; }
-  .region-control { top: auto; bottom: 16px; transform: none; }
 
   /* Panel becomes a bottom sheet */
   .panel {
