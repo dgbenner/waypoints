@@ -132,6 +132,12 @@ async function draft(body) {
     images: [], source: 'manual', status: 'want-to-see'
   };
   if (!record.themes.length) record.themes = ['monument'];
+
+  // No image yet (typed text, or a link with no preview image)? Auto-find one
+  // from Wikipedia's lead photo for the place — big time-saver for text adds.
+  if (body.kind !== 'image' && !suggestedImageUrl) {
+    suggestedImageUrl = await wikiImage(record.name);
+  }
   return { record, suggestedImageUrl };
 }
 
@@ -213,6 +219,24 @@ async function fetchPage(url) {
   const text = html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '')
     .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 2500);
   return { title, desc, ogImage, text };
+}
+
+// Wikipedia lead image for a place name (keyless). Returns a rendered raster
+// thumbnail URL, or '' if the page has none.
+async function wikiImage(query) {
+  if (!query) return '';
+  try {
+    const url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1' +
+      '&prop=pageimages&piprop=thumbnail&pithumbsize=640&titles=' + encodeURIComponent(query);
+    const r = await fetch(url, { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
+    const j = await r.json();
+    const pages = j && j.query && j.query.pages;
+    if (pages) for (const k in pages) {
+      const p = pages[k];
+      if (p && p.thumbnail && p.thumbnail.source) return p.thumbnail.source;
+    }
+  } catch (e) { /* best-effort */ }
+  return '';
 }
 
 async function geocode(q) {

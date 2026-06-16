@@ -90,6 +90,10 @@ Claude (`claude-opus-4-8`, structured output + vision) to draft the record,
 Nominatim to geocode it, shows you a preview, then commits the pin (and image)
 to `data.json` via the GitHub API. The new pin also drops on the map live.
 
+If you don't supply an image (a typed/text add, or a link with no preview image),
+it auto-fills one from **Wikipedia's lead photo** for the place — shown in the
+preview so you can see it before saving.
+
 **This needs a backend** — GitHub Pages can't run it. The function lives in
 `api/draft.js` (Vercel). The map can stay on Pages and just call the Vercel URL.
 
