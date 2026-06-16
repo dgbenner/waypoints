@@ -5520,5 +5520,30 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "jim-morrison-s-grave",
+    "name": "Jim Morrison's Grave",
+    "macroRegion": "eu",
+    "region": "Île-de-France",
+    "subregion": "Paris",
+    "country": "France",
+    "lat": 48.8607,
+    "lng": 2.3934,
+    "approx": true,
+    "category": "personal",
+    "themes": [
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "The Doors frontman Jim Morrison's grave in Père Lachaise Cemetery, a pilgrimage site for rock fans worldwide.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [],
+    "source": "manual",
+    "status": "want-to-see"
   }
 ]
