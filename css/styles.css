@@ -53,7 +53,7 @@ html, body {
    Tunable: saturate = colour intensity (mutes green/blue), brightness =
    lightness (lightens water + gray land), sepia = warmth toward the paper tone.
    Raster tiles can't be recoloured per-feature, so this is a global wash. */
-.leaflet-tile-pane { filter: saturate(0.66) brightness(1.06) sepia(0.08); }
+.leaflet-tile-pane { filter: saturate(0.86) brightness(1.02) sepia(0.03); }
 .leaflet-bar a,
 .leaflet-bar a:hover {
   background: var(--cream); color: var(--ink);
