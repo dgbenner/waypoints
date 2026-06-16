@@ -5282,5 +5282,32 @@
     "images": [],
     "source": "manual",
     "status": "want-to-see"
+  },
+  {
+    "id": "pavillon-le-corbusier",
+    "name": "Pavillon Le Corbusier",
+    "macroRegion": "eu",
+    "region": "Zürich",
+    "subregion": "Seefeld",
+    "country": "Switzerland",
+    "lat": 47.3560973,
+    "lng": 8.5508641,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "art",
+      "monument"
+    ],
+    "prominence": "standard",
+    "blurb": "1967 steel-and-enamel art museum, Le Corbusier's last building, dedicated to his work in Zürich-Seefeld.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "pavillon-le-corbusier.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
