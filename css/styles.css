@@ -98,10 +98,11 @@ html, body {
 /* soft light-gray scrim behind the title/tagline so they stay legible over the map */
 .masthead::before {
   content: ''; position: absolute; left: -20px; top: -16px;
-  width: 400px; height: 152px; z-index: -1; pointer-events: none;
+  width: 400px; height: 152px; z-index: 0; pointer-events: none;
   background: radial-gradient(250px 114px at 140px 60px,
-    rgba(245,245,245,0.46) 0%, rgba(245,245,245,0.30) 48%, rgba(245,245,245,0) 80%);
+    rgba(245,245,245,0.62) 0%, rgba(245,245,245,0.42) 48%, rgba(245,245,245,0) 80%);
 }
+.masthead h1, .masthead__sub { position: relative; z-index: 1; }
 .masthead h1 {
   margin: 0; font-weight: 500; font-size: 30px; line-height: 1; letter-spacing: 0.02em;
   color: var(--ink);
@@ -169,47 +170,47 @@ html, body {
 }
 
 .legend {
-  width: 210px; flex: 0 0 auto; background: var(--cream);
+  width: 172px; flex: 0 0 auto; background: var(--cream);
   max-height: calc(100vh - 200px); overflow-y: auto;
   border: 1px solid rgba(58,50,38,0.30); border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
-  padding: 12px 14px 14px;
-  /* engraved cartouche double border */
+  padding: 9px 11px 11px;
   outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
 }
 .legend__title {
-  font-size: 11px; letter-spacing: 0.30em; text-transform: uppercase;
-  color: var(--ink); margin: 0 0 10px; text-align: center;
-  border-bottom: 1px solid rgba(58,50,38,0.20); padding-bottom: 8px;
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--ink); margin: 0 0 7px; text-align: center;
+  border-bottom: 1px solid rgba(58,50,38,0.20); padding-bottom: 6px;
 }
-.legend__group + .legend__group { margin-top: 12px; }
+/* group = items column + a heading rotated CCW down the right edge */
+.legend__group { display: flex; align-items: stretch; gap: 6px; }
+.legend__group + .legend__group { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(58,50,38,0.12); }
+.legend__items { flex: 1 1 auto; min-width: 0; }
 .legend__heading {
-  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--ink-soft); margin: 0 0 6px;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  flex: 0 0 auto; align-self: stretch; text-align: center;
+  font-size: 8.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft);
+  padding: 1px 1px; border-left: 1px solid rgba(58,50,38,0.16);
 }
 .legend__item {
-  display: flex; align-items: center; gap: 8px; width: 100%;
+  display: flex; align-items: center; gap: 7px; width: 100%;
   appearance: none; border: none; background: transparent;
-  font-family: var(--serif); font-size: 13px; color: var(--ink);
-  padding: 3px 2px; cursor: pointer; text-align: left;
+  font-family: var(--serif); font-size: 11px; color: var(--ink);
+  padding: 1.5px 2px; cursor: pointer; text-align: left;
   border-radius: 3px; transition: background 0.12s, opacity 0.12s;
 }
 .legend__item:hover { background: var(--paper-deep); }
 .legend__item.is-off { opacity: 0.38; }
 .legend__swatch {
-  width: 13px; height: 13px; border-radius: 50%;
+  width: 11px; height: 11px; border-radius: 50%;
   border: 1.5px solid var(--cream); box-shadow: 0 0 0 1px rgba(58,50,38,0.35);
   flex: 0 0 auto;
 }
 .legend__glyph {
-  width: 18px; text-align: center; flex: 0 0 auto;
+  width: 15px; text-align: center; flex: 0 0 auto;
   color: var(--ink-soft);
 }
-.legend__glyph svg { width: 15px; height: 15px; fill: currentColor; vertical-align: middle; }
-.legend__note {
-  margin-top: 10px; font-size: 10px; line-height: 1.4; color: var(--ink-soft);
-  border-top: 1px solid rgba(58,50,38,0.16); padding-top: 8px;
-}
+.legend__glyph svg { width: 13px; height: 13px; fill: currentColor; vertical-align: middle; }
 
 /* ------------------------------ Markers ---------------------------------- */
 .wp-marker { display: block; }

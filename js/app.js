@@ -186,14 +186,7 @@
   function markerIcon(poi) {
     const color = (CATEGORIES[poi.category] || {}).color || '#666';
     const glyph = THEMES[poi.themes && poi.themes[0]] ? THEMES[poi.themes[0]].glyph : '';
-    if (poi.prominence === 'standard') {
-      return L.divIcon({
-        className: '',
-        html: '<div class="wp-marker wp-marker--standard wp-marker--' + poi.status + '">' +
-              '<div class="wp-marker__disc" style="color:' + color + '"></div></div>',
-        iconSize: [18, 18], iconAnchor: [9, 9]
-      });
-    }
+    // All pins render the same (no signature/standard hierarchy).
     return L.divIcon({
       className: '',
       html: '<div class="wp-marker wp-marker--signature wp-marker--' + poi.status + '">' +
@@ -315,10 +308,23 @@
   const legendEl = document.getElementById('legend');
   legendEl.innerHTML = '<h2 class="legend__title">Key</h2>';
 
+  // A group = items column on the left + a rotated heading down the right edge.
+  function legendGroup(headingText) {
+    const group = document.createElement('div');
+    group.className = 'legend__group';
+    const items = document.createElement('div');
+    items.className = 'legend__items';
+    const heading = document.createElement('div');
+    heading.className = 'legend__heading';
+    heading.textContent = headingText;
+    group.appendChild(items);
+    group.appendChild(heading);
+    legendEl.appendChild(group);
+    return items;
+  }
+
   // Categories
-  const catGroup = document.createElement('div');
-  catGroup.className = 'legend__group';
-  catGroup.innerHTML = '<p class="legend__heading">Category</p>';
+  const catItems = legendGroup('Category');
   Object.entries(CATEGORIES).forEach(([key, c]) => {
     const item = document.createElement('button');
     item.className = 'legend__item';
@@ -326,14 +332,11 @@
     item.addEventListener('click', () => {
       toggle(activeCats, key); item.classList.toggle('is-off'); applyFilters();
     });
-    catGroup.appendChild(item);
+    catItems.appendChild(item);
   });
-  legendEl.appendChild(catGroup);
 
   // Themes
-  const themeGroup = document.createElement('div');
-  themeGroup.className = 'legend__group';
-  themeGroup.innerHTML = '<p class="legend__heading">Theme</p>';
+  const themeItems = legendGroup('Theme');
   presentThemes.forEach(key => {
     const t = THEMES[key];
     const item = document.createElement('button');
@@ -342,14 +345,8 @@
     item.addEventListener('click', () => {
       toggle(activeThemes, key); item.classList.toggle('is-off'); applyFilters();
     });
-    themeGroup.appendChild(item);
+    themeItems.appendChild(item);
   });
-  legendEl.appendChild(themeGroup);
-
-  const note = document.createElement('p');
-  note.className = 'legend__note';
-  note.innerHTML = 'Filled discs are <strong>signature</strong> finds; faint rings are the usual stops.';
-  legendEl.appendChild(note);
 
   function toggle(set, key) { set.has(key) ? set.delete(key) : set.add(key); }
 
