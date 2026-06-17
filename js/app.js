@@ -110,22 +110,49 @@
     food:       { label: 'Food & drink',       glyph: G.food }
   };
 
-  // Three flag-only segments, west → east. Each filters its own pins + zooms.
-  // EU is framed around central Europe (no Scandinavia), per request.
-  const REGIONS = [
-    { id: 'ie', flag: 'ie.svg', label: 'Ireland', bounds: [[51.3, -10.8], [55.5, -5.3]],
-      match: p => p.country === 'Ireland' },
-    { id: 'uk', flag: 'gb.svg', label: 'United Kingdom', bounds: [[49.5, -7.6], [58.9, 1.9]],
-      match: p => p.macroRegion === 'uk' && p.country !== 'Ireland' },
-    { id: 'eu', flag: 'eu.svg', label: 'Europe', bounds: [[40.0, -2.0], [54.0, 13.5]], zoomBump: 1,
-      match: p => p.macroRegion === 'eu' }
+  // Flag strip, west → east. Target countries (full colour); other countries
+  // that have pins show as ghosted flags (dimmed, still clickable). REGIONS is
+  // assembled once DATA is known (active + ghosts) — see below.
+  const ACTIVE_FLAGS = [
+    { id: 'ie', flag: 'ie.svg', label: 'Ireland', bounds: [[51.3, -10.8], [55.5, -5.3]], match: p => p.country === 'Ireland' },
+    { id: 'uk', flag: 'gb.svg', label: 'United Kingdom', bounds: [[49.5, -7.6], [58.9, 1.9]], match: p => p.macroRegion === 'uk' && p.country !== 'Ireland' },
+    { id: 'fr', flag: 'fr.svg', label: 'France', bounds: [[42.3, -4.8], [51.1, 8.3]], match: p => p.country === 'France' },
+    { id: 'be', flag: 'be.svg', label: 'Belgium', bounds: [[49.5, 2.5], [51.5, 6.4]], match: p => p.country === 'Belgium' },
+    { id: 'nl', flag: 'nl.svg', label: 'Netherlands', bounds: [[50.7, 3.3], [53.6, 7.2]], match: p => p.country === 'Netherlands' },
+    { id: 'lu', flag: 'lu.svg', label: 'Luxembourg', bounds: [[49.4, 5.7], [50.2, 6.5]], match: p => p.country === 'Luxembourg' },
+    { id: 'ch', flag: 'ch.svg', label: 'Switzerland', bounds: [[45.8, 5.9], [47.8, 10.5]], match: p => p.country === 'Switzerland' },
+    { id: 'de', flag: 'de.svg', label: 'Germany', bounds: [[47.2, 5.9], [55.1, 15.0]], match: p => p.country === 'Germany' },
+    { id: 'it', flag: 'it.svg', label: 'Italy', bounds: [[36.6, 6.6], [47.1, 18.5]], match: p => p.country === 'Italy' }
   ];
+  const COVERED = new Set(['Ireland', 'Scotland', 'England', 'Wales', 'Isle of Man', 'United Kingdom',
+    'France', 'Belgium', 'Netherlands', 'Luxembourg', 'Switzerland', 'Germany', 'Italy', '']);
+  const GHOST_META = {
+    'Spain': { flag: 'es.svg', bounds: [[36.0, -9.5], [43.8, 3.4]] },
+    'Portugal': { flag: 'pt.svg', bounds: [[36.9, -9.6], [42.2, -6.1]] },
+    'Morocco': { flag: 'ma.svg', bounds: [[27.6, -13.2], [35.9, -1.0]] },
+    'Czech Republic': { flag: 'cz.svg', bounds: [[48.5, 12.0], [51.1, 18.9]] }
+  };
 
   const SCOTLAND_FOOD = ['Haggis, neeps & tatties', 'Cock-a-leekie', 'Cullen skink', 'Cranachan',
     'Clootie dumpling', 'Rumbledethumps', 'Arbroath smokies', 'Stovies', 'Scotch pie',
     'Full Scottish breakfast', 'Grouse', 'Shortbread', 'Irn-Bru'];
 
   const DATA = (RAW || []).filter(p => typeof p.lat === 'number' && typeof p.lng === 'number');
+
+  // Ghost flags: any country with pins that isn't a target gets a dimmed,
+  // still-clickable flag at the end of the strip.
+  const ghostGroups = {};
+  DATA.forEach(p => { const c = p.country; if (c && !COVERED.has(c)) (ghostGroups[c] = ghostGroups[c] || []).push(p); });
+  const GHOST_FLAGS = Object.keys(ghostGroups).map(c => {
+    const meta = GHOST_META[c];
+    let bounds = meta && meta.bounds;
+    if (!bounds) {
+      const ps = ghostGroups[c], la = ps.map(p => p.lat), ln = ps.map(p => p.lng), pad = 0.6;
+      bounds = [[Math.min(...la) - pad, Math.min(...ln) - pad], [Math.max(...la) + pad, Math.max(...ln) + pad]];
+    }
+    return { id: 'ghost-' + c.toLowerCase().replace(/[^a-z]+/g, '-'), flag: meta && meta.flag, label: c, bounds, ghost: true, match: p => p.country === c };
+  });
+  const REGIONS = ACTIVE_FLAGS.concat(GHOST_FLAGS);
 
   /* ----------------------------------------------------------------------- *
    * MAP
@@ -206,7 +233,7 @@
     .filter(t => THEMES[t])
     .sort((a, b) => Object.keys(THEMES).indexOf(a) - Object.keys(THEMES).indexOf(b));
   const activeThemes = new Set(presentThemes);
-  let activeRegion = REGIONS[1]; // United Kingdom by default
+  let activeRegion = REGIONS.find(r => r.id === 'uk') || REGIONS[0]; // UK by default
 
   function passes(poi) {
     if (!activeCats.has(poi.category)) return false;
@@ -231,10 +258,13 @@
   const regionEl = document.getElementById('region-control');
   REGIONS.forEach(r => {
     const btn = document.createElement('button');
-    btn.innerHTML = '<img src="images/' + r.flag + '" alt="' + r.label + '">';
+    btn.innerHTML = r.flag
+      ? '<img src="images/' + r.flag + '" alt="' + r.label + '">'
+      : '<span class="rc-mono">' + r.label.slice(0, 2).toUpperCase() + '</span>';
     btn.dataset.id = r.id;
-    btn.title = r.label;
+    btn.title = r.label + (r.ghost ? ' (not a target area yet)' : '');
     btn.setAttribute('aria-label', r.label);
+    if (r.ghost) btn.classList.add('is-ghost');
     if (r.id === 'uk') btn.classList.add('is-active');
     btn.addEventListener('click', () => selectRegion(r, btn));
     regionEl.appendChild(btn);
@@ -245,7 +275,7 @@
     btn.classList.add('is-active');
 
     // Swap base layer if this region wants a different tile provider.
-    const next = baseLayerFor(r.id === 'eu' ? 'eu' : 'uk');
+    const next = baseLayerFor((r.id === 'ie' || r.id === 'uk') ? 'uk' : 'eu');
     if (next.options.attribution !== baseLayer.options.attribution) {
       map.removeLayer(baseLayer);
       baseLayer = next.addTo(map);

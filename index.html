@@ -28,16 +28,18 @@
   <div class="paper-grain" aria-hidden="true"></div>
   <div class="map-vignette" aria-hidden="true"></div>
 
-  <!-- Masthead -->
-  <header class="masthead">
-    <h1>Waypoints</h1>
-    <p class="masthead__sub">A gathering of places</p>
-  </header>
+  <!-- Top-left: title + tagline (hidden on small screens) and the flag strip -->
+  <div class="top-left">
+    <header class="masthead">
+      <h1>Waypoints</h1>
+      <p class="masthead__sub">A gathering of places</p>
+    </header>
+    <nav class="region-control" id="region-control" aria-label="Region flags"></nav>
+  </div>
 
-  <!-- Lower-left stack: region flags · Add button · legend -->
+  <!-- Bottom-left: legend (KEY) + ever-present Add Waypoint button -->
   <div class="lower-left">
-    <!-- Region selector (flag segmented control) -->
-    <nav class="region-control" id="region-control" aria-label="Region presets"></nav>
+    <aside class="legend" id="legend" aria-label="Key and filters"></aside>
     <button class="add-waypoint" id="add-waypoint" type="button"
             aria-label="Add new waypoint" title="Add new waypoint">
       <span class="aw-lbl aw-lbl--top">Add</span>
@@ -47,8 +49,6 @@
       </svg>
       <span class="aw-lbl aw-lbl--bottom">Waypoint</span>
     </button>
-    <!-- Legend / filter cartouche -->
-    <aside class="legend" id="legend" aria-label="Key and filters"></aside>
   </div>
 
   <!-- Side panel (desktop drawer / mobile bottom sheet) -->
