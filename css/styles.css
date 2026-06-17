@@ -100,7 +100,7 @@ html, body {
   content: ''; position: absolute; left: -20px; top: -16px;
   width: 400px; height: 152px; z-index: 0; pointer-events: none;
   background: radial-gradient(250px 114px at 140px 60px,
-    rgba(245,245,245,0.95) 0%, rgba(245,245,245,0.72) 48%, rgba(245,245,245,0) 82%);
+    rgba(245,245,245,0.80) 0%, rgba(245,245,245,0.56) 48%, rgba(245,245,245,0) 82%);
 }
 .masthead h1, .masthead__sub { position: relative; z-index: 1; }
 .masthead h1 {
