@@ -94,7 +94,13 @@ html, body {
   display: flex; align-items: center; gap: 14px;
   max-width: calc(100vw - 32px);
 }
-.masthead { pointer-events: none; flex: 0 0 auto; }
+.masthead { pointer-events: none; flex: 0 0 auto; position: relative; }
+/* soft light-gray scrim behind the title/tagline so they stay legible over the map */
+.masthead::before {
+  content: ''; position: absolute; left: -16px; top: -12px;
+  width: 210px; height: 84px; z-index: -1; pointer-events: none;
+  background: radial-gradient(130px 60px at 30px 30px, rgba(245,245,245,0.92), rgba(245,245,245,0) 72%);
+}
 .masthead h1 {
   margin: 0; font-weight: 500; font-size: 30px; line-height: 1; letter-spacing: 0.02em;
   color: var(--ink);
@@ -108,23 +114,37 @@ html, body {
 
 /* ------------------------- Flag strip (region filter) -------------------- */
 .region-control {
-  display: flex; gap: 0; flex: 0 1 auto; flex-wrap: nowrap;
+  display: flex; gap: 0; flex: 0 1 auto; flex-wrap: nowrap; align-items: stretch;
   background: var(--cream); border: 1px solid rgba(58,50,38,0.30);
-  border-radius: var(--radius); box-shadow: var(--shadow-soft);
+  border-radius: var(--radius);
+  box-shadow: 0 0 10px 2px rgba(245,245,245,0.85), var(--shadow-soft);
   overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
   max-width: 100%;
 }
 .region-control::-webkit-scrollbar { display: none; }
+.rc-active, .rc-ghosts { display: flex; }
+/* inactive/other-country flags collapse into a sliding accordion */
+.rc-ghosts { max-width: 0; overflow: hidden; transition: max-width 0.32s ease; }
+.region-control.ghosts-open .rc-ghosts { max-width: 320px; }
+.rc-toggle {
+  appearance: none; border: none; background: transparent; cursor: pointer;
+  padding: 0 8px; display: flex; align-items: center; flex: 0 0 auto;
+  border-left: 1px solid rgba(58,50,38,0.14); color: var(--ink-soft);
+}
+.rc-toggle:hover { color: var(--ink); }
+.rc-arrow { font-size: 17px; line-height: 1; display: inline-block; transition: transform 0.25s; }
+.region-control.ghosts-open .rc-arrow { transform: rotate(90deg); }
 .region-control button {
   appearance: none; border: none; background: transparent;
-  padding: 6px 9px; cursor: pointer; line-height: 0; flex: 0 0 auto;
+  padding: 6px 8px; cursor: pointer; line-height: 0; flex: 0 0 auto;
   border-right: 1px solid rgba(58,50,38,0.14);
   transition: background 0.15s;
 }
-.region-control button:last-child { border-right: none; }
+.rc-ghosts button:last-child, .rc-active button:last-child { border-right: none; }
+/* uniform container: every flag in an equal 24×16 box, original aspect (no stretch) */
 .region-control button img {
-  height: 16px; width: auto; display: block; border-radius: 2px;
-  border: 1px solid rgba(58,50,38,0.25); opacity: 0.55; transition: opacity 0.15s, filter 0.15s;
+  width: 24px; height: 16px; object-fit: contain; display: block; border-radius: 2px;
+  opacity: 0.55; transition: opacity 0.15s, filter 0.15s;
 }
 .region-control button:hover img { opacity: 0.9; }
 .region-control button.is-active { background: var(--paper-deep); }
@@ -333,6 +353,15 @@ html, body {
 .p-inside__item:hover { background: var(--paper-deep); }
 .p-inside__item img { width: 34px; height: 34px; object-fit: cover; border-radius: 4px; flex: 0 0 auto; background: var(--paper-deep); }
 .p-inside__dot { width: 12px; height: 12px; border-radius: 50%; flex: 0 0 auto; margin: 0 11px; box-shadow: 0 0 0 1px rgba(58,50,38,0.3); }
+
+/* Flag-as-duplicate (remove) — lower-right of the panel */
+.p-dup {
+  display: block; margin: 18px 20px 8px auto;
+  appearance: none; background: transparent; border: 1px solid rgba(178,58,110,0.45);
+  color: var(--c-personal); font-family: var(--serif); font-size: 11px; letter-spacing: 0.06em;
+  padding: 6px 12px; border-radius: 5px; cursor: pointer; transition: background 0.15s;
+}
+.p-dup:hover { background: rgba(178,58,110,0.10); }
 
 /* --------------------- Add-waypoint button (corner brackets) ------------- */
 .add-waypoint {

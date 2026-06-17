@@ -256,8 +256,11 @@
    * REGION SEGMENTED CONTROL
    * ----------------------------------------------------------------------- */
   const regionEl = document.getElementById('region-control');
-  REGIONS.forEach(r => {
+  const rcActive = document.createElement('div'); rcActive.className = 'rc-active';
+  const rcGhosts = document.createElement('div'); rcGhosts.className = 'rc-ghosts';
+  function makeFlagBtn(r) {
     const btn = document.createElement('button');
+    btn.type = 'button';
     btn.innerHTML = r.flag
       ? '<img src="images/' + r.flag + '" alt="' + r.label + '">'
       : '<span class="rc-mono">' + r.label.slice(0, 2).toUpperCase() + '</span>';
@@ -267,8 +270,23 @@
     if (r.ghost) btn.classList.add('is-ghost');
     if (r.id === 'uk') btn.classList.add('is-active');
     btn.addEventListener('click', () => selectRegion(r, btn));
-    regionEl.appendChild(btn);
-  });
+    return btn;
+  }
+  REGIONS.forEach(r => (r.ghost ? rcGhosts : rcActive).appendChild(makeFlagBtn(r)));
+  regionEl.appendChild(rcActive);
+  if (rcGhosts.children.length) {
+    const toggle = document.createElement('button');
+    toggle.type = 'button'; toggle.className = 'rc-toggle';
+    toggle.setAttribute('aria-label', 'Show other countries');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '<span class="rc-arrow">›</span>';
+    toggle.addEventListener('click', () => {
+      const open = regionEl.classList.toggle('ghosts-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    regionEl.appendChild(toggle);
+    regionEl.appendChild(rcGhosts);
+  }
 
   function selectRegion(r, btn) {
     regionEl.querySelectorAll('button').forEach(b => b.classList.remove('is-active'));
@@ -429,7 +447,8 @@
         (poi.blurb ? '<p class="p-blurb">' + esc(poi.blurb) + '</p>' : '') +
         rows + nest +
       '</div>' +
-      flags + food;
+      flags + food +
+      '<button class="p-dup" type="button" title="Remove this pin">&#9873; Flag as duplicate</button>';
 
     // tap-to-copy coordinates
     const cEl = panelBody.querySelector('.p-coords');
@@ -449,6 +468,10 @@
       if (t) { map.setView([t.poi.lat, t.poi.lng], Math.max(map.getZoom(), 14), { animate: true }); openPanel(t.poi); }
     }));
 
+    // flag-as-duplicate → remove this pin (no review; uses the saved access key)
+    const dupBtn = panelBody.querySelector('.p-dup');
+    if (dupBtn) dupBtn.addEventListener('click', () => deletePin(poi));
+
     panel.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
     backdrop.hidden = false;
@@ -463,6 +486,33 @@
     panel.setAttribute('aria-hidden', 'true');
     backdrop.classList.remove('is-open');
     setTimeout(() => { backdrop.hidden = true; }, 320);
+  }
+
+  function getStoredKey() { try { return localStorage.getItem('wp_addkey') || ''; } catch (e) { return ''; } }
+  function saveStoredKey(k) { try { if (k) localStorage.setItem('wp_addkey', k); } catch (e) {} }
+  let _toastEl;
+  function toast(msg, isErr) {
+    if (!_toastEl) { _toastEl = document.createElement('div'); _toastEl.className = 'aw-toast'; document.body.appendChild(_toastEl); }
+    _toastEl.textContent = msg; _toastEl.classList.toggle('is-error', !!isErr); _toastEl.classList.add('show');
+    clearTimeout(_toastEl._t); _toastEl._t = setTimeout(() => _toastEl.classList.remove('show'), isErr ? 5000 : 3000);
+  }
+  async function deletePin(poi) {
+    let key = getStoredKey();
+    if (!key) { key = (window.prompt('Access key to remove this pin:') || '').trim(); if (key) saveStoredKey(key); }
+    if (!key) return;
+    toast('Removing…');
+    try {
+      const res = await fetch('/api/draft', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', password: key, id: poi.id })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      const idx = ENTRIES.findIndex(e => e.poi.id === poi.id);
+      if (idx !== -1) { cluster.removeLayer(ENTRIES[idx].marker); ENTRIES.splice(idx, 1); }
+      closePanel();
+      toast('Removed “' + poi.name + '”');
+    } catch (err) { toast('Remove failed: ' + (err.message || err), true); }
   }
 
   // Expose a hook so the add-flow (add.js) can drop a newly-created pin live,

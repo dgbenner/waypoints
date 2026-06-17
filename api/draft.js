@@ -69,6 +69,9 @@ module.exports = async (req, res) => {
   if (secret && body.password !== secret) return res.status(401).json({ error: 'Bad access key' });
 
   try {
+    if (body.action === 'delete') {
+      return res.status(200).json(await del(body));
+    }
     if (body.action === 'commit') {
       return res.status(200).json(await commit(body));
     }
@@ -216,6 +219,34 @@ async function commit(body) {
   });
   if (!put.ok) throw new Error('Commit failed (' + put.status + '): ' + (await put.text()).slice(0, 200));
   return { ok: true, record };
+}
+
+/* ------------------------------------ delete ------------------------------- */
+async function del(body) {
+  const id = body.id;
+  if (!id) throw new Error('No id to delete');
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) throw new Error('GITHUB_TOKEN not set');
+  const repo = process.env.GITHUB_REPO || 'dgbenner/waypoints';
+  const branch = process.env.GITHUB_BRANCH || 'main';
+  const base = 'https://api.github.com/repos/' + repo + '/contents/';
+  const gh = (path, opts = {}) => fetch(base + path, Object.assign({}, opts, {
+    headers: Object.assign({ Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'Waypoints' }, opts.headers || {})
+  }));
+  const curRes = await gh('data.json?ref=' + branch);
+  if (!curRes.ok) throw new Error('Could not read data.json (' + curRes.status + ')');
+  const cur = await curRes.json();
+  const data = JSON.parse(Buffer.from(cur.content, 'base64').toString('utf8'));
+  const idx = data.findIndex(r => r.id === id);
+  if (idx === -1) throw new Error('Pin not found: ' + id);
+  const removed = data.splice(idx, 1)[0];
+  const newContent = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
+  const put = await gh('data.json', {
+    method: 'PUT',
+    body: JSON.stringify({ message: 'Remove duplicate: ' + (removed.name || id), content: newContent, sha: cur.sha, branch })
+  });
+  if (!put.ok) throw new Error('Delete failed (' + put.status + '): ' + (await put.text()).slice(0, 200));
+  return { ok: true, id };
 }
 
 /* ------------------------------------ helpers ------------------------------ */
