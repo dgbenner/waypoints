@@ -116,12 +116,13 @@ html, body {
 
 /* ------------------------- Flag strip (region filter) -------------------- */
 .region-control {
-  display: flex; gap: 0; flex: 0 1 auto; flex-wrap: nowrap; align-items: stretch;
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 601;
+  display: flex; gap: 0; flex-wrap: nowrap; align-items: stretch;
   background: var(--cream); border: 1px solid rgba(58,50,38,0.30);
   border-radius: var(--radius);
   box-shadow: 0 0 10px 2px rgba(245,245,245,0.85), var(--shadow-soft);
   overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
-  max-width: 100%;
+  max-width: calc(100vw - 32px);
 }
 .region-control::-webkit-scrollbar { display: none; }
 .rc-active, .rc-ghosts { display: flex; }
