@@ -97,9 +97,10 @@ html, body {
 .masthead { pointer-events: none; flex: 0 0 auto; position: relative; }
 /* soft light-gray scrim behind the title/tagline so they stay legible over the map */
 .masthead::before {
-  content: ''; position: absolute; left: -16px; top: -12px;
-  width: 210px; height: 84px; z-index: -1; pointer-events: none;
-  background: radial-gradient(130px 60px at 30px 30px, rgba(245,245,245,0.92), rgba(245,245,245,0) 72%);
+  content: ''; position: absolute; left: -20px; top: -16px;
+  width: 340px; height: 128px; z-index: -1; pointer-events: none;
+  background: radial-gradient(210px 96px at 120px 52px,
+    rgba(245,245,245,0.46) 0%, rgba(245,245,245,0.30) 45%, rgba(245,245,245,0) 78%);
 }
 .masthead h1 {
   margin: 0; font-weight: 500; font-size: 30px; line-height: 1; letter-spacing: 0.02em;
@@ -366,7 +367,7 @@ html, body {
 /* --------------------- Add-waypoint button (corner brackets) ------------- */
 .add-waypoint {
   width: 132px; height: 132px; position: relative;
-  background: rgba(255, 255, 255, 0.2); border: none; cursor: pointer;
+  background: rgba(255, 255, 255, 0.4); border: none; cursor: pointer;
   color: var(--ink-soft); transition: color 0.15s, background 0.15s;
   border-radius: 6px;
 }
