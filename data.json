@@ -5628,5 +5628,33 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "rovinj-old-town",
+    "name": "Rovinj Old Town",
+    "macroRegion": "eu",
+    "region": "Istria",
+    "subregion": "Adriatic Coast",
+    "country": "Croatia",
+    "lat": 45.0811,
+    "lng": 13.6387,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "coast",
+      "cathedral",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Picturesque Adriatic peninsula town crowned by the baroque Church of St. Euphemia and its towering campanile.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "rovinj-old-town.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
