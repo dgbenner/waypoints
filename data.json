@@ -5601,5 +5601,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "salford-lads-club-2",
+    "name": "Salford Lads' Club",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Greater Manchester",
+    "country": "United Kingdom",
+    "lat": 53.4767766,
+    "lng": -2.2743137,
+    "approx": false,
+    "category": "personal",
+    "themes": [
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Historic 1903 youth club where The Smiths posed for the inner sleeve of 'The Queen Is Dead', now a music pilgrimage site.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "salford-lads-club-2.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
