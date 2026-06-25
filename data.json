@@ -5656,5 +5656,31 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "corpus-museum",
+    "name": "Corpus Museum",
+    "macroRegion": "eu",
+    "region": "South Holland",
+    "subregion": "Oegstgeest",
+    "country": "Netherlands",
+    "lat": 52.1704872,
+    "lng": 4.453483,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Interactive science museum offering a journey through the human body inside a giant human-shaped building.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "corpus-museum.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
