@@ -5682,5 +5682,31 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "grundtvig-s-church",
+    "name": "Grundtvig's Church",
+    "macroRegion": "eu",
+    "region": "Copenhagen",
+    "subregion": "Bispebjerg",
+    "country": "Denmark",
+    "lat": 55.7205,
+    "lng": 12.5335,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "cathedral"
+    ],
+    "prominence": "signature",
+    "blurb": "Expressionist yellow-brick church completed in 1940, blending Gothic form with modernist design.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "grundtvig-s-church.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
