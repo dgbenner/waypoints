@@ -151,6 +151,12 @@ async function draft(body) {
   return { record, suggestedImageUrl };
 }
 
+// Per-user data file: data.json for Dan (default), data-<user>.json otherwise.
+function dataFileName() {
+  const user = String(process.env.WAYPOINTS_USER || '').trim().toLowerCase();
+  return (!user || user === 'dan') ? 'data.json' : 'data-' + user.replace(/[^a-z0-9-]/g, '') + '.json';
+}
+
 /* ------------------------------------ commit ------------------------------- */
 async function commit(body) {
   const record = body.record;
@@ -164,9 +170,10 @@ async function commit(body) {
     headers: Object.assign({ Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'Waypoints' }, opts.headers || {})
   }));
 
-  // Load current data.json
-  const curRes = await gh('data.json?ref=' + branch);
-  if (!curRes.ok) throw new Error('Could not read data.json (' + curRes.status + ')');
+  // Load the current (per-user) data file
+  const dataFile = dataFileName();
+  const curRes = await gh(dataFile + '?ref=' + branch);
+  if (!curRes.ok) throw new Error('Could not read ' + dataFile + ' (' + curRes.status + ')');
   const cur = await curRes.json();
   const data = JSON.parse(Buffer.from(cur.content, 'base64').toString('utf8'));
 
@@ -219,7 +226,7 @@ async function commit(body) {
 
   data.push(record);
   const newContent = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
-  const put = await gh('data.json', {
+  const put = await gh(dataFile, {
     method: 'PUT',
     body: JSON.stringify({ message: 'Add waypoint: ' + record.name, content: newContent, sha: cur.sha, branch })
   });
@@ -239,15 +246,16 @@ async function del(body) {
   const gh = (path, opts = {}) => fetch(base + path, Object.assign({}, opts, {
     headers: Object.assign({ Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'Waypoints' }, opts.headers || {})
   }));
-  const curRes = await gh('data.json?ref=' + branch);
-  if (!curRes.ok) throw new Error('Could not read data.json (' + curRes.status + ')');
+  const dataFile = dataFileName();
+  const curRes = await gh(dataFile + '?ref=' + branch);
+  if (!curRes.ok) throw new Error('Could not read ' + dataFile + ' (' + curRes.status + ')');
   const cur = await curRes.json();
   const data = JSON.parse(Buffer.from(cur.content, 'base64').toString('utf8'));
   const idx = data.findIndex(r => r.id === id);
   if (idx === -1) throw new Error('Pin not found: ' + id);
   const removed = data.splice(idx, 1)[0];
   const newContent = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
-  const put = await gh('data.json', {
+  const put = await gh(dataFile, {
     method: 'PUT',
     body: JSON.stringify({ message: 'Remove duplicate: ' + (removed.name || id), content: newContent, sha: cur.sha, branch })
   });
