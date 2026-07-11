@@ -5708,5 +5708,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "saint-cirq-lapopie",
+    "name": "Saint-Cirq-Lapopie",
+    "macroRegion": "eu",
+    "region": "Occitanie",
+    "subregion": "Lot",
+    "country": "France",
+    "lat": 44.4647712,
+    "lng": 1.6687454,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "castle"
+    ],
+    "prominence": "signature",
+    "blurb": "Clifftop medieval village above the Lot River, ranked among the most beautiful villages in France.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "saint-cirq-lapopie.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
