@@ -152,7 +152,15 @@
     }
     return { id: 'ghost-' + c.toLowerCase().replace(/[^a-z]+/g, '-'), flag: meta && meta.flag, label: c, bounds, ghost: true, match: p => p.country === c };
   });
-  const REGIONS = ACTIVE_FLAGS.concat(GHOST_FLAGS);
+  // "All" — shows every pin, framed to the whole collection. Lives at the end
+  // of the accordion, after a divider.
+  const allBounds = (() => {
+    const la = DATA.map(p => p.lat), ln = DATA.map(p => p.lng), pad = 0.8;
+    return la.length ? [[Math.min(...la) - pad, Math.min(...ln) - pad], [Math.max(...la) + pad, Math.max(...ln) + pad]]
+                     : [[36, -11], [59, 19]];
+  })();
+  const ALL_FLAG = { id: 'all', label: 'All', all: true, bounds: allBounds, match: () => true };
+  const REGIONS = ACTIVE_FLAGS.concat(GHOST_FLAGS, [ALL_FLAG]);
 
   /* ----------------------------------------------------------------------- *
    * MAP
@@ -254,18 +262,30 @@
   function makeFlagBtn(r) {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.innerHTML = r.flag
-      ? '<img src="images/' + r.flag + '" alt="' + r.label + '">'
-      : '<span class="rc-mono">' + r.label.slice(0, 2).toUpperCase() + '</span>';
+    btn.innerHTML = r.all
+      ? '<span class="rc-all">All</span>'
+      : r.flag
+        ? '<img src="images/' + r.flag + '" alt="' + r.label + '">'
+        : '<span class="rc-mono">' + r.label.slice(0, 2).toUpperCase() + '</span>';
     btn.dataset.id = r.id;
-    btn.title = r.label + (r.ghost ? ' (not a target area yet)' : '');
-    btn.setAttribute('aria-label', r.label);
+    btn.title = r.all ? 'All pins' : r.label + (r.ghost ? ' (not a target area yet)' : '');
+    btn.setAttribute('aria-label', r.all ? 'All pins' : r.label);
     if (r.ghost) btn.classList.add('is-ghost');
     if (r.id === 'uk') btn.classList.add('is-active');
     btn.addEventListener('click', () => selectRegion(r, btn));
     return btn;
   }
-  REGIONS.forEach(r => (r.ghost ? rcGhosts : rcActive).appendChild(makeFlagBtn(r)));
+  REGIONS.forEach(r => {
+    if (r.all) {
+      if (rcGhosts.children.length) {
+        const div = document.createElement('span'); div.className = 'rc-divider';
+        rcGhosts.appendChild(div);
+      }
+      rcGhosts.appendChild(makeFlagBtn(r));
+    } else {
+      (r.ghost ? rcGhosts : rcActive).appendChild(makeFlagBtn(r));
+    }
+  });
   regionEl.appendChild(rcActive);
   if (rcGhosts.children.length) {
     const toggle = document.createElement('button');
