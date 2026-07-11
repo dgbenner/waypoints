@@ -5762,5 +5762,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "umlauftank-2-circulating-tank",
+    "name": "Umlauftank 2 (Circulating Tank)",
+    "macroRegion": "eu",
+    "region": "Berlin",
+    "subregion": "Tiergarten",
+    "country": "Germany",
+    "lat": 52.5087,
+    "lng": 13.3277,
+    "approx": true,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Ludwig Leo's iconic 1974 experimental water research facility with a blue cube and giant pink circulating pipe on the Landwehr Canal.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "umlauftank-2-circulating-tank.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
