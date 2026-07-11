@@ -65,6 +65,12 @@ module.exports = async (req, res) => {
   let body;
   try { body = await readBody(req); } catch (e) { return res.status(400).json({ error: 'Bad JSON' }); }
 
+  // Feedback is open (no access key) so any visitor can submit.
+  if (body.action === 'feedback') {
+    try { return res.status(200).json(await feedback(body)); }
+    catch (e) { return res.status(500).json({ error: String((e && e.message) || e) }); }
+  }
+
   const secret = process.env.WAYPOINTS_ADD_SECRET;
   if (secret && body.password !== secret) return res.status(401).json({ error: 'Bad access key' });
 
@@ -247,6 +253,31 @@ async function del(body) {
   });
   if (!put.ok) throw new Error('Delete failed (' + put.status + '): ' + (await put.text()).slice(0, 200));
   return { ok: true, id };
+}
+
+/* ----------------------------------- feedback ------------------------------ */
+async function feedback(body) {
+  const cats = Array.isArray(body.categories)
+    ? body.categories.filter(c => typeof c === 'string').slice(0, 8) : [];
+  const message = String(body.message || '').slice(0, 500).trim();
+  if (!cats.length && !message) throw new Error('Empty feedback');
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) throw new Error('GITHUB_TOKEN not set');
+  const repo = process.env.GITHUB_REPO || 'dgbenner/waypoints';
+  const branch = process.env.GITHUB_BRANCH || 'main';
+  const base = 'https://api.github.com/repos/' + repo + '/contents/';
+  const gh = (path, opts = {}) => fetch(base + path, Object.assign({}, opts, {
+    headers: Object.assign({ Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'Waypoints' }, opts.headers || {})
+  }));
+  const entry = JSON.stringify({ at: new Date().toISOString(), categories: cats, message }) + '\n';
+  let existing = '', sha;
+  const cur = await gh('feedback.jsonl?ref=' + branch);
+  if (cur.ok) { const j = await cur.json(); sha = j.sha; existing = Buffer.from(j.content, 'base64').toString('utf8'); }
+  const putBody = { message: 'Feedback', content: Buffer.from(existing + entry).toString('base64'), branch };
+  if (sha) putBody.sha = sha;
+  const put = await gh('feedback.jsonl', { method: 'PUT', body: JSON.stringify(putBody) });
+  if (!put.ok) throw new Error('Feedback save failed (' + put.status + ')');
+  return { ok: true };
 }
 
 /* ------------------------------------ helpers ------------------------------ */

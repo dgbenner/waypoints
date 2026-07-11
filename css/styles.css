@@ -472,6 +472,34 @@ html, body {
 .aw-pv-blurb { font-size: 14px; line-height: 1.5; margin: 0 0 10px; }
 .aw-pv-coords { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
 
+/* ------------------------------ Feedback --------------------------------- */
+.fb-tab {
+  position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 900;
+  writing-mode: vertical-rl; appearance: none; border: none; cursor: pointer;
+  background: var(--ink); color: var(--cream);
+  font-family: var(--serif); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 15px 7px; border-radius: 6px 0 0 6px; box-shadow: var(--shadow-soft);
+  transition: background 0.15s;
+}
+.fb-tab:hover { background: #2c261d; }
+.fb-backdrop { position: fixed; inset: 0; z-index: 1100; background: rgba(58,50,38,0.34); }
+.fb-modal {
+  position: fixed; z-index: 1101; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 440px; max-width: 92vw; max-height: 88vh; overflow-y: auto;
+  background: var(--cream); color: var(--ink);
+  border: 1px solid rgba(58,50,38,0.3); border-radius: 8px;
+  box-shadow: var(--shadow-lift); padding: 24px 24px 22px;
+  outline: 1px solid rgba(58,50,38,0.16); outline-offset: 4px;
+}
+.fb-cats { display: flex; flex-direction: column; gap: 9px; margin: 4px 0 14px; }
+.fb-cat { display: flex; align-items: center; gap: 9px; font-size: 14px; color: var(--ink); cursor: pointer; }
+.fb-cat input { width: 15px; height: 15px; accent-color: var(--c-personal); cursor: pointer; flex: 0 0 auto; }
+.fb-count { text-align: right; font-size: 11px; color: var(--ink-soft); margin: 4px 0 0; }
+
+@media (max-width: 640px) {
+  .fb-tab { font-size: 11px; padding: 12px 6px; }
+}
+
 /* Tablet & down: drop the title/tagline; the flag strip stands alone top-left */
 @media (max-width: 1024px) {
   .masthead { display: none; }
