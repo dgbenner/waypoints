@@ -5735,5 +5735,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "jai-vilas-palace",
+    "name": "Jai Vilas Palace",
+    "macroRegion": "eu",
+    "region": "Asia",
+    "subregion": "South Asia",
+    "country": "India",
+    "lat": 26.2033,
+    "lng": 78.1591,
+    "approx": true,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "art"
+    ],
+    "prominence": "signature",
+    "blurb": "19th-century Scindia royal palace in Gwalior, famed for its opulent Durbar Hall with giant crystal chandeliers and European decor.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "jai-vilas-palace.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
