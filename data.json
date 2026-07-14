@@ -5789,5 +5789,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "king-s-college-chapel",
+    "name": "King's College Chapel",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Cambridge",
+    "country": "United Kingdom",
+    "lat": 52.2047796,
+    "lng": 0.116544,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "cathedral",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Iconic 16th-century chapel with the world's largest fan-vaulted ceiling and Rubens' Adoration of the Magi.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "king-s-college-chapel.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
