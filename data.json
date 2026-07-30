@@ -5816,5 +5816,31 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "kew-gardens",
+    "name": "Kew Gardens",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "London",
+    "country": "United Kingdom",
+    "lat": 51.4781974,
+    "lng": -0.2968861,
+    "approx": false,
+    "category": "nature",
+    "themes": [
+      "mountain"
+    ],
+    "prominence": "signature",
+    "blurb": "Royal Botanic Gardens at Kew, a UNESCO World Heritage site with historic glasshouses and vast plant collections.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "https://www.kew.org/",
+    "link": "https://www.kew.org/",
+    "images": [
+      "kew-gardens.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
