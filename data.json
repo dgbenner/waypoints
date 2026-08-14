@@ -5842,5 +5842,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "wangen-tower-urbach-turm",
+    "name": "Wangen Tower (Urbach Turm)",
+    "macroRegion": "eu",
+    "region": "Baden-Württemberg",
+    "subregion": "Remstal",
+    "country": "Germany",
+    "lat": 48.8283,
+    "lng": 9.5847,
+    "approx": true,
+    "category": "modern",
+    "themes": [
+      "monument",
+      "industrial"
+    ],
+    "prominence": "signature",
+    "blurb": "Twisting 14-metre tower of self-shaped curved timber built for the 2019 Remstal Garden Show near Urbach.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "wangen-tower-urbach-turm.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
