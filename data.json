@@ -5869,5 +5869,31 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "clermont-ferrand-cathedral",
+    "name": "Clermont-Ferrand Cathedral",
+    "macroRegion": "eu",
+    "region": "Auvergne-Rhône-Alpes",
+    "subregion": "Puy-de-Dôme",
+    "country": "France",
+    "lat": 45.7789,
+    "lng": 3.0836,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "cathedral"
+    ],
+    "prominence": "signature",
+    "blurb": "Gothic cathedral built from black volcanic lava stone, dominating the skyline of Clermont-Ferrand.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "clermont-ferrand-cathedral.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
