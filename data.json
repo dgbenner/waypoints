@@ -5895,5 +5895,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "the-gates-of-hell-la-porte-de-l-enfer",
+    "name": "The Gates of Hell (La Porte de l'Enfer)",
+    "macroRegion": "eu",
+    "region": "Île-de-France",
+    "subregion": "Paris",
+    "country": "France",
+    "lat": 48.8553,
+    "lng": 2.3158,
+    "approx": true,
+    "category": "personal",
+    "themes": [
+      "art",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Rodin's monumental bronze doors depicting scenes from Dante's Inferno, cast for and displayed at the Musée Rodin.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "the-gates-of-hell-la-porte-de-l-enfer.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
