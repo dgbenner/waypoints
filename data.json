@@ -5922,5 +5922,32 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "eltz-castle",
+    "name": "Eltz Castle",
+    "macroRegion": "eu",
+    "region": "Rhineland-Palatinate",
+    "subregion": "Wierschem, Moselle",
+    "country": "Germany",
+    "lat": 50.2058,
+    "lng": 7.3667,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Medieval hilltop castle nestled in forested hills above the Elzbach, owned by the same family for over 850 years.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "eltz-castle.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
