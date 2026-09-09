@@ -580,11 +580,82 @@
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
       const idx = ENTRIES.findIndex(e => e.poi.id === poi.id);
-      if (idx !== -1) { cluster.removeLayer(ENTRIES[idx].marker); ENTRIES.splice(idx, 1); }
+      if (idx !== -1) { cluster.removeLayer(ENTRIES[idx].marker); ENTRIES.splice(idx, 1); renderRecents(); }
       closePanel();
       toast('Removed “' + poi.name + '”');
     } catch (err) { toast('Remove failed: ' + (err.message || err), true); }
   }
+
+  /* ----------------------------------------------------------------------- *
+   * RECENTLY ADDED  (five newest pins, above the key)
+   * ----------------------------------------------------------------------- */
+  const recentsEl = document.getElementById('recents');
+
+  // Relative age: days up to a month, then months, then years.
+  function ago(iso) {
+    if (!iso) return '—';
+    const then = new Date(iso + 'T00:00:00').getTime();
+    if (!isFinite(then)) return '—';
+    const days = Math.floor((Date.now() - then) / 86400000);
+    if (days < 0) return '—';
+    if (days === 0) return 'today';
+    if (days <= 30) return days + 'd';
+    const months = Math.round(days / 30.44);
+    if (months < 12) return Math.max(1, months) + 'm';
+    return Math.max(1, Math.round(days / 365.25)) + 'y';
+  }
+
+  // Newest five: dated pins first (newest first), then fall back to file order
+  // so the panel still fills before every pin carries an addedAt.
+  function newestFive() {
+    const dated = ENTRIES.filter(e => e.poi.addedAt)
+      .sort((a, b) => (a.poi.addedAt < b.poi.addedAt ? 1 : a.poi.addedAt > b.poi.addedAt ? -1 : 0));
+    const picked = dated.slice(0, 5);
+    if (picked.length < 5) {
+      const have = new Set(picked.map(e => e.poi.id));
+      for (let i = ENTRIES.length - 1; i >= 0 && picked.length < 5; i--) {
+        if (!have.has(ENTRIES[i].poi.id)) { picked.push(ENTRIES[i]); have.add(ENTRIES[i].poi.id); }
+      }
+    }
+    return picked;
+  }
+
+  function goToPin(poi) {
+    // The pin may sit outside the active region — switch first, or it stays hidden.
+    const region = REGIONS.find(r => r.match(poi));
+    if (region && region !== activeRegion) {
+      activeRegion = region;
+      regionEl.querySelectorAll('button').forEach(b => b.classList.toggle('is-active', b.dataset.id === region.id));
+      applyFilters();
+    }
+    map.setView([poi.lat, poi.lng], Math.max(map.getZoom(), 11), { animate: true });
+    openPanel(poi);
+  }
+
+  function renderRecents() {
+    const picked = newestFive();
+    if (!picked.length) { recentsEl.hidden = true; return; }
+    recentsEl.hidden = false;
+    recentsEl.innerHTML = '<h2 class="legend__title">Recently added</h2>';
+    picked.forEach(e => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'recents__item';
+      btn.title = e.poi.name;
+      const name = document.createElement('span');
+      name.className = 'recents__name';
+      name.textContent = e.poi.name;
+      const age = document.createElement('span');
+      age.className = 'recents__age';
+      age.textContent = ago(e.poi.addedAt);
+      btn.appendChild(name);
+      btn.appendChild(age);
+      btn.addEventListener('click', () => goToPin(e.poi));
+      recentsEl.appendChild(btn);
+    });
+  }
+
+  renderRecents();
 
   // Expose a hook so the add-flow (add.js) can drop a newly-created pin live,
   // without waiting for the data.json redeploy.
@@ -606,6 +677,7 @@
         m.on('click', () => openPanel(rec));
         ENTRIES.push({ poi: rec, marker: m });
         applyFilters();                        // rebuild cluster incl. the new pin
+        renderRecents();                       // the new pin heads the recents list
         map.setView([rec.lat, rec.lng], Math.max(map.getZoom(), 11), { animate: true });
         openPanel(rec);
       } catch (e) { console.error('addLive failed', e); }

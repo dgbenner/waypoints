@@ -5681,7 +5681,8 @@
       "corpus-museum.jpg"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-06-25"
   },
   {
     "id": "grundtvig-s-church",
@@ -5707,7 +5708,8 @@
       "grundtvig-s-church.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-07-09"
   },
   {
     "id": "saint-cirq-lapopie",
@@ -5734,7 +5736,8 @@
       "saint-cirq-lapopie.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-07-10"
   },
   {
     "id": "jai-vilas-palace",
@@ -5761,7 +5764,8 @@
       "jai-vilas-palace.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-07-10"
   },
   {
     "id": "umlauftank-2-circulating-tank",
@@ -5788,7 +5792,8 @@
       "umlauftank-2-circulating-tank.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-07-11"
   },
   {
     "id": "king-s-college-chapel",
@@ -5815,7 +5820,8 @@
       "king-s-college-chapel.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-07-14"
   },
   {
     "id": "kew-gardens",
@@ -5841,7 +5847,8 @@
       "kew-gardens.jpg"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-07-30"
   },
   {
     "id": "wangen-tower-urbach-turm",
@@ -5868,7 +5875,8 @@
       "wangen-tower-urbach-turm.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-08-14"
   },
   {
     "id": "clermont-ferrand-cathedral",
@@ -5894,7 +5902,8 @@
       "clermont-ferrand-cathedral.jpg"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-08-17"
   },
   {
     "id": "the-gates-of-hell-la-porte-de-l-enfer",
@@ -5921,7 +5930,8 @@
       "the-gates-of-hell-la-porte-de-l-enfer.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-08-29"
   },
   {
     "id": "eltz-castle",
@@ -5948,7 +5958,8 @@
       "eltz-castle.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-09-03"
   },
   {
     "id": "the-shambles",
@@ -5974,6 +5985,7 @@
       "the-shambles.webp"
     ],
     "source": "screenshot",
-    "status": "want-to-see"
+    "status": "want-to-see",
+    "addedAt": "2026-09-09"
   }
 ]

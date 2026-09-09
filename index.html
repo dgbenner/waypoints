@@ -37,9 +37,12 @@
     <nav class="region-control" id="region-control" aria-label="Region flags"></nav>
   </div>
 
-  <!-- Bottom-left: legend (KEY) + ever-present Add Waypoint button -->
+  <!-- Bottom-left: recents + legend (KEY) stacked, then the Add Waypoint button -->
   <div class="lower-left">
-    <aside class="legend" id="legend" aria-label="Key and filters"></aside>
+    <div class="lower-left__stack">
+      <aside class="legend recents" id="recents" aria-label="Recently added" hidden></aside>
+      <aside class="legend" id="legend" aria-label="Key and filters"></aside>
+    </div>
     <button class="add-waypoint" id="add-waypoint" type="button"
             aria-label="Add new waypoint" title="Add new waypoint">
       <span class="aw-lbl aw-lbl--top">Add</span>

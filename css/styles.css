@@ -187,6 +187,26 @@ html, body {
   padding: 9px 11px 11px;
   outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
 }
+.lower-left__stack { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+/* Recently added — same case as the key, a quarter of its height */
+.recents { max-height: none; overflow: visible; }
+.recents__item {
+  display: flex; align-items: baseline; gap: 6px; width: 100%;
+  appearance: none; border: none; background: transparent;
+  font-family: var(--serif); font-size: 11px; color: var(--ink);
+  padding: 2px; cursor: pointer; text-align: left;
+  border-radius: 3px; transition: background 0.12s;
+}
+.recents__item:hover { background: var(--paper-deep); }
+.recents__name {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.recents__age {
+  flex: 0 0 auto; font-size: 9px; letter-spacing: 0.08em;
+  color: var(--ink-soft); opacity: 0.55;
+}
 .legend__title {
   font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
   color: var(--ink); margin: 0 0 7px; text-align: center;

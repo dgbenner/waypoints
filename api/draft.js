@@ -183,6 +183,9 @@ async function commit(body) {
   while (ids.has(id)) id = (record.id || slug(record.name)) + '-' + (n++);
   record.id = id;
 
+  // Date stamp — drives the "recently added" panel's relative dates
+  record.addedAt = new Date().toISOString().slice(0, 10);
+
   // Image: uploaded base64, or fetch a suggested URL (link og:image)
   let imageBase64 = body.imageBase64 || '';
   let ext = (body.imageName && body.imageName.split('.').pop() || '').toLowerCase();
