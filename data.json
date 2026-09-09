@@ -5987,5 +5987,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-09"
+  },
+  {
+    "id": "portofino",
+    "name": "Portofino",
+    "macroRegion": "eu",
+    "region": "Liguria",
+    "subregion": "Metropolitan City of Genoa",
+    "country": "Italy",
+    "lat": 44.3033,
+    "lng": 9.2097,
+    "approx": false,
+    "category": "nature",
+    "themes": [
+      "coast",
+      "food"
+    ],
+    "prominence": "signature",
+    "blurb": "Picturesque Italian Riviera fishing village with a colourful harbour and luxury yachts nestled in a wooded bay.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "portofino.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-09-09"
   }
 ]
