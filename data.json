@@ -5949,5 +5949,31 @@
     ],
     "source": "screenshot",
     "status": "want-to-see"
+  },
+  {
+    "id": "the-shambles",
+    "name": "The Shambles",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "York, North Yorkshire",
+    "country": "United Kingdom",
+    "lat": 54.1357335,
+    "lng": -0.7995485,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Medieval cobbled street in York with overhanging timber-framed buildings, once home to butchers' shops.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "the-shambles.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see"
   }
 ]
