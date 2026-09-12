@@ -6015,5 +6015,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-09"
+  },
+  {
+    "id": "bmw-museum-bmw-welt",
+    "name": "BMW Museum & BMW Welt",
+    "macroRegion": "eu",
+    "region": "Bavaria",
+    "subregion": "Munich",
+    "country": "Germany",
+    "lat": 48.1772,
+    "lng": 11.5591,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Iconic BMW headquarters tower, museum and futuristic BMW Welt showroom near Munich's Olympic Park.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "bmw-museum-bmw-welt.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-09-12"
   }
 ]
