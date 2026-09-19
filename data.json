@@ -6043,5 +6043,32 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-12"
+  },
+  {
+    "id": "two-towers-of-bologna-asinelli-and-garisenda",
+    "name": "Two Towers of Bologna (Asinelli and Garisenda)",
+    "macroRegion": "eu",
+    "region": "Emilia-Romagna",
+    "subregion": "Bologna",
+    "country": "Italy",
+    "lat": 44.4941,
+    "lng": 11.3465,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Bologna's iconic medieval leaning towers; the taller Asinelli reaches 97m, with the shorter Garisenda beside it.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "two-towers-of-bologna-asinelli-and-garisenda.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-09-19"
   }
 ]
