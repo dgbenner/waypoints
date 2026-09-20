@@ -6070,5 +6070,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-19"
+  },
+  {
+    "id": "diga-della-verzasca",
+    "name": "Diga della Verzasca",
+    "macroRegion": "eu",
+    "region": "Ticino",
+    "subregion": "Verzasca Valley",
+    "country": "Switzerland",
+    "lat": 46.2586,
+    "lng": 8.8003,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "220m concrete arch dam famed for the GoldenEye bungee jump made iconic by James Bond.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "diga-della-verzasca.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-09-20"
   }
 ]
