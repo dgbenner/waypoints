@@ -6126,5 +6126,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-28"
+  },
+  {
+    "id": "museum-of-witchcraft-and-magic",
+    "name": "Museum of Witchcraft and Magic",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Cornwall",
+    "country": "United Kingdom",
+    "lat": 50.6905948,
+    "lng": -4.6949915,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "art"
+    ],
+    "prominence": "signature",
+    "blurb": "Boscastle museum with the world's largest collection of witchcraft and occult artefacts, founded by Cecil Williamson in 1951.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "museum-of-witchcraft-and-magic.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-09-28"
   }
 ]
