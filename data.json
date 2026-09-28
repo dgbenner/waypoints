@@ -6098,5 +6098,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-20"
+  },
+  {
+    "id": "iwm-duxford-sr-71-blackbird",
+    "name": "IWM Duxford - SR-71 Blackbird",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Cambridgeshire",
+    "country": "United Kingdom",
+    "lat": 52.0894,
+    "lng": 0.1319,
+    "approx": true,
+    "category": "heritage",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Lockheed SR-71 Blackbird reconnaissance jet with its Pratt & Whitney J58 engine displayed at IWM Duxford's American Air Museum.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "iwm-duxford-sr-71-blackbird.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-09-28"
   }
 ]
