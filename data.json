@@ -6154,5 +6154,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-28"
+  },
+  {
+    "id": "mariendom-neviges",
+    "name": "Mariendom Neviges",
+    "macroRegion": "eu",
+    "region": "North Rhine-Westphalia",
+    "subregion": "Velbert",
+    "country": "Germany",
+    "lat": 51.3127363,
+    "lng": 7.0874376,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "cathedral",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Brutalist pilgrimage church designed by Gottfried Böhm in 1968, one of Germany's largest church buildings after Cologne Cathedral.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "mariendom-neviges.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-09-28"
   }
 ]
