@@ -6237,5 +6237,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-05"
+  },
+  {
+    "id": "ziggy-stardust-plaque",
+    "name": "Ziggy Stardust Plaque",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "City of Westminster",
+    "country": "United Kingdom",
+    "lat": 51.5108635,
+    "lng": -0.1394041,
+    "approx": false,
+    "category": "personal",
+    "themes": [
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Plaque marking the Heddon Street spot where David Bowie's Ziggy Stardust album cover was photographed in 1972.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "ziggy-stardust-plaque.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-05"
   }
 ]
