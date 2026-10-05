@@ -6265,5 +6265,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-05"
+  },
+  {
+    "id": "beachy-head",
+    "name": "Beachy Head",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "East Sussex",
+    "country": "United Kingdom",
+    "lat": 50.738185,
+    "lng": 0.2494669,
+    "approx": false,
+    "category": "nature",
+    "themes": [
+      "coast",
+      "music"
+    ],
+    "prominence": "signature",
+    "blurb": "Dramatic chalk headland and cliffs near Eastbourne, the Sussex coast evoked in The Cure's Just Like Heaven.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "beachy-head.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-05"
   }
 ]
