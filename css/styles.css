@@ -60,6 +60,8 @@ html, body {
   border-bottom-color: rgba(58,50,38,0.15);
 }
 .leaflet-bar { border: 1px solid rgba(58,50,38,0.25); box-shadow: var(--shadow-soft); }
+/* zoom, compass and Area Scout share one vertical axis, 45px in from the right */
+.leaflet-top.leaflet-right .leaflet-control-zoom { margin-right: 28px; }
 .leaflet-control-attribution {
   background: rgba(251,246,233,0.78) !important;
   color: var(--ink-soft); font-size: 10px;
@@ -402,6 +404,7 @@ html, body {
   color: var(--ink-soft); transition: color 0.15s, background 0.15s;
   border-radius: 6px;
 }
+.add-waypoint { transform: scale(0.8); transform-origin: left bottom; }
 .add-waypoint:hover { color: var(--line); background: rgba(251, 246, 233, 0.35); }
 .add-waypoint.is-over { color: var(--line); background: rgba(185, 130, 79, 0.14); }
 
@@ -528,7 +531,7 @@ html, body {
   position: relative; flex: 0 0 auto; width: 56px; height: 56px; padding: 0;
   display: flex; align-items: center; justify-content: center;
   background: var(--cream); cursor: pointer;
-  border: 1px solid rgba(58,50,38,0.30); border-radius: var(--radius);
+  border: 1px solid rgba(58,50,38,0.30); border-radius: 50%;
   box-shadow: var(--shadow-soft);
   outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
   transition: background 0.15s;
@@ -536,10 +539,10 @@ html, body {
 .scout-btn:hover { background: var(--paper-deep); }
 .scout-btn:focus-visible { outline: 2px solid var(--line); }
 .scout-btn[disabled] { opacity: 0.45; cursor: default; }
-.scout-btn__icon { width: 70%; height: 70%; object-fit: contain; display: block; }
+.scout-btn__icon { width: 74%; height: 74%; object-fit: contain; display: block; }
 .scout-btn__glyph { font-size: 26px; line-height: 1; color: var(--ink-soft); }
 .scout-btn__stop {
-  display: none; position: absolute; left: 0; right: 0; bottom: 3px; text-align: center;
+  display: none; position: absolute; left: 0; right: 0; bottom: 7px; text-align: center;
   font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-personal);
 }
 .scout-btn.is-running .scout-btn__icon,
@@ -552,9 +555,10 @@ html, body {
 
 /* Area Scout: the same button on the map, under the zoom control and compass */
 .scout-map {
-  position: fixed; right: 17px; top: 174px; z-index: 600;
+  position: fixed; right: 15px; top: 172px; z-index: 600;
   display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
 }
+.scout-map .scout-btn { width: 60px; height: 60px; }
 .scout-map__status {
   max-width: 190px; text-align: right; font-size: 12px; font-style: italic; color: var(--ink);
   background: rgba(251,246,233,0.92); border: 1px solid rgba(58,50,38,0.2); border-radius: var(--radius);
@@ -739,8 +743,9 @@ html, body {
   .scout-card__img { height: 84px; }
   .scout-detail__img { height: 130px; }
   .scout-tray__totals { display: none; }
-  .scout-map { right: 12px; top: 124px; }
-  .scout-map .scout-btn { width: 48px; height: 48px; }
+  .leaflet-top.leaflet-right .leaflet-control-zoom { margin-right: 17px; }
+  .scout-map { right: 8px; top: 122px; }
+  .scout-map .scout-btn { width: 52px; height: 52px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .scout-tray { transition: none; }
@@ -754,7 +759,7 @@ html, body {
 
 /* ------------------------------ Mobile ----------------------------------- */
 @media (max-width: 640px) {
-  .add-waypoint { width: 96px; height: 96px; }
+  .add-waypoint { width: 96px; height: 96px; transform: none; }
   .add-waypoint .aw-lbl { font-size: 9px; letter-spacing: 0.12em; }
   .legend { width: 150px; font-size: 12px; }
   .compass { width: 44px; height: 44px; bottom: auto; top: 64px; right: 12px; }

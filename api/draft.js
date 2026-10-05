@@ -134,7 +134,10 @@ async function draft(body) {
   }
 
   const noAmp = t => String(t || '').replace(/\s*&\s*/g, ' and ');
-  d.name = noAmp(d.name); d.blurb = noAmp(d.blurb);
+  // Title Case keeps small joining words lowercase mid-name: "Studios and Zebra", not "Studios And Zebra"
+  const SMALL = /^(a|an|and|as|at|but|by|for|from|in|into|nor|of|on|or|the|to|with|de|du|des|la|le|les|del|della|di|da|van|von|der|den|et)$/i;
+  d.name = noAmp(d.name).split(' ').map((w, i, all) => (i > 0 && i < all.length - 1 && SMALL.test(w)) ? w.toLowerCase() : w).join(' ');
+  d.blurb = noAmp(d.blurb);
   const record = {
     id: slug(d.name),
     name: d.name,
