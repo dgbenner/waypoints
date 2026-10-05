@@ -6182,5 +6182,31 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-09-28"
+  },
+  {
+    "id": "abbey-road-studios-and-zebra-crossing",
+    "name": "Abbey Road Studios And Zebra Crossing",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "City of Westminster",
+    "country": "United Kingdom",
+    "lat": 51.531988,
+    "lng": -0.178226,
+    "approx": false,
+    "category": "personal",
+    "themes": [
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Famous zebra crossing from the Beatles' 1969 Abbey Road cover, outside the recording studios.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [],
+    "source": "manual",
+    "status": "want-to-see",
+    "addedAt": "2026-10-05"
   }
 ]
