@@ -15,6 +15,7 @@
  *   GITHUB_BRANCH        – optional, default 'main'
  * ========================================================================== */
 const Anthropic = require('@anthropic-ai/sdk');
+const { github, appendJsonl, readBody, findImage, geocode } = require('./_lib');
 
 const CATS = ['personal', 'heritage', 'modern', 'nature'];
 const THEMES = ['music', 'art', 'literary', 'chess', 'castle', 'cathedral',
@@ -121,10 +122,15 @@ async function draft(body) {
   const textOut = (msg.content.find(b => b.type === 'text') || {}).text || '{}';
   const d = JSON.parse(textOut);
 
-  // Prefer a real geocode over the model's estimate.
+  // Prefer a real geocode over the model's estimate. A Scout suggestion arrives
+  // already geocoded (fixedLat/fixedLng), so keep its point and skip this.
   let lat = d.lat, lng = d.lng, approx = d.approx !== false;
-  const geo = await geocode([d.name, d.subregion, d.region, d.country].filter(Boolean).join(', '));
-  if (geo) { lat = geo.lat; lng = geo.lng; approx = false; }
+  if (typeof body.fixedLat === 'number' && typeof body.fixedLng === 'number') {
+    lat = body.fixedLat; lng = body.fixedLng; approx = false;
+  } else {
+    const geo = await geocode([d.name, d.subregion, d.region, d.country].filter(Boolean).join(', '));
+    if (geo) { lat = geo.lat; lng = geo.lng; approx = false; }
+  }
 
   const record = {
     id: slug(d.name),
@@ -144,6 +150,7 @@ async function draft(body) {
 
   // No image yet (typed text, or a link with no preview image)? Auto-find one
   // from Wikipedia's lead photo for the place — big time-saver for text adds.
+  if (body.imageUrl) suggestedImageUrl = body.imageUrl; // Scout already found a photo
   if (body.kind !== 'image' && !suggestedImageUrl) {
     suggestedImageUrl = await findImage(record.name, record.region, record.country);
   }
@@ -151,27 +158,16 @@ async function draft(body) {
   return { record, suggestedImageUrl };
 }
 
-// Per-user data file: data.json for Dan (default), data-<user>.json otherwise.
-function dataFileName() {
-  const user = String(process.env.WAYPOINTS_USER || '').trim().toLowerCase();
-  return (!user || user === 'dan') ? 'data.json' : 'data-' + user.replace(/[^a-z0-9-]/g, '') + '.json';
-}
+const DATA_FILE = 'data.json';
 
 /* ------------------------------------ commit ------------------------------- */
 async function commit(body) {
   const record = body.record;
   if (!record || !record.name) throw new Error('No record to commit');
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) throw new Error('GITHUB_TOKEN not set');
-  const repo = process.env.GITHUB_REPO || 'dgbenner/waypoints';
-  const branch = process.env.GITHUB_BRANCH || 'main';
-  const base = 'https://api.github.com/repos/' + repo + '/contents/';
-  const gh = (path, opts = {}) => fetch(base + path, Object.assign({}, opts, {
-    headers: Object.assign({ Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'Waypoints' }, opts.headers || {})
-  }));
+  const { gh, branch } = github();
 
   // Load the current (per-user) data file
-  const dataFile = dataFileName();
+  const dataFile = DATA_FILE;
   const curRes = await gh(dataFile + '?ref=' + branch);
   if (!curRes.ok) throw new Error('Could not read ' + dataFile + ' (' + curRes.status + ')');
   const cur = await curRes.json();
@@ -241,15 +237,8 @@ async function commit(body) {
 async function del(body) {
   const id = body.id;
   if (!id) throw new Error('No id to delete');
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) throw new Error('GITHUB_TOKEN not set');
-  const repo = process.env.GITHUB_REPO || 'dgbenner/waypoints';
-  const branch = process.env.GITHUB_BRANCH || 'main';
-  const base = 'https://api.github.com/repos/' + repo + '/contents/';
-  const gh = (path, opts = {}) => fetch(base + path, Object.assign({}, opts, {
-    headers: Object.assign({ Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'Waypoints' }, opts.headers || {})
-  }));
-  const dataFile = dataFileName();
+  const { gh, branch } = github();
+  const dataFile = DATA_FILE;
   const curRes = await gh(dataFile + '?ref=' + branch);
   if (!curRes.ok) throw new Error('Could not read ' + dataFile + ' (' + curRes.status + ')');
   const cur = await curRes.json();
@@ -272,33 +261,11 @@ async function feedback(body) {
     ? body.categories.filter(c => typeof c === 'string').slice(0, 8) : [];
   const message = String(body.message || '').slice(0, 500).trim();
   if (!cats.length && !message) throw new Error('Empty feedback');
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) throw new Error('GITHUB_TOKEN not set');
-  const repo = process.env.GITHUB_REPO || 'dgbenner/waypoints';
-  const branch = process.env.GITHUB_BRANCH || 'main';
-  const base = 'https://api.github.com/repos/' + repo + '/contents/';
-  const gh = (path, opts = {}) => fetch(base + path, Object.assign({}, opts, {
-    headers: Object.assign({ Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'User-Agent': 'Waypoints' }, opts.headers || {})
-  }));
-  const entry = JSON.stringify({ at: new Date().toISOString(), categories: cats, message }) + '\n';
-  let existing = '', sha;
-  const cur = await gh('feedback.jsonl?ref=' + branch);
-  if (cur.ok) { const j = await cur.json(); sha = j.sha; existing = Buffer.from(j.content, 'base64').toString('utf8'); }
-  const putBody = { message: 'Feedback', content: Buffer.from(existing + entry).toString('base64'), branch };
-  if (sha) putBody.sha = sha;
-  const put = await gh('feedback.jsonl', { method: 'PUT', body: JSON.stringify(putBody) });
-  if (!put.ok) throw new Error('Feedback save failed (' + put.status + ')');
+  await appendJsonl('feedback.jsonl', { at: new Date().toISOString(), categories: cats, message }, 'Feedback');
   return { ok: true };
 }
 
 /* ------------------------------------ helpers ------------------------------ */
-async function readBody(req) {
-  if (req.body && typeof req.body === 'object') return req.body;
-  let raw = '';
-  for await (const chunk of req) raw += chunk;
-  return JSON.parse(raw || '{}');
-}
-
 async function fetchPage(url) {
   const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Waypoints)' } });
   const html = await r.text();
@@ -311,98 +278,6 @@ async function fetchPage(url) {
   const text = html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '')
     .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 2500);
   return { title, desc, ogImage, text };
-}
-
-// Wikipedia lead image for a place name (keyless). Returns a rendered raster
-// thumbnail URL, or '' if the page has none.
-async function wikiImage(query) {
-  if (!query) return '';
-  try {
-    const url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1' +
-      '&prop=pageimages&piprop=thumbnail&pithumbsize=640&titles=' + encodeURIComponent(query);
-    const r = await fetch(url, { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
-    const j = await r.json();
-    const pages = j && j.query && j.query.pages;
-    if (pages) for (const k in pages) {
-      const p = pages[k];
-      if (p && p.thumbnail && p.thumbnail.source) return p.thumbnail.source;
-    }
-  } catch (e) { /* best-effort */ }
-  return '';
-}
-
-// Wikipedia full-text search → lead image of the top result (keyless).
-async function wikiSearch(q) {
-  if (!q) return '';
-  try {
-    const url = 'https://en.wikipedia.org/w/api.php?action=query&format=json' +
-      '&generator=search&gsrlimit=1&gsrsearch=' + encodeURIComponent(q) +
-      '&prop=pageimages&piprop=thumbnail&pithumbsize=640';
-    const r = await fetch(url, { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
-    const j = await r.json();
-    const pages = j && j.query && j.query.pages;
-    if (pages) for (const k in pages) {
-      const p = pages[k];
-      if (p && p.thumbnail && p.thumbnail.source) return p.thumbnail.source;
-    }
-  } catch (e) { /* best-effort */ }
-  return '';
-}
-
-// Robust image finder: try title variants, then a search fallback. The user
-// reviews the result in the preview, so an approximate hit is fine.
-function titleCandidates(name) {
-  const base = String(name || '').replace(/\s*\([^)]*\)/g, '').trim();
-  const out = [];
-  const add = s => { s = (s || '').trim(); if (s.length > 2 && !out.includes(s)) out.push(s); };
-  if (base.includes(' — ')) { const [a, b] = base.split(' — '); add(b); add(a); }
-  add(base.split(' / ')[0]);
-  add(base);
-  out.slice().forEach(c => { if (c.includes(',')) add(c.split(',')[0]); });
-  return out;
-}
-// Wikimedia Commons file search → top image (keyless). The broadest source:
-// has photos for graves, statues, small towns, etc. that lack a Wikipedia page.
-async function wikiCommons(query) {
-  if (!query) return '';
-  try {
-    const url = 'https://commons.wikimedia.org/w/api.php?action=query&format=json' +
-      '&generator=search&gsrnamespace=6&gsrlimit=1&gsrsearch=' + encodeURIComponent(query) +
-      '&prop=imageinfo&iiprop=url&iiurlwidth=720';
-    const r = await fetch(url, { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
-    const j = await r.json();
-    const pages = j && j.query && j.query.pages;
-    if (pages) for (const k in pages) {
-      const p = pages[k];
-      if (p && p.imageinfo && p.imageinfo[0] && p.imageinfo[0].thumburl) return p.imageinfo[0].thumburl;
-    }
-  } catch (e) { /* best-effort */ }
-  return '';
-}
-
-async function findImage(name, region, country) {
-  const ctx = region ? ' ' + region : country ? ' ' + country : '';
-  const tryWiki = async () => {
-    for (const c of titleCandidates(name)) { const img = await wikiImage(c); if (img) return img; }
-    return await wikiSearch(name + ctx);
-  };
-  const tryCommons = async () => (await wikiCommons(name + ctx)) || (await wikiCommons(name));
-  // For specific objects, Commons (an actual photo of the thing) beats the
-  // Wikipedia article image (often a portrait or generic city shot).
-  const specific = /grave|tomb|cemeter|statue|sculptur|memorial|mural|relic|colossus|fountain|obelisk/i.test(name);
-  if (specific) return (await tryCommons()) || (await tryWiki());
-  return (await tryWiki()) || (await tryCommons());
-}
-
-async function geocode(q) {
-  if (!q) return null;
-  try {
-    const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(q),
-      { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
-    const j = await r.json();
-    if (j && j[0] && j[0].lat) return { lat: parseFloat(j[0].lat), lng: parseFloat(j[0].lon) };
-  } catch (e) { /* fall back to model estimate */ }
-  return null;
 }
 
 function slug(s) {

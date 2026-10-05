@@ -5,16 +5,9 @@
 (function () {
   'use strict';
 
-  // Multi-user: /api/config tells us which user this deployment serves (which
-  // data file + flag model). Falls back to Dan's data.json / target flags if the
-  // config endpoint isn't reachable (e.g. the static GitHub Pages mirror).
-  fetch('/api/config').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
-    .then(function (cfg) {
-      var CONFIG = cfg || { user: 'dan', dataFile: 'data.json', flags: 'targets' };
-      return fetch(CONFIG.dataFile)
-        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-        .then(function (RAW) { init(RAW, CONFIG); });
-    })
+  fetch('data.json')
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (RAW) { init(RAW); })
     .catch(function (err) {
       console.error('Waypoints: could not load map data —', err);
       var m = document.getElementById('map');
@@ -24,8 +17,7 @@
         'run a local server (<code>python3 -m http.server</code>) and reload.</div>';
     });
 
-  function init(RAW, CONFIG) {
-    const flagsMode = (CONFIG && CONFIG.flags) || 'targets';
+  function init(RAW) {
 
   /* ----------------------------------------------------------------------- *
    * TILE PROVIDERS
@@ -136,28 +128,6 @@
     'Morocco': { flag: 'ma.svg', bounds: [[27.6, -13.2], [35.9, -1.0]] },
     'Czech Republic': { flag: 'cz.svg', bounds: [[48.5, 12.0], [51.1, 18.9]] }
   };
-  // country name → ISO-2 (for the auto flag model — flags via flagcdn). Unknown
-  // countries fall back to a 2-letter monogram chip.
-  const COUNTRY_ISO = {
-    'Ireland': 'ie', 'United Kingdom': 'gb', 'Scotland': 'gb', 'England': 'gb', 'Wales': 'gb',
-    'Northern Ireland': 'gb', 'Isle of Man': 'im', 'Guernsey': 'gg', 'Jersey': 'je',
-    'France': 'fr', 'Belgium': 'be', 'Netherlands': 'nl', 'Luxembourg': 'lu', 'Switzerland': 'ch',
-    'Germany': 'de', 'Italy': 'it', 'Spain': 'es', 'Portugal': 'pt', 'Andorra': 'ad', 'Monaco': 'mc',
-    'Austria': 'at', 'Czech Republic': 'cz', 'Czechia': 'cz', 'Poland': 'pl', 'Denmark': 'dk',
-    'Sweden': 'se', 'Norway': 'no', 'Finland': 'fi', 'Iceland': 'is', 'Slovenia': 'si', 'Croatia': 'hr',
-    'Hungary': 'hu', 'Slovakia': 'sk', 'Greece': 'gr', 'Turkey': 'tr', 'Türkiye': 'tr', 'Romania': 'ro',
-    'Bulgaria': 'bg', 'Serbia': 'rs', 'Bosnia and Herzegovina': 'ba', 'Montenegro': 'me',
-    'North Macedonia': 'mk', 'Albania': 'al', 'Kosovo': 'xk', 'Estonia': 'ee', 'Latvia': 'lv',
-    'Lithuania': 'lt', 'Ukraine': 'ua', 'Belarus': 'by', 'Russia': 'ru', 'Moldova': 'md', 'Malta': 'mt', 'Cyprus': 'cy',
-    'Morocco': 'ma', 'Tunisia': 'tn', 'Egypt': 'eg', 'Algeria': 'dz', 'Israel': 'il', 'Jordan': 'jo',
-    'Lebanon': 'lb', 'United Arab Emirates': 'ae', 'Saudi Arabia': 'sa', 'Qatar': 'qa', 'India': 'in',
-    'China': 'cn', 'Japan': 'jp', 'South Korea': 'kr', 'Thailand': 'th', 'Vietnam': 'vn', 'Indonesia': 'id',
-    'Singapore': 'sg', 'Malaysia': 'my', 'Philippines': 'ph', 'Nepal': 'np', 'Sri Lanka': 'lk',
-    'United States': 'us', 'USA': 'us', 'Canada': 'ca', 'Mexico': 'mx', 'Brazil': 'br', 'Argentina': 'ar',
-    'Chile': 'cl', 'Peru': 'pe', 'Colombia': 'co', 'Australia': 'au', 'New Zealand': 'nz',
-    'South Africa': 'za', 'Kenya': 'ke', 'Tanzania': 'tz', 'Namibia': 'na'
-  };
-
   const SCOTLAND_FOOD = ['Haggis, neeps & tatties', 'Cock-a-leekie', 'Cullen skink', 'Cranachan',
     'Clootie dumpling', 'Rumbledethumps', 'Arbroath smokies', 'Stovies', 'Scotch pie',
     'Full Scottish breakfast', 'Grouse', 'Shortbread', 'Irn-Bru'];
@@ -186,29 +156,7 @@
   })();
   const ALL_FLAG = { id: 'all', label: 'All', all: true, bounds: allBounds, match: () => true };
 
-  const autoMode = flagsMode === 'auto';
-  let REGIONS;
-  if (autoMode) {
-    // One flag per country that has pins, all active, west → east. Flags via
-    // flagcdn; bounds computed from that country's pins.
-    const groups = {};
-    DATA.forEach(p => { if (p.country) (groups[p.country] = groups[p.country] || []).push(p); });
-    const flags = Object.keys(groups).map(c => {
-      const ps = groups[c], la = ps.map(p => p.lat), ln = ps.map(p => p.lng), pad = 0.6;
-      const iso = COUNTRY_ISO[c];
-      return {
-        id: 'c-' + c.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-        label: c,
-        flag: iso ? ('https://flagcdn.com/' + iso + '.svg') : null,
-        bounds: [[Math.min.apply(null, la) - pad, Math.min.apply(null, ln) - pad], [Math.max.apply(null, la) + pad, Math.max.apply(null, ln) + pad]],
-        minLng: Math.min.apply(null, ln),
-        match: p => p.country === c
-      };
-    }).sort((a, b) => a.minLng - b.minLng);
-    REGIONS = flags.concat([ALL_FLAG]);
-  } else {
-    REGIONS = ACTIVE_FLAGS.concat(GHOST_FLAGS, [ALL_FLAG]);
-  }
+  const REGIONS = ACTIVE_FLAGS.concat(GHOST_FLAGS, [ALL_FLAG]);
 
   /* ----------------------------------------------------------------------- *
    * MAP
@@ -282,8 +230,7 @@
     .filter(t => THEMES[t])
     .sort((a, b) => Object.keys(THEMES).indexOf(a) - Object.keys(THEMES).indexOf(b));
   const activeThemes = new Set(presentThemes);
-  let activeRegion = autoMode ? (REGIONS.find(r => r.all) || REGIONS[0])
-                              : (REGIONS.find(r => r.id === 'uk') || REGIONS[0]);
+  let activeRegion = REGIONS.find(r => r.id === 'uk') || REGIONS[0];
 
   function passes(poi) {
     if (!activeCats.has(poi.category)) return false;
@@ -516,6 +463,7 @@
         '<div class="p-chips">' + catChip + themeChips +
           '<span class="p-status">' + esc(statusLabel) + '</span></div>' +
         (poi.blurb ? '<p class="p-blurb">' + esc(poi.blurb) + '</p>' : '') +
+        '<div class="p-scout" id="p-scout"></div>' +
         rows + nest +
       '</div>' +
       flags + food +
@@ -542,6 +490,9 @@
     // flag-as-duplicate → remove this pin (no review; uses the saved access key)
     const dupBtn = panelBody.querySelector('.p-dup');
     if (dupBtn) dupBtn.addEventListener('click', () => deletePin(poi));
+
+    // Pin Scout (js/scout.js) fills the #p-scout slot
+    document.dispatchEvent(new CustomEvent('waypoints:panel', { detail: poi }));
 
     panel.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
@@ -663,6 +614,15 @@
     categories: CATEGORIES,
     themes: THEMES,
     listPins: () => ENTRIES.map(e => ({ id: e.poi.id, name: e.poi.name })),
+    // for Pin Scout
+    map: map,
+    pins: () => ENTRIES.map(e => e.poi),
+    closePanel: closePanel,
+    activeRegion: () => ({ id: activeRegion.id, label: activeRegion.label, all: !!activeRegion.all, bounds: activeRegion.bounds }),
+    flyTo: function (id) {
+      const e = ENTRIES.find(x => x.poi.id === id);
+      if (e) map.flyTo([e.poi.lat, e.poi.lng], Math.max(map.getZoom(), 11), { duration: 0.8 });
+    },
     addLive: function (rec, previewSrc) {
       try {
         if (!rec || typeof rec.lat !== 'number' || typeof rec.lng !== 'number') return;

@@ -25,6 +25,7 @@
   let dropped = null;            // { base64, mediaType, name } for an uploaded image
   let currentRecord = null;      // drafted record awaiting commit
   let suggestedImageUrl = '';    // og:image from a link, if any
+  let scoutPrefill = null;       // { lat, lng, imageUrl, onCommitted } when opened from Pin Scout
 
   /* ---------------------------------- open/close ------------------------- */
   function open() {
@@ -54,7 +55,7 @@
     previewStep.hidden = which !== 'preview';
   }
   function resetInput() {
-    dropped = null; currentRecord = null; suggestedImageUrl = '';
+    dropped = null; currentRecord = null; suggestedImageUrl = ''; scoutPrefill = null;
     textEl.value = ''; if (parentEl) parentEl.value = '';
     status1.textContent = ''; status1.classList.remove('is-error');
     status2.textContent = ''; status2.classList.remove('is-error');
@@ -159,7 +160,9 @@
     if (!p) { setStatus(status1, 'Drop an image, paste a link, or type a description first.', true); return; }
     draftBtn.disabled = true; draftBtn.textContent = 'Drafting…'; setStatus(status1, 'Asking Claude…');
     try {
-      const res = await api({ action: 'draft', password: keyEl.value, parentId: resolveParent(), ...p });
+      const fixed = scoutPrefill
+        ? { fixedLat: scoutPrefill.lat, fixedLng: scoutPrefill.lng, imageUrl: scoutPrefill.imageUrl || '' } : {};
+      const res = await api({ action: 'draft', password: keyEl.value, parentId: resolveParent(), ...p, ...fixed });
       saveKey(keyEl.value);
       currentRecord = res.record;
       suggestedImageUrl = res.suggestedImageUrl || '';
@@ -212,12 +215,25 @@
       const rec = res.record || currentRecord;
       const previewSrc = dropped ? dropped.dataUrl : (suggestedImageUrl || '');
       if (window.Waypoints && window.Waypoints.addLive) window.Waypoints.addLive(rec, previewSrc);
+      if (scoutPrefill && scoutPrefill.onCommitted) scoutPrefill.onCommitted(rec);
       close();
     } catch (err) {
       setStatus(status2, errMsg(err), true);
       commitBtn.disabled = false;
     }
   }
+
+  /* --------------------------- opened from Pin Scout ---------------------- */
+  // Accepting a Scout suggestion opens this same form, pre-filled. Scout's
+  // geocoded point and photo ride along so the draft step doesn't redo them.
+  window.WaypointsAdd = {
+    openPrefilled: function (o) {
+      open();
+      textEl.value = o.text || '';
+      scoutPrefill = { lat: o.lat, lng: o.lng, imageUrl: o.imageUrl || '', onCommitted: o.onCommitted };
+      setStatus(status1, 'From Pin Scout. Location and photo are kept; review the draft before adding.');
+    }
+  };
 
   /* ---------------------------------- helpers ---------------------------- */
   async function api(body) {
