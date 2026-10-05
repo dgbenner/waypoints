@@ -6208,5 +6208,34 @@
     "source": "manual",
     "status": "want-to-see",
     "addedAt": "2026-10-05"
+  },
+  {
+    "id": "battersea-power-station",
+    "name": "Battersea Power Station",
+    "macroRegion": "uk",
+    "region": "Greater London",
+    "subregion": "Wandsworth",
+    "country": "United Kingdom",
+    "lat": 51.4817738,
+    "lng": -0.1445821,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Iconic decommissioned coal power station with four chimneys, famed from Pink Floyd's Animals cover, now a retail and leisure hub.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "battersea-power-station.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-05"
   }
 ]
