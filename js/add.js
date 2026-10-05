@@ -62,6 +62,7 @@
     dropInner.innerHTML = '<span class="aw-drop-icon">⤓</span>' +
       '<span class="aw-drop-text">Drop an image here, or click to upload</span>';
     draftBtn.disabled = false; draftBtn.textContent = 'Draft it →';
+    commitBtn.disabled = false;   // a previous successful save leaves it disabled
   }
 
   $('add-waypoint').addEventListener('click', open);
