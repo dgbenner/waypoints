@@ -21,6 +21,22 @@
       .split(' ').filter(w => w && w !== 'the').join(' ');
   }
 
+  // House style: never "&", and place names in Title Case.
+  const noAmp = t => String(t == null ? '' : t).replace(/\s*(&amp;|&)\s*/g, ' and ');
+  const SMALL = new Set(['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'from', 'in', 'into', 'nor', 'of', 'on',
+    'or', 'over', 'the', 'to', 'upon', 'with', 'vs', 'de', 'du', 'des', 'la', 'le', 'les', 'del', 'della', 'di', 'da',
+    'van', 'von', 'der', 'den', 'y', 'e', 'et', 'au', 'aux']);
+  function titleCase(name) {
+    const words = noAmp(name).trim().split(/\s+/);
+    return words.map((w, i) => {
+      // leave words that already carry capitals or digits after the first letter: BMW, SR-71, McDonald's
+      if (/[A-Z0-9]/.test(w.slice(1))) return w;
+      const bare = w.toLowerCase().replace(/^[^a-z\u00c0-\u024f]+|[^a-z\u00c0-\u024f]+$/g, '');
+      if (i > 0 && i < words.length - 1 && SMALL.has(bare)) return w.toLowerCase();
+      return w.split('-').map(part => part.replace(/^([^A-Za-z\u00c0-\u024f]*)([A-Za-z\u00c0-\u024f])/, (m, pre, c) => pre + c.toUpperCase())).join('-');
+    }).join(' ');
+  }
+
   function distanceKm(lat1, lng1, lat2, lng2) {
     const R = 6371.0088, t = x => x * Math.PI / 180;
     const dLat = t(lat2 - lat1), dLng = t(lng2 - lng1);
@@ -138,7 +154,7 @@
           if (!q) return { content: 'Empty query', isError: true };
           const g = await ctx.server('geocode', { query: q });
           if (!g || g.error || !isNum(g.lat)) return { content: (g && g.error) || 'No match', isError: true };
-          state.geocodes.push({ query: q, lat: g.lat, lng: g.lng, display_name: g.display_name || '' });
+          state.geocodes.push({ query: q, lat: g.lat, lng: g.lng, display_name: g.display_name || '', locality: g.locality || '', country: g.country || '' });
           return { content: { lat: g.lat, lng: g.lng, display_name: g.display_name || '' } };
         }
         case 'distance_km': {
@@ -173,7 +189,10 @@
       const reject = (s, reason, note) => moved.push({ name: s.name || '(unnamed)', reason, note, suggestion: s });
 
       (input.suggestions || []).forEach(raw => {
-        const s = Object.assign({}, raw);
+        const s = Object.assign({}, raw, {
+          name: titleCase(raw.name), summary: noAmp(raw.summary), about: noAmp(raw.about), why_chosen: noAmp(raw.why_chosen),
+          evidence: (raw.evidence || []).map(e => Object.assign({}, e, { claim: noAmp(e && e.claim) }))
+        });
         s.fits_pins = (s.fits_pins || []).filter(id => pinIds.has(id));
         const want = mode === 'area' ? 'area' : 'nearby';
         if (s.kind !== want) return reject(s, 'weak_fit', (mode === 'area' ? 'Area Scout' : 'Pin Scout') + ' only takes "' + want + '" suggestions for now.');
@@ -181,7 +200,7 @@
         const geo = isNum(s.lat) && isNum(s.lng) &&
           state.geocodes.find(g => distanceKm(s.lat, s.lng, g.lat, g.lng) <= GEOCODE_MATCH_KM);
         if (!geo) return reject(s, 'unverified_location', 'Its coordinates did not come from a geocode in this run.');
-        s.place = geo.display_name;
+        s.place = geo.display_name; s.locality = geo.locality; s.country = geo.country;
 
         if (mode === 'area') {
           if (!inView(s.lat, s.lng)) return reject(s, 'outside_view', 'Outside the map view of ' + area.name + '.');
@@ -206,7 +225,7 @@
       kept.splice(CAP[mode]).forEach(s => reject(s, 'weak_fit', 'Over the cap of ' + CAP[mode] + ' suggestions.'));
 
       const modelRejected = (input.rejected || []).map(r => ({
-        name: r.name || '(unnamed)', reason: REASONS.includes(r.reason) ? r.reason : 'weak_fit', note: r.note || ''
+        name: titleCase(r.name) || '(unnamed)', reason: REASONS.includes(r.reason) ? r.reason : 'weak_fit', note: noAmp(r.note)
       }));
       return {
         headline_facts: input.headline_facts || { searched: 0, considered: 0 },
@@ -254,7 +273,7 @@
     return { exec, noteSearchResults, finalResult, state };
   }
 
-  const api = { createRun, normName, distanceKm, normUrl, findDuplicates, duplicatePinGroups, matchDecision, REASONS };
+  const api = { createRun, titleCase, noAmp, normName, distanceKm, normUrl, findDuplicates, duplicatePinGroups, matchDecision, REASONS };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.ScoutTools = api;
 })(typeof window !== 'undefined' ? window : this);

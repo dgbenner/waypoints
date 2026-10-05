@@ -130,10 +130,17 @@ async function findImage(name, region, country) {
 async function geocode(q) {
   if (!q) return null;
   try {
-    const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(q),
+    const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&accept-language=en&q=' + encodeURIComponent(q),
       { headers: { 'User-Agent': 'Waypoints/1.0 (personal map)' } });
     const j = await r.json();
-    if (j && j[0] && j[0].lat) return { lat: parseFloat(j[0].lat), lng: parseFloat(j[0].lon), display_name: j[0].display_name || '' };
+    if (j && j[0] && j[0].lat) {
+      const a = j[0].address || {};
+      return {
+        lat: parseFloat(j[0].lat), lng: parseFloat(j[0].lon), display_name: j[0].display_name || '',
+        locality: a.city || a.town || a.village || a.hamlet || a.suburb || a.municipality || a.county || '',
+        country: a.country || ''
+      };
+    }
   } catch (e) { /* fall back to model estimate */ }
   return null;
 }

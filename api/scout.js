@@ -39,6 +39,7 @@ You run in one of two modes, named in the first message:
 3. Verify every candidate: geocode it (never use your own estimate for a location), check_duplicate to make sure it isn't already on the map, call past_decisions once to skip anything Dan already accepted or rejected, and keep the URLs that back each claim.
 4. Be selective. When in doubt, reject it with a reason. Nothing is a good result if nothing is good.
 5. Never claim something your sources don't say. Evidence URLs must come from your own web searches in this run.
+6. Write place names in Title Case. Never use "&" anywhere; write "and".
 Finish by calling submit_findings. It is the only way to end the run.`;
 
 const CLIENT_TOOLS = [

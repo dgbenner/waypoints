@@ -50,6 +50,7 @@ Fill every required field. Rules:
 - category (pin colour): personal (music/art/literary/chess/personal passions), heritage (castles, cathedrals, historic/tourist sites), modern (contemporary/industrial/architecture/urbex), nature (landscape, coast, wildlife).
 - themes: array from [music,art,literary,chess,castle,cathedral,monument,industrial,coast,mountain,wildlife,food]; first theme is the most important (it becomes the pin glyph). Use "mountain" for general landscape/gardens/forests, "monument" for stones/memorials/statues/towers.
 - prominence: "signature" for offbeat/personal finds; "standard" for marquee mainstream tourist stops.
+- name: Title Case. Never use "&" in any field; write "and".
 - blurb: one concise factual line (<=160 chars).
 - timeGated: true if it has tickets/opening hours (museums, toured castles, churches with paid entry, gardens, operas); false for open streets/coast/free memorials/ruins.
 - lat/lng: your best WGS84 estimate. Set approx:true unless you are confident of the exact point.
@@ -132,6 +133,8 @@ async function draft(body) {
     if (geo) { lat = geo.lat; lng = geo.lng; approx = false; }
   }
 
+  const noAmp = t => String(t || '').replace(/\s*&\s*/g, ' and ');
+  d.name = noAmp(d.name); d.blurb = noAmp(d.blurb);
   const record = {
     id: slug(d.name),
     name: d.name,

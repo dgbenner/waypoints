@@ -84,7 +84,8 @@
   mapBtn.innerHTML =
     '<button type="button" class="scout-btn" aria-label="Scout this area" title="Scout this area">' +
       iconHtml() + '<span class="scout-btn__stop">Stop</span></button>' +
-    '<span class="scout-map__status" aria-live="polite" hidden></span>';
+    '<span class="scout-map__status" aria-live="polite" hidden></span>' +
+    '<button type="button" class="scout-map__last" hidden></button>';
   document.body.appendChild(mapBtn);
   $('.scout-btn', mapBtn).addEventListener('click', async () => {
     if (run && run.running) { stopRun(); return; }
@@ -92,8 +93,19 @@
     startRun({ mode: 'area', area: await viewArea() });
   });
 
-  function renderMapBtn() {
+  $('.scout-map__last', mapBtn).addEventListener('click', () => { if (run && run.result && !run.running) openTray(true); });
+
+  function renderMapBtn(trayClosed) {
     const b = $('.scout-btn', mapBtn), st = $('.scout-map__status', mapBtn);
+    const last = $('.scout-map__last', mapBtn);
+    const trayOpen = !trayClosed && tray && !tray.el.hidden;
+    const showLast = run && !run.running && run.result && !trayOpen;
+    last.hidden = !showLast;
+    if (showLast) {
+      const open = run.result.suggestions.filter(x => !x._decided).length;
+      last.textContent = 'Last results' + (open ? ' (' + open + ' to decide)' : '');
+      last.title = (run.mode === 'area' ? 'Area Scout across ' : 'Pin Scout around ') + run.anchor.name;
+    }
     const mine = run && run.running && run.mode === 'area';
     const other = run && run.running && !mine;
     b.classList.toggle('is-running', !!mine);
@@ -468,11 +480,13 @@
     t.el.style.height = tall ? '' : '85vh';
   }
 
-  function openTray() {
+  function openTray(restoring) {
     if (!tray) tray = buildTray();
     const r = run.result;
-    run.outcome = r && r.suggestions.length ? 'found' : 'nothing';
-    run.fun = funLine();
+    if (!restoring || !run.fun) {
+      run.outcome = r && r.suggestions.length ? 'found' : 'nothing';
+      run.fun = funLine();
+    }
     tray.segName = 'suggestions'; tray.selected = 0;
     tray.log.hidden = true;
     if (W().closePanel) W().closePanel();
@@ -480,6 +494,8 @@
     requestAnimationFrame(() => tray.el.classList.add('is-open'));
     renderTray();
     drawMarkers(true);
+    saveRun(true);
+    renderMapBtn();
   }
 
   function closeTray() {
@@ -487,7 +503,43 @@
     tray.el.classList.remove('is-open');
     setTimeout(() => { tray.el.hidden = true; tray.el.style.height = ''; }, 280);
     if (tray.layer) { tray.layer.remove(); tray.layer = null; }
+    saveRun(false);
+    renderMapBtn(true);
   }
+
+  /* ===================== keep the last run across reloads ================= */
+  // Per-browser convenience: the last run (results, decisions so far, log) is
+  // kept so a refresh doesn't lose undecided suggestions.
+  const STORE = 'wp_scout_last';
+  let trayWasOpen = false;
+  function saveRun(open) {
+    if (!run || run.running || !run.result) return;
+    if (typeof open === 'boolean') trayWasOpen = open;
+    const anchor = Object.assign({}, run.anchor); delete anchor._previewSrc;
+    try {
+      localStorage.setItem(STORE, JSON.stringify({
+        v: 1, mode: run.mode, area: run.area, anchor, result: run.result, fun: run.fun, outcome: run.outcome,
+        steps: run.steps, searches: run.searches, tokens: run.tokens, log: run.log, models: Array.from(run.models || []),
+        startedAt: run.startedAt, finishedAt: run.finishedAt, error: run.error, stopped: run.stopped, trayOpen: trayWasOpen
+      }));
+    } catch (e) { /* storage full or blocked: results just won't survive a reload */ }
+  }
+  function restoreRun() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) {}
+    if (!saved || saved.v !== 1 || !saved.result || run) return;
+    run = Object.assign({}, saved, {
+      running: false, models: new Set(saved.models || []), pins: W().pins(), key: getKey(), bytesSent: 0,
+      tools: null
+    });
+    trayWasOpen = !!saved.trayOpen;
+    if (trayWasOpen) openTray(true); else renderMapBtn(true);
+  }
+  // app.js loads data asynchronously; restore once the map exists
+  (function waitForMap(n) {
+    if (W().map && W().pins) restoreRun();
+    else if (n < 100) setTimeout(() => waitForMap(n + 1), 100);
+  })(0);
 
   function funLine() {
     const r = run.result;
@@ -531,7 +583,12 @@
     tray.el.classList.remove('is-empty');
     if (tray.selected >= list.length) tray.selected = 0;
     tray.cards.innerHTML = list.map((it, i) => cardHtml(it, i)).join('');
-    tray.cards.querySelectorAll('.scout-card').forEach(c => c.addEventListener('click', () => select(+c.dataset.i, true)));
+    tray.cards.querySelectorAll('.scout-card').forEach(c => {
+      const i = +c.dataset.i;
+      c.addEventListener('click', () => select(i, true));
+      c.addEventListener('keydown', e => { if (e.target === c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(i, true); } });
+      wireActions(c, list[i], i);
+    });
     renderDetail();
   }
 
@@ -560,15 +617,42 @@
 
   function cardHtml(it, i) {
     const s = sug(it);
-    const chip = tray.segName === 'rejected'
+    const rejectedSeg = tray.segName === 'rejected';
+    const chip = rejectedSeg
       ? '<span class="scout-chip scout-chip--reason">' + esc(REASON_LABEL[it.reason] || it.reason) + '</span>'
-      : '<span class="scout-chip">' + esc(s && typeof s.km === 'number' ? s.km + ' km' : s ? shortPlace(s.place).split(', ')[0] : '') + '</span>';
+      : '<span class="scout-chip">' + esc(s && typeof s.km === 'number' ? s.km + ' km' : s ? (s.locality || shortPlace(s.place).split(', ')[0]) : '') + '</span>';
     const status = it._decided ? '<span class="scout-card__badge scout-card__badge--' + it._decided + '">' + esc(it._decided) + '</span>' : '';
-    return '<button type="button" role="listitem" class="scout-card' + (i === tray.selected ? ' is-selected' : '') + '" data-i="' + i + '">' +
+    return '<div role="listitem" tabindex="0" class="scout-card' + (i === tray.selected ? ' is-selected' : '') + '" data-i="' + i + '">' +
       photoHtml(s, 'scout-card__img') + status +
       '<span class="scout-card__name">' + esc(it.name) + '</span>' + chip +
-      '<span class="scout-card__sum">' + esc(tray.segName === 'rejected' ? it.note : (s && s.summary) || '') + '</span>' +
-      '</button>';
+      '<span class="scout-card__sum">' + esc(rejectedSeg ? it.note : (s && s.summary) || '') + '</span>' +
+      '<span class="scout-card__actions">' + actionButtons(it) + '</span>' +
+      '</div>';
+  }
+
+  // Small Accept / Reject (or Overrule) buttons, shared by the cards and the inspector.
+  function actionButtons(it) {
+    if (it._decided) return '<span class="scout-card__done">' + esc(decidedText(it)) + '</span>';
+    if (tray.segName === 'rejected') return '<button type="button" class="scout-mini" data-act="overrule">Overrule</button>';
+    return '<button type="button" class="scout-mini scout-mini--primary" data-act="accept">Accept</button>' +
+      '<button type="button" class="scout-mini" data-act="reject">Reject</button>';
+  }
+  function decidedText(it) {
+    return it._decided === 'accepted' ? 'Accepted' : it._decided === 'rejected' ? 'Rejected' + (it._reason ? ': ' + it._reason : '') : 'Overruled';
+  }
+
+  // Wire the action buttons inside one card or the inspector bar.
+  function wireActions(root, it, i) {
+    root.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation();
+      if (b.dataset.act === 'accept') { if (i !== tray.selected) select(i, false); accept(it); }
+      else if (b.dataset.act === 'overrule') overrule(it);
+      else if (b.dataset.act === 'reject') {
+        if (i !== tray.selected) select(i, false);
+        const box = tray.detail.querySelector('.scout-reasons');
+        if (box) box.hidden = false;
+      }
+    }));
   }
 
   function select(i, fly) {
@@ -589,43 +673,34 @@
       '<button type="button" class="scout-chip scout-chip--pin" data-pin="' + esc(id) + '">' + esc(pinsById[id].name) + '</button>').join('');
     const sources = (s.evidence || []).map(e =>
       '<li><a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(hostOf(e.url)) + '</a> ' + esc(e.claim) + '</li>').join('');
-    const place = shortPlace(s.place);
-    let actions;
-    if (it._decided) {
-      actions = '<p class="scout-decided">' + esc(it._decided === 'accepted' ? 'Accepted and sent to the add form.' :
-        it._decided === 'rejected' ? 'Rejected' + (it._reason ? ': ' + it._reason : '') + '. Scout won’t suggest it again.' : 'Overruled into Suggestions.') + '</p>';
-    } else if (tray.segName === 'rejected') {
-      actions = '<div class="scout-actions"><button type="button" class="aw-btn aw-btn--ghost" data-act="overrule">Overrule</button></div>';
-    } else {
-      actions = '<div class="scout-actions">' +
-        '<button type="button" class="aw-btn aw-btn--primary" data-act="accept">Accept</button>' +
-        '<button type="button" class="aw-btn aw-btn--ghost" data-act="reject">Reject</button></div>' +
-        '<div class="scout-reasons" hidden><span class="scout-reasons__label">Why? (optional)</span>' +
+    const place = s.locality ? [s.locality, s.country].filter(Boolean).join(', ') : shortPlace(s.place);
+    const reasons = (!it._decided && tray.segName === 'suggestions')
+      ? '<div class="scout-reasons" hidden><span class="scout-reasons__label">Why? (optional)</span>' +
         REJECT_CHIPS.map(c => '<button type="button" class="scout-chip scout-chip--reason-pick" data-reason="' + esc(c) + '">' + esc(c) + '</button>').join('') +
-        '<button type="button" class="scout-chip scout-chip--reason-pick" data-reason="">Skip</button></div>';
-    }
+        '<button type="button" class="scout-chip scout-chip--reason-pick" data-reason="">Skip</button></div>'
+      : '';
     tray.detail.innerHTML =
       photoHtml(s, 'scout-detail__img') +
+      // name + small actions stay pinned at the top while the inspector scrolls
+      '<div class="scout-detail__bar">' +
+        '<div class="scout-detail__barrow">' +
+          '<h3 class="scout-detail__name">' + esc(it.name) + '</h3>' +
+          '<span class="scout-detail__actions">' + actionButtons(it) + '</span>' +
+        '</div>' + reasons +
+      '</div>' +
       '<div class="scout-detail__pad">' +
-        '<h3 class="scout-detail__name">' + esc(it.name) + '</h3>' +
         (place || typeof s.km === 'number' ? '<p class="scout-detail__place">' + esc(place) + (typeof s.km === 'number' ? ' · ' + s.km + ' km from ' + esc(run.anchor.name) : '') + '</p>' : '') +
         (tray.segName === 'rejected' ? '<p class="scout-detail__why"><span class="scout-chip scout-chip--reason">' + esc(REASON_LABEL[it.reason] || it.reason) + '</span> ' + esc(it.note) + '</p>' : '') +
         (s.about ? '<h4>What it is</h4><p>' + esc(s.about) + '</p>' : '') +
         (s.why_chosen ? '<h4>Why Scout chose it</h4><p>' + esc(s.why_chosen) + '</p>' : '') +
         (fits ? '<h4>Fits your pins</h4><div class="scout-fits">' + fits + '</div>' : '') +
         (sources ? '<details class="scout-sources"><summary>Sources (' + s.evidence.length + ')</summary><ul>' + sources + '</ul></details>' : '') +
-        actions +
       '</div>';
     tray.detail.scrollTop = 0;
 
     tray.detail.querySelectorAll('[data-pin]').forEach(b => b.addEventListener('click', () => W().flyTo(b.dataset.pin)));
-    const act = a => tray.detail.querySelector('[data-act="' + a + '"]');
-    if (act('accept')) act('accept').addEventListener('click', () => accept(it));
-    if (act('reject')) act('reject').addEventListener('click', () => {
-      tray.detail.querySelector('.scout-reasons').hidden = false; act('reject').disabled = true;
-    });
+    wireActions($('.scout-detail__actions', tray.detail), it, tray.selected);
     tray.detail.querySelectorAll('[data-reason]').forEach(b => b.addEventListener('click', () => reject(it, b.dataset.reason)));
-    if (act('overrule')) act('overrule').addEventListener('click', () => overrule(it));
   }
 
   function hostOf(u) { try { return new URL(u).host.replace(/^www\./, ''); } catch (e) { return u; } }
@@ -643,13 +718,15 @@
     const s = sug(it);
     if (!window.WaypointsAdd) { toast('The add form is not available.', true); return; }
     window.WaypointsAdd.openPrefilled({
-      text: s.name + ' (' + (run.mode === 'area' ? (shortPlace(s.place) || run.anchor.name) : 'near ' + run.anchor.name + ', ' + (run.anchor.country || '')) + '). ' + (s.summary || ''),
+      text: s.name + ' (' + (run.mode === 'area'
+        ? ([s.locality, s.country].filter(Boolean).join(', ') || shortPlace(s.place) || run.anchor.name)
+        : 'near ' + run.anchor.name + ', ' + (run.anchor.country || '')) + '). ' + (s.summary || ''),
       lat: s.lat, lng: s.lng, imageUrl: s.image || '',
       onCommitted: async () => {
         // the add flow opens the new pin's panel; close it so the tray stays usable
         if (W().closePanel) W().closePanel();
         it._decided = 'accepted';
-        renderTray(); drawMarkers(false);
+        renderTray(); drawMarkers(false); saveRun();
         await decide(it, 'accepted', '');
       }
     });
@@ -657,8 +734,8 @@
 
   async function reject(it, reason) {
     it._decided = 'rejected'; it._reason = reason;
-    renderTray(); drawMarkers(false);
-    if (!(await decide(it, 'rejected', reason))) { it._decided = null; renderTray(); }
+    renderTray(); drawMarkers(false); saveRun();
+    if (!(await decide(it, 'rejected', reason))) { it._decided = null; renderTray(); saveRun(); }
   }
 
   async function overrule(it) {
@@ -669,7 +746,7 @@
     r.suggestions.push(moved);
     tray.segName = 'suggestions'; tray.selected = r.suggestions.length - 1;
     await fetchImage(moved);
-    renderTray(); drawMarkers(false);
+    renderTray(); drawMarkers(false); saveRun();
     decide(moved, 'overruled', it.reason);
   }
 
