@@ -6293,5 +6293,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-05"
+  },
+  {
+    "id": "portmeirion",
+    "name": "Portmeirion",
+    "macroRegion": "uk",
+    "region": "Wales",
+    "subregion": "Gwynedd",
+    "country": "United Kingdom",
+    "lat": 52.9134519,
+    "lng": -4.0993545,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "art"
+    ],
+    "prominence": "signature",
+    "blurb": "Italianate village designed by Clough Williams-Ellis, famous as the filming location for The Prisoner.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "portmeirion.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-05"
   }
 ]
