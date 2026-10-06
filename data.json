@@ -6629,5 +6629,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "loch-ness-2",
+    "name": "Loch Ness",
+    "macroRegion": "uk",
+    "region": "Scotland",
+    "subregion": "Scottish Highlands",
+    "country": "United Kingdom",
+    "lat": 57.3229,
+    "lng": -4.4244,
+    "approx": true,
+    "category": "nature",
+    "themes": [
+      "wildlife",
+      "mountain"
+    ],
+    "prominence": "signature",
+    "blurb": "Large deep freshwater loch in the Great Glen, famed for the legendary Loch Ness Monster.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "loch-ness-2.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
