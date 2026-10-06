@@ -6573,5 +6573,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "st-peter-s-seminary",
+    "name": "St Peter's Seminary",
+    "macroRegion": "uk",
+    "region": "Scotland",
+    "subregion": "Argyll and Bute",
+    "country": "United Kingdom",
+    "lat": 55.9703108,
+    "lng": -4.6405332,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Gillespie Kidd and Coia's A-listed modernist seminary near Cardross, now a celebrated concrete ruin.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "st-peter-s-seminary.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
