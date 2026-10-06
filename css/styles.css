@@ -541,14 +541,20 @@ html, body {
 .scout-btn[disabled] { opacity: 0.45; cursor: default; }
 .scout-btn__icon { width: 74%; height: 74%; object-fit: contain; display: block; }
 .scout-btn__glyph { font-size: 26px; line-height: 1; color: var(--ink-soft); }
+/* "Stop" shows only when hovering a running button, centred over the faded figure */
 .scout-btn__stop {
-  display: none; position: absolute; left: 0; right: 0; bottom: 7px; text-align: center;
-  font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-personal);
+  display: none; position: absolute; inset: 0; align-items: center; justify-content: center;
+  font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-personal);
 }
+/* Working: the figure and the outer ring fade in and out together. Opacity only, no size change. */
 .scout-btn.is-running .scout-btn__icon,
-.scout-btn.is-running .scout-btn__glyph { animation: scout-pulse 1.3s ease-in-out infinite; height: 58%; margin-top: -10px; }
-.scout-btn.is-running .scout-btn__stop { display: block; }
-@keyframes scout-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.9); } }
+.scout-btn.is-running .scout-btn__glyph { animation: scout-pulse 1.3s ease-in-out infinite; }
+.scout-btn.is-running { animation: scout-ring 1.3s ease-in-out infinite; }
+.scout-btn.is-running:hover .scout-btn__icon,
+.scout-btn.is-running:hover .scout-btn__glyph { animation: none; opacity: 0.15; }
+.scout-btn.is-running:hover .scout-btn__stop { display: flex; }
+@keyframes scout-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@keyframes scout-ring { 0%, 100% { outline-color: rgba(58,50,38,0.18); } 50% { outline-color: rgba(58,50,38,0.03); } }
 .scout-slot__text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .scout-slot__label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); }
 .scout-slot__status { font-size: 13px; color: var(--ink-soft); font-style: italic; }
@@ -751,7 +757,7 @@ html, body {
 }
 @media (prefers-reduced-motion: reduce) {
   .scout-tray { transition: none; }
-  .scout-btn.is-running .scout-btn__icon, .scout-pill__dot { animation: none; }
+  .scout-btn.is-running .scout-btn__icon, .scout-btn.is-running, .scout-pill__dot { animation: none; }
 }
 
 /* Tablet & down: drop the title/tagline; the flag strip stands alone top-left */

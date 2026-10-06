@@ -214,7 +214,7 @@
     closeTray();
     if (mode === 'area' && W().closePanel) W().closePanel();
     refreshSlotFor(anchor);
-    setStatus('Scout is reading your pins…');
+    setStatus(line('reading'));
 
     logLine('start', mode === 'pin'
       ? 'Pin Scout around ' + anchor.name + ' (' + anchor.id + '), detour limit ' + DETOUR_KM + ' km.'
@@ -239,10 +239,12 @@
     try {
       while (run.steps < STEP_LIMIT && !run.stopped) {
         run.steps++;
-        setStatus(run.steps === 1 ? 'Scout is reading your pins…' : 'Scout is following a lead…');
+        startTicker(run.steps === 1 ? 'reading' : 'searching');
         const payload = JSON.stringify({ messages, searchesUsed: run.searches });
         run.bytesSent = Math.max(run.bytesSent, payload.length);
-        const r = await server('step', { messages, mode, searchesUsed: run.searches });
+        let r;
+        try { r = await server('step', { messages, mode, searchesUsed: run.searches }); }
+        finally { stopTicker(); }
         tally(r);
         run.tools.noteSearchResults(r.content);
         messages.push({ role: 'assistant', content: r.content });
@@ -298,7 +300,7 @@
     if (run.stopped) logLine('note', 'Stopped by you after step ' + run.steps + '.');
 
     if (run.result && run.result.suggestions.length) {
-      setStatus('Scout is finding photos…');
+      setStatus(line('photos'));
       await Promise.all(run.result.suggestions.map(fetchImage));
     }
     run.running = false;
@@ -313,6 +315,7 @@
   function stopRun() {
     if (!run || !run.running) return;
     run.stopped = true;
+    stopTicker();
     setStatus('Stopping after this step…');
   }
 
@@ -322,13 +325,40 @@
     if (pin) renderPanelSlot(pin);
   }
 
+  // Status lines, picked at random per stage of the work
+  const LINES = {
+    reading: ['Scout is reading your pins…', 'Studying your taste…', 'Leafing through your map…', 'Taking notes on your pins…'],
+    searching: ['Scrounging around…', 'Peering through the spyglass…', 'Investigating…', 'Searching for clues…',
+      'Following a lead…', 'Asking the locals…', 'Checking under rocks…', 'Squinting at the horizon…',
+      'Rummaging through old maps…', 'Sniffing out a trail…', 'Scout is on the case…', 'Knocking on doors…',
+      'Reading the small print…', 'Turning over stones…', 'Combing the archives…'],
+    checking: ['Checking a lead…', 'Pinning it down…', 'Making sure it’s real…', 'Measuring the distance…',
+      'Checking it isn’t already on your map…', 'Comparing notes…'],
+    remembering: ['Remembering what you turned down…', 'Checking the old logbook…'],
+    writing: ['Writing it up…', 'Sorting the finds…', 'Tidying the notebook…'],
+    photos: ['Finding photos…', 'Developing the photos…', 'Dusting off the camera…']
+  };
+  function line(stage) {
+    const set = LINES[stage];
+    let pick = set[Math.floor(Math.random() * set.length)];
+    if (run && pick === run.status && set.length > 1) pick = set[(set.indexOf(pick) + 1) % set.length];
+    return pick;
+  }
+  // While a step is out with the model (it can take a while), keep the line changing.
+  let ticker = null;
+  function startTicker(stage) {
+    stopTicker();
+    setStatus(line(stage));
+    ticker = setInterval(() => { if (run && run.running && !run.stopped) setStatus(line('searching')); }, 4500);
+  }
+  function stopTicker() { if (ticker) { clearInterval(ticker); ticker = null; } }
+
   function statusFor(tool) {
-    return {
-      search_my_pins: 'Scout is reading your pins…', get_pin: 'Scout is reading your pins…',
-      geocode: 'Scout is checking a lead…', check_duplicate: 'Scout is checking a lead…',
-      distance_km: 'Scout is checking a lead…', past_decisions: 'Scout is checking your past decisions…',
-      submit_findings: 'Scout is writing it up…'
-    }[tool] || 'Scout is working…';
+    return line({
+      search_my_pins: 'reading', get_pin: 'reading', pins_in_view: 'reading',
+      geocode: 'checking', check_duplicate: 'checking', distance_km: 'checking',
+      past_decisions: 'remembering', submit_findings: 'writing'
+    }[tool] || 'searching');
   }
 
   async function fetchImage(s) {
