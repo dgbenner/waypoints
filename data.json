@@ -6349,5 +6349,34 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "jodrell-bank-observatory",
+    "name": "Jodrell Bank Observatory",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Cheshire",
+    "country": "United Kingdom",
+    "lat": 53.2366504,
+    "lng": -2.3082382,
+    "approx": false,
+    "category": "personal",
+    "themes": [
+      "music",
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Home of the Lovell Telescope and pulsar data linked to Joy Division's Unknown Pleasures cover; now a UNESCO site.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "jodrell-bank-observatory.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
