@@ -6544,5 +6544,34 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "dunnottar-castle",
+    "name": "Dunnottar Castle",
+    "macroRegion": "uk",
+    "region": "Scotland",
+    "subregion": "Aberdeenshire",
+    "country": "United Kingdom",
+    "lat": 56.9459963,
+    "lng": -2.1970568,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "coast",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Dramatic ruined medieval clifftop fortress above the North Sea near Stonehaven, featured in Zeffirelli's Hamlet.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "dunnottar-castle.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
