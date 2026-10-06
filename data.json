@@ -6601,5 +6601,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "goonhilly-earth-station",
+    "name": "Goonhilly Earth Station",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Cornwall",
+    "country": "United Kingdom",
+    "lat": 50.0490966,
+    "lng": -5.183317,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Historic satellite ground station on the Lizard, home to giant dishes that carried the first Telstar transatlantic TV link.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "goonhilly-earth-station.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
