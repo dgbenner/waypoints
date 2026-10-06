@@ -6378,5 +6378,32 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "strawberry-studios",
+    "name": "Strawberry Studios",
+    "macroRegion": "uk",
+    "region": "North West England",
+    "subregion": "Greater Manchester",
+    "country": "England",
+    "lat": 53.4070168,
+    "lng": -2.1542789,
+    "approx": false,
+    "category": "personal",
+    "themes": [
+      "music"
+    ],
+    "prominence": "signature",
+    "blurb": "Stockport studio at 3 Waterloo Road where Joy Division recorded Unknown Pleasures in 1979.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "strawberry-studios.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
