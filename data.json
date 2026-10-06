@@ -6321,5 +6321,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-05"
+  },
+  {
+    "id": "ian-curtis-memorial-stone",
+    "name": "Ian Curtis Memorial Stone",
+    "macroRegion": "uk",
+    "region": "North West England",
+    "subregion": "Cheshire",
+    "country": "England",
+    "lat": 53.2663542,
+    "lng": -2.137922,
+    "approx": false,
+    "category": "personal",
+    "themes": [
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Memorial stone to Joy Division singer Ian Curtis in Macclesfield Cemetery, a pilgrimage site for post-punk fans.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "ian-curtis-memorial-stone.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
