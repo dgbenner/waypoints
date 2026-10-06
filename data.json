@@ -6462,5 +6462,32 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "cerne-abbas-giant",
+    "name": "Cerne Abbas Giant",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Dorset",
+    "country": "United Kingdom",
+    "lat": 50.8136679,
+    "lng": -2.4748234,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Giant chalk hill figure cut into a Dorset hillside, possibly of Saxon or later origin.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "cerne-abbas-giant.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
