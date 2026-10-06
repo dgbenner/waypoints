@@ -6516,5 +6516,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "kelvedon-hatch-secret-nuclear-bunker",
+    "name": "Kelvedon Hatch Secret Nuclear Bunker",
+    "macroRegion": "uk",
+    "region": "Essex",
+    "subregion": "Brentwood",
+    "country": "England",
+    "lat": 51.6725,
+    "lng": 0.2611,
+    "approx": true,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Cold War-era underground government bunker turned museum, hidden beneath an ordinary-looking Essex bungalow.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "kelvedon-hatch-secret-nuclear-bunker.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
