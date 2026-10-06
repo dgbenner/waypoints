@@ -6405,5 +6405,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "bletchley-park",
+    "name": "Bletchley Park",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Buckinghamshire",
+    "country": "United Kingdom",
+    "lat": 51.9974936,
+    "lng": -0.7410593,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "industrial"
+    ],
+    "prominence": "signature",
+    "blurb": "WWII codebreaking centre where Alan Turing and colleagues cracked the Enigma cipher, now a museum of cryptography.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "bletchley-park.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
