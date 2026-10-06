@@ -1,0 +1,167 @@
+{
+  "_note": "Scout's agent card. Rendered by js/scout-card.js in the Scout Agent modal. When Scout's behaviour changes, update this file and AGENT-CARD.md together and add a changelog line.",
+  "name": "Scout",
+  "kicker": "Agent card · Waypoints",
+  "job": "Finds places worth adding to your map, checks them, and explains why each one fits your taste.",
+  "updated": "Oct 6, 2026",
+  "glance": [
+    {
+      "n": "2",
+      "label": "modes: Pin and Area"
+    },
+    {
+      "n": "8",
+      "label": "hard rules it can't break"
+    },
+    {
+      "n": "0",
+      "label": "pins added without you"
+    },
+    {
+      "n": "8 · 12",
+      "label": "web searches per run (Pin · Area)"
+    }
+  ],
+  "steps": [
+    {
+      "t": "Reads",
+      "s": "Your Pins",
+      "d": "Reads the pin you opened, or the pins in view, and searches your other pins for related threads like a band, film or architect. Your pin descriptions are how it learns your taste."
+    },
+    {
+      "t": "Searches",
+      "s": "The Web",
+      "d": "Searches for candidate places and reads the pages it finds: up to 8 searches for Pin Scout, 12 for Area Scout. Every claim it later makes has to point back to one of these pages."
+    },
+    {
+      "t": "Checks",
+      "s": "Hard Rules",
+      "d": "Code geocodes each candidate, measures the distance, and checks for duplicates and past decisions. <b>Anything that fails is moved to Rejected with the rule it broke.</b> Scout gets one chance to resubmit."
+    },
+    {
+      "t": "Judges",
+      "s": "Fit",
+      "d": "The model decides what genuinely fits your taste and what's worth the detour. <b>It must cite the pins that make the case, and its sources.</b>"
+    },
+    {
+      "t": "Tray",
+      "s": "You Decide",
+      "d": "Results slide up from the bottom: photos, why each was chosen, and sources. <b>Accept opens your normal add form.</b> Reject works in one press, with an optional reason. Every decision is remembered, and the last run survives a refresh."
+    }
+  ],
+  "locked": [
+    {
+      "t": "Coordinates",
+      "d": "Come from geocoding in this run, never the model's guess.",
+      "code": "unverified_location"
+    },
+    {
+      "t": "Nearby Distance",
+      "d": "Pin Scout: within 60 km of the pin.",
+      "code": "too_far"
+    },
+    {
+      "t": "Area Bounds",
+      "d": "Area Scout: inside the area on your screen.",
+      "code": "outside_view"
+    },
+    {
+      "t": "Duplicates",
+      "d": "Not within 500 m of a pin, and not the same name (case, accents, apostrophes and \"the\" ignored).",
+      "code": "duplicate"
+    },
+    {
+      "t": "Your Past Decisions",
+      "d": "Never re-suggests what you accepted or rejected.",
+      "code": "already_decided"
+    },
+    {
+      "t": "Sources",
+      "d": "Every suggestion links to a page found in this run's own searches.",
+      "code": "vague_thread"
+    },
+    {
+      "t": "Caps",
+      "d": "Up to 3 for a pin, 10 for an area. Extras are cut.",
+      "code": "weak_fit"
+    },
+    {
+      "t": "Nothing Is Fine",
+      "d": "An empty result needs a reason, not filler.",
+      "code": "nothing_reason"
+    }
+  ],
+  "judged": [
+    {
+      "t": "Fits Your Taste",
+      "d": "Argued from your own pins, which it has to name."
+    },
+    {
+      "t": "Worth the Detour",
+      "d": "Telling a real find from a tourist trap."
+    },
+    {
+      "t": "What to Say",
+      "d": "The summary and the \"why Scout chose it\" text in your tray. Names come out in Title Case, never with an ampersand."
+    },
+    {
+      "t": "Real Connection",
+      "d": "Coming with Connections: a specific named thread (\"Stanley Kubrick\", not \"70s feel\") with two sources."
+    }
+  ],
+  "modes": [
+    {
+      "name": "Pin Scout",
+      "icon": "pin",
+      "where": "The round button in an open pin's panel.",
+      "d": "Starts from one pin you've opened.",
+      "lanes": [
+        {
+          "t": "Nearby · within 60 km · up to 3"
+        },
+        {
+          "t": "Connections · any distance · next",
+          "later": true
+        }
+      ]
+    },
+    {
+      "name": "Area Scout",
+      "icon": "area",
+      "where": "The round button on the map, under the compass.",
+      "d": "Searches the area on screen. Zoom sets the area: the active flag's country when it fills the view, otherwise the view itself.",
+      "lanes": [
+        {
+          "t": "Up to 10 places · inside the view"
+        },
+        {
+          "t": "Always on"
+        }
+      ]
+    }
+  ],
+  "never": [
+    "Adds a pin on its own",
+    "Runs without you pressing the button",
+    "Guesses a location",
+    "Suggests something you already accepted or rejected"
+  ],
+  "tools": [
+    "Web search · reads pages; 8 searches per Pin Scout run, 12 per Area Scout run",
+    "Your pins · search them, read one, list what's in view",
+    "Geocode · real coordinates and the town (OpenStreetMap)",
+    "Distance · calculated, never estimated",
+    "Duplicate check · within 500 m or same name",
+    "Past decisions · what you accepted or rejected",
+    "Submit findings · the only way to finish"
+  ],
+  "changelog": [
+    "Oct 6, 2026 · Reject works in one press; status lines rotate while Scout works; the button pulses by opacity only.",
+    "Oct 5, 2026 · Tray actions on every card; the last run survives a refresh; Title Case names, no ampersands.",
+    "Oct 5, 2026 · Launched Pin Scout (Nearby) and Area Scout. Single-user; Jill's map retired."
+  ],
+  "foot": {
+    "spec": "_source/waypoints-scout-spec-v2.md",
+    "owner": "Dan Benner"
+  }
+}

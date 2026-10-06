@@ -13,6 +13,8 @@
  *   image     { name, region, country }   → findImage()
  *   decide    { mode, scope, name, lat, lng, decision, reason } → scout-log.jsonl
  *   decisions {}                          → scout-log.jsonl, read live from GitHub
+ *   runlog    { mode, scope, considered, rejected_rule, rejected_judgment, shown, searches,
+ *               tokens_in, tokens_out, cost_usd } → one summary line per run (for the agent card)
  * ========================================================================== */
 const Anthropic = require('@anthropic-ai/sdk');
 const { appendJsonl, readJsonl, readBody, findImage, geocode, reverseGeocode } = require('./_lib');
@@ -156,6 +158,13 @@ module.exports = async (req, res) => {
   let body;
   try { body = await readBody(req); } catch (e) { return res.status(400).json({ error: 'Bad JSON' }); }
 
+  // The agent card's numbers are public (counts and costs only, no place names), so the
+  // card reads properly when opened from another site.
+  if (body.action === 'cardstats') {
+    try { return res.status(200).json(await cardstats()); }
+    catch (e) { return res.status(500).json({ error: String((e && e.message) || e) }); }
+  }
+
   const secret = process.env.WAYPOINTS_ADD_SECRET;
   if (secret && body.password !== secret) return res.status(401).json({ error: 'Bad access key' });
 
@@ -171,6 +180,7 @@ module.exports = async (req, res) => {
       case 'image':
         return res.status(200).json({ url: await findImage(body.name, body.region, body.country) });
       case 'decide': return res.status(200).json(await decide(body));
+      case 'runlog': return res.status(200).json(await runlog(body));
       case 'decisions': return res.status(200).json({ decisions: await readJsonl(LOG_FILE) });
       default: return res.status(400).json({ error: 'Unknown action' });
     }
@@ -216,6 +226,35 @@ async function step(body) {
     usage: msg.usage,
     searchCap: cap
   };
+}
+
+/* ---------------------------------- cardstats ----------------------------- */
+async function cardstats() {
+  const log = await readJsonl(LOG_FILE);
+  const runs = log.filter(d => d.decision === 'run').map(r => ({
+    at: r.at, mode: r.mode, scope: r.scope, considered: r.considered, rejected_rule: r.rejected_rule,
+    rejected_judgment: r.rejected_judgment, shown: r.shown, searches: r.searches,
+    tokens_in: r.tokens_in, tokens_out: r.tokens_out, cost_usd: r.cost_usd
+  }));
+  const since = runs.length ? runs[0].at : null;   // count decisions only from when runs were logged
+  const count = kind => since ? log.filter(d => d.decision === kind && d.at >= since).length : 0;
+  return { runs, accepted: count('accepted'), overruled: count('overruled') };
+}
+
+/* ------------------------------------ runlog ------------------------------- */
+// One line per finished run, so the agent card can show real numbers.
+async function runlog(body) {
+  const n = k => Math.max(0, Math.round(Number(body[k]) || 0));
+  const entry = {
+    at: new Date().toISOString(), decision: 'run',
+    mode: body.mode === 'area' ? 'area' : 'pin',
+    scope: String(body.scope || '').slice(0, 120),
+    considered: n('considered'), rejected_rule: n('rejected_rule'), rejected_judgment: n('rejected_judgment'),
+    shown: n('shown'), searches: n('searches'), tokens_in: n('tokens_in'), tokens_out: n('tokens_out'),
+    cost_usd: Math.max(0, +(Number(body.cost_usd) || 0).toFixed(4))
+  };
+  await appendJsonl(LOG_FILE, entry, 'Scout run: ' + entry.mode + ' ' + entry.scope);
+  return { ok: true };
 }
 
 /* ------------------------------------ decide ------------------------------- */

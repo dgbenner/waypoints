@@ -309,7 +309,23 @@
     renderMapBtn();
     refreshSlotFor(anchor);
     logLine('end', totalsLine() + ' · largest request ' + Math.round(run.bytesSent / 1024) + ' KB');
+    logRunSummary();
     openTray();
+  }
+
+  // One summary line per finished run in scout-log.jsonl, read by the agent card.
+  function logRunSummary() {
+    const r = run.result;
+    if (!r) return;
+    const t = run.tokens;
+    server('runlog', {
+      mode: run.mode, scope: run.mode === 'area' ? run.anchor.name : run.anchor.id,
+      considered: (r.headline_facts && r.headline_facts.considered) || 0,
+      rejected_rule: r.rejected.filter(x => x.suggestion).length,      // moved by the code's checks
+      rejected_judgment: r.rejected.filter(x => !x.suggestion).length, // Scout's own rejections
+      shown: r.suggestions.length, searches: run.searches,
+      tokens_in: t.input + t.cacheWrite + t.cacheRead, tokens_out: t.output, cost_usd: cost()
+    }).catch(() => { /* the card just shows one run fewer */ });
   }
 
   function stopRun() {
@@ -331,7 +347,8 @@
     searching: ['Scrounging around…', 'Peering through the spyglass…', 'Investigating…', 'Searching for clues…',
       'Following a lead…', 'Asking the locals…', 'Checking under rocks…', 'Squinting at the horizon…',
       'Rummaging through old maps…', 'Sniffing out a trail…', 'Scout is on the case…', 'Knocking on doors…',
-      'Reading the small print…', 'Turning over stones…', 'Combing the archives…'],
+      'Reading the small print…', 'Turning over stones…', 'Combing the archives…',
+      'Invetigating with Gareth…'],   // misspelled on purpose: The Office (UK)
     checking: ['Checking a lead…', 'Pinning it down…', 'Making sure it’s real…', 'Measuring the distance…',
       'Checking it isn’t already on your map…', 'Comparing notes…'],
     remembering: ['Remembering what you turned down…', 'Checking the old logbook…'],

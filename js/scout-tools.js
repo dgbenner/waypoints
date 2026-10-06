@@ -172,7 +172,7 @@
           return { content: d.length ? { duplicate: true, matches: d } : { duplicate: false } };
         }
         case 'past_decisions': {
-          const d = await loadDecisions();
+          const d = (await loadDecisions()).filter(x => ['accepted', 'rejected', 'overruled'].includes(x.decision));
           return { content: d.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, decision: x.decision, reason: x.reason, at: x.at })) };
         }
         case 'submit_findings':
