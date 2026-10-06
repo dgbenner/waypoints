@@ -648,10 +648,12 @@ html, body {
 .scout-card__done { font-size: 11.5px; font-style: italic; color: var(--ink-soft); }
 .scout-mini {
   appearance: none; font-family: var(--serif); font-size: 11.5px; letter-spacing: 0.03em; line-height: 1;
-  padding: 5px 11px; border-radius: 4px; cursor: pointer;
+  padding: 5px 11px; border-radius: 4px; cursor: pointer; position: relative;
   background: transparent; color: var(--ink); border: 1px solid rgba(58,50,38,0.32);
   transition: background 0.15s;
 }
+/* invisible extra hit area so the small buttons are easy to land on */
+.scout-mini::after { content: ''; position: absolute; inset: -8px -4px; }
 .scout-mini:hover { background: var(--paper-deep); }
 .scout-mini--primary { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 .scout-mini--primary:hover { background: #2c261d; }

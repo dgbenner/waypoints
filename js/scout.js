@@ -643,16 +643,17 @@
 
   // Wire the action buttons inside one card or the inspector bar.
   function wireActions(root, it, i) {
-    root.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', e => {
-      e.stopPropagation();
-      if (b.dataset.act === 'accept') { if (i !== tray.selected) select(i, false); accept(it); }
-      else if (b.dataset.act === 'overrule') overrule(it);
-      else if (b.dataset.act === 'reject') {
+    root.querySelectorAll('[data-act]').forEach(b => {
+      // don't let the press move focus: in some browsers that scrolls the row and the click misses
+      b.addEventListener('mousedown', e => e.preventDefault());
+      b.addEventListener('click', e => {
+        e.stopPropagation();
         if (i !== tray.selected) select(i, false);
-        const box = tray.detail.querySelector('.scout-reasons');
-        if (box) box.hidden = false;
-      }
-    }));
+        if (b.dataset.act === 'accept') accept(it);
+        else if (b.dataset.act === 'overrule') overrule(it);
+        else if (b.dataset.act === 'reject') reject(it, '');
+      });
+    });
   }
 
   function select(i, fly) {
@@ -674,10 +675,10 @@
     const sources = (s.evidence || []).map(e =>
       '<li><a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(hostOf(e.url)) + '</a> ' + esc(e.claim) + '</li>').join('');
     const place = s.locality ? [s.locality, s.country].filter(Boolean).join(', ') : shortPlace(s.place);
-    const reasons = (!it._decided && tray.segName === 'suggestions')
-      ? '<div class="scout-reasons" hidden><span class="scout-reasons__label">Why? (optional)</span>' +
+    const reasons = (it._decided === 'rejected' && !it._reason && tray.segName === 'suggestions')
+      ? '<div class="scout-reasons"><span class="scout-reasons__label">Why? (optional)</span>' +
         REJECT_CHIPS.map(c => '<button type="button" class="scout-chip scout-chip--reason-pick" data-reason="' + esc(c) + '">' + esc(c) + '</button>').join('') +
-        '<button type="button" class="scout-chip scout-chip--reason-pick" data-reason="">Skip</button></div>'
+        '</div>'
       : '';
     tray.detail.innerHTML =
       photoHtml(s, 'scout-detail__img') +
@@ -700,7 +701,7 @@
 
     tray.detail.querySelectorAll('[data-pin]').forEach(b => b.addEventListener('click', () => W().flyTo(b.dataset.pin)));
     wireActions($('.scout-detail__actions', tray.detail), it, tray.selected);
-    tray.detail.querySelectorAll('[data-reason]').forEach(b => b.addEventListener('click', () => reject(it, b.dataset.reason)));
+    tray.detail.querySelectorAll('[data-reason]').forEach(b => b.addEventListener('click', () => addReason(it, b.dataset.reason)));
   }
 
   function hostOf(u) { try { return new URL(u).host.replace(/^www\./, ''); } catch (e) { return u; } }
@@ -736,6 +737,13 @@
     it._decided = 'rejected'; it._reason = reason;
     renderTray(); drawMarkers(false); saveRun();
     if (!(await decide(it, 'rejected', reason))) { it._decided = null; renderTray(); saveRun(); }
+  }
+
+  // Optional reason after a reject: logged as a second entry carrying the reason.
+  async function addReason(it, reason) {
+    it._reason = reason;
+    renderTray(); saveRun();
+    if (!(await decide(it, 'rejected', reason))) { it._reason = ''; renderTray(); saveRun(); }
   }
 
   async function overrule(it) {
