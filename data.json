@@ -6489,5 +6489,32 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "avebury-stone-circle",
+    "name": "Avebury Stone Circle",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Wiltshire",
+    "country": "United Kingdom",
+    "lat": 51.4286099,
+    "lng": -1.8517053,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "The largest stone circle in Britain, a Neolithic henge you can walk through, near Silbury Hill.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "avebury-stone-circle.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
