@@ -6433,5 +6433,34 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "tintagel-castle",
+    "name": "Tintagel Castle",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Cornwall",
+    "country": "United Kingdom",
+    "lat": 50.6686663,
+    "lng": -4.762152,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "coast",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Cliff-top medieval ruin on the Cornish coast, long linked to the legend of King Arthur.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "tintagel-castle.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-06"
   }
 ]
