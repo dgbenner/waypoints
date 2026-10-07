@@ -6741,5 +6741,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-07"
+  },
+  {
+    "id": "lindisfarne-castle",
+    "name": "Lindisfarne Castle",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Northumberland",
+    "country": "United Kingdom",
+    "lat": 55.6690608,
+    "lng": -1.7848547,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "coast"
+    ],
+    "prominence": "signature",
+    "blurb": "16th-century tidal-island fort on Holy Island, remodelled as an Arts and Crafts home by Edwin Lutyens in 1903.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "lindisfarne-castle.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-07"
   }
 ]
