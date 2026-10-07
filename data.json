@@ -6685,5 +6685,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-07"
+  },
+  {
+    "id": "rosslyn-chapel",
+    "name": "Rosslyn Chapel",
+    "macroRegion": "uk",
+    "region": "Scotland",
+    "subregion": "Midlothian",
+    "country": "United Kingdom",
+    "lat": 55.8553873,
+    "lng": -3.1599363,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "cathedral",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Ornately carved 15th-century chapel near Roslin, famed for its mysterious stonework and Da Vinci Code fame.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "rosslyn-chapel.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-07"
   }
 ]
