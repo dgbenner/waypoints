@@ -6769,5 +6769,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-07"
+  },
+  {
+    "id": "bodiam-castle",
+    "name": "Bodiam Castle",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "East Sussex",
+    "country": "United Kingdom",
+    "lat": 51.0022632,
+    "lng": 0.5432201,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Moated 14th-century medieval castle in East Sussex, a picturesque National Trust ruin.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "bodiam-castle.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-07"
   }
 ]
