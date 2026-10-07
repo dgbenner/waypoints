@@ -30,3 +30,4 @@
 {"at":"2026-10-07T05:49:03.836Z","mode":"area","scope":"United Kingdom","name":"Glenfinnan Viaduct","lat":56.8758236,"lng":-5.4293199,"decision":"accepted","reason":""}
 {"at":"2026-10-07T05:49:19.230Z","mode":"area","scope":"United Kingdom","name":"Angel of the North","lat":54.914116,"lng":-1.5895191,"decision":"rejected","reason":""}
 {"at":"2026-10-07T05:49:39.099Z","mode":"area","scope":"United Kingdom","name":"Lindisfarne Castle","lat":55.6690608,"lng":-1.7848547,"decision":"accepted","reason":""}
+{"at":"2026-10-07T05:51:13.964Z","decision":"run","mode":"area","scope":"Northumberland","considered":8,"rejected_rule":0,"rejected_judgment":4,"shown":3,"searches":12,"tokens_in":287139,"tokens_out":6418,"cost_usd":0.417}
