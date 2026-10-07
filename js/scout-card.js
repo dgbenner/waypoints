@@ -19,7 +19,7 @@
   const modal = document.getElementById('sa-modal');
   const backdrop = document.getElementById('sa-backdrop');
   const body = document.getElementById('sa-body');
-  let card = null, openStep = 2;
+  let card = null, openStep = 0;   // opens on the first step, Reads
 
   const STEP_ICONS = [
     '<path d="M4 5h11a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3z"/><path d="M8 9h6M8 13h6"/>',
@@ -147,7 +147,7 @@
   function renderStep() {
     body.querySelectorAll('.sa-node').forEach(n => n.setAttribute('aria-expanded', +n.dataset.i === openStep));
     const s = card.steps[openStep];
-    $('#sa-stepdetail', body).innerHTML = '<b>' + esc(s.t) + '.</b> ' + s.d;   // d carries trusted <b> markup from our own JSON
+    $('#sa-stepdetail', body).innerHTML = '<b>' + esc(s.t) + ':</b> ' + s.d;   // d carries trusted <b> markup from our own JSON
   }
 
   /* ------------------------------ live numbers ---------------------------- */

@@ -37,21 +37,27 @@
     <nav class="region-control" id="region-control" aria-label="Region flags"></nav>
   </div>
 
-  <!-- Bottom-left: recents + legend (KEY) stacked, then the Add Waypoint button -->
+  <!-- Top right: the Legend, collapsed to a toggle until clicked -->
+  <div class="key-box">
+    <button class="key-toggle" id="key-toggle" type="button" aria-expanded="false" aria-controls="legend">
+      Legend <span class="key-toggle__chev" aria-hidden="true">▾</span>
+    </button>
+    <aside class="legend" id="legend" aria-label="Legend and filters" hidden></aside>
+  </div>
+
+  <!-- Bottom-left: Add Waypoint over Recently added -->
   <div class="lower-left">
     <div class="lower-left__stack">
+      <button class="add-waypoint" id="add-waypoint" type="button"
+              aria-label="Add new waypoint" title="Add new waypoint">
+        <svg class="aw-frame" viewBox="0 0 172 52" preserveAspectRatio="none" aria-hidden="true">
+          <path class="aw-corners" d="M3 17 V8 Q3 3 8 3 H17 M155 3 H164 Q169 3 169 8 V17 M169 35 V44 Q169 49 164 49 H155 M17 49 H8 Q3 49 3 44 V35" />
+        </svg>
+        <svg class="aw-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 V21.5 M2.5 12 H21.5" /></svg>
+        <span class="aw-lbl">Add Waypoint</span>
+      </button>
       <aside class="legend recents" id="recents" aria-label="Recently added" hidden></aside>
-      <aside class="legend" id="legend" aria-label="Key and filters"></aside>
     </div>
-    <button class="add-waypoint" id="add-waypoint" type="button"
-            aria-label="Add new waypoint" title="Add new waypoint">
-      <span class="aw-lbl aw-lbl--top">Add</span>
-      <svg class="aw-frame" viewBox="0 0 100 100" aria-hidden="true">
-        <path class="aw-corners" d="M4 26 V4 H26 M74 4 H96 V26 M96 74 V96 H74 M26 96 H4 V74" />
-        <path class="aw-plus" d="M50 42 V58 M42 50 H58" />
-      </svg>
-      <span class="aw-lbl aw-lbl--bottom">Waypoint</span>
-    </button>
   </div>
 
   <!-- Side panel (desktop drawer / mobile bottom sheet) -->
@@ -116,7 +122,7 @@
   <!-- Feedback tab + window -->
   <!-- Right-edge tabs: Scout Agent card above Feedback -->
   <div class="side-tabs">
-    <button class="fb-tab" id="sa-tab" type="button" aria-label="Scout agent card" aria-expanded="false" aria-controls="sa-modal">Scout Agent</button>
+    <button class="fb-tab" id="sa-tab" type="button" aria-label="Scout rules" aria-expanded="false" aria-controls="sa-modal">Scout Rules</button>
     <button class="fb-tab" id="fb-tab" type="button" aria-label="Feedback">Feedback</button>
   </div>
   <div class="fb-backdrop" id="sa-backdrop" hidden></div>

@@ -60,8 +60,8 @@ html, body {
   border-bottom-color: rgba(58,50,38,0.15);
 }
 .leaflet-bar { border: 1px solid rgba(58,50,38,0.25); box-shadow: var(--shadow-soft); }
-/* zoom, compass and Area Scout share one vertical axis, 45px in from the right */
-.leaflet-top.leaflet-right .leaflet-control-zoom { margin-right: 28px; }
+/* bottom-right stack: zoom over compass over scale; zoom and compass share one axis, 45px in from the right */
+.leaflet-bottom.leaflet-right .leaflet-control-zoom { margin-right: 28px; margin-bottom: 4px; }
 .leaflet-control-attribution {
   background: rgba(251,246,233,0.78) !important;
   color: var(--ink-soft); font-size: 10px;
@@ -175,7 +175,7 @@ html, body {
 .region-control button.is-active .rc-all { opacity: 1; }
 
 /* ------------------------------ Legend ----------------------------------- */
-/* Bottom-left row: legend (KEY) with the Add button to its right */
+/* Bottom-left: Add Waypoint over Recently added; the Key lives top right */
 .lower-left {
   position: fixed; left: 16px; bottom: 22px; z-index: 600;
   display: flex; flex-direction: row; align-items: flex-end; gap: 12px;
@@ -183,13 +183,32 @@ html, body {
 
 .legend {
   width: 172px; flex: 0 0 auto; background: var(--cream);
-  max-height: calc(100vh - 200px); overflow-y: auto;
+  max-height: calc(100vh - 120px); overflow-y: auto;
   border: 1px solid rgba(58,50,38,0.30); border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
   padding: 9px 11px 11px;
   outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
 }
-.lower-left__stack { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.lower-left__stack { display: flex; flex-direction: column; gap: 10px; width: 172px; }
+
+/* Key: collapsed toggle in the top-right corner, opens downward */
+.key-box {
+  position: fixed; top: 16px; right: 16px; z-index: 650;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+.key-toggle {
+  appearance: none; cursor: pointer; font-family: var(--serif);
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink);
+  background: var(--cream); padding: 7px 10px 7px 13px;
+  border: 1px solid rgba(58,50,38,0.30); border-radius: var(--radius); box-shadow: var(--shadow-soft);
+  outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
+  display: flex; align-items: center; gap: 6px; transition: background 0.15s;
+}
+.key-toggle:hover { background: var(--paper-deep); }
+.key-toggle:focus-visible { outline: 2px solid var(--line); }
+.key-toggle__chev { font-size: 9px; letter-spacing: 0; transition: transform 0.2s; }
+.key-toggle[aria-expanded="true"] .key-toggle__chev { transform: rotate(180deg); }
+.key-box .legend[hidden] { display: none; }
 
 /* Recently added — same case as the key, a quarter of its height */
 .recents { max-height: none; overflow: visible; }
@@ -289,8 +308,8 @@ html, body {
 
 /* Compass rose — sits under the zoom control, clear of scale + attribution */
 .compass {
-  position: fixed; right: 14px; top: 96px; z-index: 600;
   width: 62px; height: 62px; opacity: 0.85; pointer-events: none;
+  margin: 0 14px 2px 0 !important;
   filter: drop-shadow(0 1px 2px rgba(58,50,38,0.3));
 }
 .compass svg { width: 100%; height: 100%; }
@@ -399,12 +418,12 @@ html, body {
 
 /* --------------------- Add-waypoint button (corner brackets) ------------- */
 .add-waypoint {
-  width: 132px; height: 132px; position: relative;
+  width: 100%; height: 52px; position: relative;
+  display: flex; align-items: center; justify-content: center; gap: 7px; padding: 0 13px;
   background: rgba(255, 255, 255, 0.6); border: none; cursor: pointer;
   color: var(--ink-soft); transition: color 0.15s, background 0.15s;
   border-radius: 6px;
 }
-.add-waypoint { transform: scale(0.8); transform-origin: left bottom; }
 .add-waypoint:hover { color: var(--line); background: rgba(251, 246, 233, 0.35); }
 .add-waypoint.is-over { color: var(--line); background: rgba(185, 130, 79, 0.14); }
 
@@ -420,17 +439,17 @@ html, body {
 .aw-toast.is-error { background: var(--c-personal); }
 .add-waypoint .aw-frame { position: absolute; inset: 0; width: 100%; height: 100%;
   filter: drop-shadow(0 1px 1px rgba(58,50,38,0.25)); }
-.add-waypoint .aw-corners { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
-.add-waypoint .aw-plus   { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
+.add-waypoint .aw-corners { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.add-waypoint .aw-plus {
+  position: relative; flex: 0 0 auto; width: 24px; height: 24px;
+  fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round;
+}
 .add-waypoint .aw-lbl {
-  position: absolute; left: 0; right: 0; text-align: center;
-  display: flex; align-items: center; justify-content: center;
+  position: relative; white-space: nowrap;
   font-family: var(--serif); font-size: 11px; letter-spacing: 0.18em;
   text-transform: uppercase; color: var(--ink);
   text-shadow: 0 1px 0 var(--cream);
 }
-.add-waypoint .aw-lbl--top    { top: 6%;  bottom: 60%; }   /* above the plus */
-.add-waypoint .aw-lbl--bottom { top: 60%; bottom: 6%;  }   /* below the plus */
 
 /* ------------------------------ Add modal -------------------------------- */
 .aw-modal-backdrop {
@@ -564,22 +583,30 @@ html, body {
 
 /* Area Scout: the same button on the map, under the zoom control and compass */
 .scout-map {
-  position: fixed; right: 15px; top: 172px; z-index: 600;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+  position: fixed; left: 22px; top: 82px; z-index: 600;
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
 }
+/* caption to his right: plain text on the map, a soft paper halo keeps it legible */
+.scout-map__text { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
+.scout-map .scout-btn__icon { transform: scaleX(-1); }   /* faces right, into the map */
 .scout-map .scout-btn { width: 60px; height: 60px; }
 .scout-map__status {
-  max-width: 190px; text-align: right; font-size: 12px; font-style: italic; color: var(--ink);
-  background: rgba(251,246,233,0.92); border: 1px solid rgba(58,50,38,0.2); border-radius: var(--radius);
-  padding: 4px 8px; box-shadow: var(--shadow-soft);
+  max-width: 260px; text-align: left; font-size: 13px; font-style: italic; color: var(--ink);
+  text-shadow: 0 0 3px var(--cream), 0 0 6px var(--cream), 0 0 10px var(--cream);
 }
 .scout-map__status[hidden] { display: none; }
 .scout-map__last {
-  appearance: none; cursor: pointer; font-family: var(--serif); font-size: 11.5px; color: var(--ink);
-  background: rgba(251,246,233,0.94); border: 1px solid rgba(58,50,38,0.25); border-radius: var(--radius);
-  padding: 4px 9px; box-shadow: var(--shadow-soft); white-space: nowrap;
+  appearance: none; cursor: pointer; font-family: var(--serif); font-size: 12px; color: var(--ink);
+  background: none; border: 0; padding: 0; white-space: nowrap;
+  border-bottom: 1px solid rgba(58,50,38,0.4);
+  text-shadow: 0 0 3px var(--cream), 0 0 6px var(--cream), 0 0 10px var(--cream);
 }
-.scout-map__last:hover { background: var(--paper-deep); }
+.scout-map__last:hover { border-bottom-color: var(--ink); }
+/* "…" while working: three dots pulsing in turn */
+.scout-dots i { font-style: inherit; animation: scout-dot 1.2s infinite; opacity: 0.2; }
+.scout-dots i:nth-child(2) { animation-delay: 0.2s; }
+.scout-dots i:nth-child(3) { animation-delay: 0.4s; }
+@keyframes scout-dot { 0%, 60%, 100% { opacity: 0.2; } 30% { opacity: 1; } }
 .scout-map__last[hidden] { display: none; }
 
 /* Running pill (visible when the panel is closed mid-run) */
@@ -628,12 +655,14 @@ html, body {
 }
 .scout-tray__close:hover { background: var(--paper-deep); color: var(--ink); }
 
-.scout-tray__body { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 400px; }
-.scout-tray.is-empty .scout-tray__body { grid-template-columns: 1fr; }
+.scout-tray__body { flex: 1 1 auto; min-height: 0; position: relative; }
+.scout-tray.is-empty .scout-tray__body { display: block; }
 .scout-tray.is-empty .scout-cards { display: none; }
 .scout-cards {
-  display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 14px 20px; align-items: stretch;
-  border-right: 1px solid rgba(58,50,38,0.14); overscroll-behavior: contain;
+  /* runs the full width, under the inspector, so you can see more cards waiting behind it */
+  position: absolute; inset: 0; padding-right: 440px;
+  display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; padding-top: 14px; padding-bottom: 14px; padding-left: 20px; align-items: stretch;
+  overscroll-behavior: contain;
 }
 .scout-card {
   position: relative; flex: 0 0 210px; display: flex; flex-direction: column; gap: 6px; text-align: left;
@@ -681,20 +710,24 @@ html, body {
 .scout-chip--pin, .scout-chip--reason-pick { cursor: pointer; }
 .scout-chip--pin:hover, .scout-chip--reason-pick:hover { background: var(--paper-deep); }
 
-.scout-detail { overflow-y: auto; overscroll-behavior: contain; }
-.scout-detail__img { width: 100%; height: 170px; object-fit: cover; display: block; background: var(--paper-deep); }
-.scout-detail__pad { padding: 4px 20px 22px; }
-.scout-detail__bar {
-  position: sticky; top: 0; z-index: 1; background: var(--cream);
-  padding: 10px 20px 8px; border-bottom: 1px solid rgba(58,50,38,0.10);
+/* Inspector: floats over the right end of the card row, see-through enough to show the cards behind */
+.scout-detail {
+  position: absolute; top: 10px; right: 14px; bottom: 10px; width: 400px; z-index: 2;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: rgba(251,246,233,0.85);
+  border: 1px solid rgba(58,50,38,0.14); border-radius: 6px;
+  box-shadow: var(--shadow-soft);
 }
+.scout-tray.is-empty .scout-detail { position: static; width: auto; background: none; border: 0; box-shadow: none; }
+.scout-detail__pad { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 2px 18px 18px; }
+.scout-detail__bar { flex: 0 0 auto; padding: 12px 18px 8px; border-bottom: 1px solid rgba(58,50,38,0.12); }
 .scout-detail__barrow { display: flex; align-items: flex-start; gap: 12px; }
-.scout-detail__name { font-size: 19px; font-weight: 500; line-height: 1.25; margin: 0; flex: 1 1 auto; min-width: 0; }
+.scout-detail__name { font-size: 17px; font-weight: 500; line-height: 1.25; letter-spacing: -0.005em; margin: 0; flex: 1 1 auto; min-width: 0; }
 .scout-detail__actions { flex: 0 0 auto; display: flex; gap: 6px; align-items: center; padding-top: 2px; }
 .scout-detail__actions .scout-card__done { white-space: nowrap; }
-.scout-detail__place { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin: 6px 0 4px !important; }
-.scout-detail h4 { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; color: var(--ink-soft); margin: 14px 0 4px; }
-.scout-detail p { font-size: 14px; line-height: 1.5; margin: 0; }
+.scout-detail__place { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 8px 0 2px !important; }
+.scout-detail h4 { font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: var(--ink-soft); margin: 11px 0 3px; }
+.scout-detail p { font-size: 13px; line-height: 1.42; letter-spacing: -0.005em; margin: 0; }
 .scout-detail__why { margin-bottom: 8px !important; }
 .scout-fits { display: flex; flex-wrap: wrap; gap: 6px; }
 .scout-sources { margin-top: 14px; font-size: 13px; }
@@ -747,20 +780,23 @@ html, body {
   .scout-tray { height: 60vh; }
   .scout-tray__head { flex-wrap: wrap; row-gap: 6px; padding-left: 16px; }
   .scout-tray__fun { order: 5; flex-basis: 100%; white-space: normal; font-size: 14px; }
-  .scout-tray__body { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
-  .scout-cards { border-right: none; border-bottom: 1px solid rgba(58,50,38,0.14); padding: 12px 16px; }
+  /* phones: cards on top, inspector underneath (no overlay) */
+  .scout-tray__body { display: grid; grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+  .scout-cards { position: static; border-right: none; border-bottom: 1px solid rgba(58,50,38,0.14); padding: 12px 16px; }
+  .scout-detail { position: static; width: auto; border-radius: 0; border: 0; background: var(--cream); box-shadow: none; }
   .scout-card { flex-basis: 170px; }
   .scout-cards { align-items: stretch; }
   .scout-card__img { height: 84px; }
-  .scout-detail__img { height: 130px; }
+
   .scout-tray__totals { display: none; }
-  .leaflet-top.leaflet-right .leaflet-control-zoom { margin-right: 17px; }
-  .scout-map { right: 8px; top: 122px; }
+  .leaflet-bottom.leaflet-right .leaflet-control-zoom { margin-right: 17px; }
+  .scout-map { left: 16px; top: 62px; }
   .scout-map .scout-btn { width: 52px; height: 52px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .scout-tray { transition: none; }
-  .scout-btn.is-running .scout-btn__icon, .scout-btn.is-running, .scout-pill__dot { animation: none; }
+  .scout-btn.is-running .scout-btn__icon, .scout-btn.is-running, .scout-pill__dot, .scout-dots i { animation: none; }
+  .scout-dots i { opacity: 1; }
 }
 
 /* ---------------------------- Scout Agent card --------------------------- */
@@ -781,7 +817,7 @@ html, body {
   width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: var(--cream);
   border: 1px solid rgba(58,50,38,0.30); outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
 }
-.sa-badge img { width: 74%; height: 74%; object-fit: contain; }
+.sa-badge img { width: 70%; height: 70%; object-fit: contain; transform: scaleX(-1); }   /* faces right */
 .sa-head__text p { margin: 2px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-soft); }
 .sa-head .aw-h { margin: 0; font-size: 26px; }
 .sa-sc { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); }
@@ -812,8 +848,8 @@ html, body {
   display: grid; place-items: center; color: var(--line); position: relative; z-index: 1; transition: background 0.15s, color 0.15s;
 }
 .sa-node[aria-expanded="true"] .sa-dot { background: var(--line); color: var(--cream); }
-.sa-node b { font-size: 14px; font-weight: 600; }
-.sa-node span:last-child { font: 11px var(--mono); color: var(--ink-soft); }
+.sa-node b { font-size: 14px; font-weight: 600; line-height: 1.15; }
+.sa-node span:last-child { font: 11px/1.15 var(--mono); color: var(--ink-soft); margin-top: -3px; }   /* subtitle tucked up under the title */
 .sa-node:focus-visible { outline: 2px solid var(--line); outline-offset: 2px; border-radius: 4px; }
 .sa-stepdetail { background: var(--paper); border-radius: 4px; padding: 12px 14px; font-size: 14px; line-height: 1.5; color: var(--ink-soft); }
 .sa-stepdetail b { color: var(--ink); }
@@ -890,10 +926,13 @@ html, body {
 
 /* ------------------------------ Mobile ----------------------------------- */
 @media (max-width: 640px) {
-  .add-waypoint { width: 96px; height: 96px; transform: none; }
-  .add-waypoint .aw-lbl { font-size: 9px; letter-spacing: 0.12em; }
+  .add-waypoint { height: 46px; gap: 10px; padding: 0 12px; }
+  .add-waypoint .aw-plus { width: 20px; height: 20px; }
+  .add-waypoint .aw-lbl { font-size: 10px; letter-spacing: 0.12em; }
   .legend { width: 150px; font-size: 12px; }
-  .compass { width: 44px; height: 44px; bottom: auto; top: 64px; right: 12px; }
+  .lower-left__stack { width: 150px; }
+  .key-box { top: 58px; right: 12px; }
+  .compass { width: 44px; height: 44px; margin: 0 12px 2px 0 !important; }
 
   /* Panel becomes a bottom sheet */
   .panel {

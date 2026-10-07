@@ -166,12 +166,13 @@
 
   let baseLayer = baseLayerFor('uk').addTo(map);
 
-  L.control.zoom({ position: 'topright' }).addTo(map);
+  // Bottom-right stack, top to bottom: zoom, compass, scale. Leaflet puts each new
+  // bottom-corner control above the previous one, so add them bottom-up.
   L.control.scale({ position: 'bottomright', imperial: true, metric: true, maxWidth: 140 }).addTo(map);
 
   // Compass rose (map furniture)
   const compass = document.createElement('div');
-  compass.className = 'compass';
+  compass.className = 'compass leaflet-control';
   compass.setAttribute('aria-hidden', 'true');
   compass.innerHTML =
     '<svg viewBox="0 0 100 100"><g fill="none" stroke="#3A3226" stroke-width="1.4">' +
@@ -182,7 +183,9 @@
     '<path d="M84 50 L50 56 L54 50 L50 44 Z" fill="#3A3226" opacity="0.5"/>' +
     '<text x="50" y="13" text-anchor="middle" font-family="Spectral,serif" font-size="12" fill="#3A3226">N</text>' +
     '</svg>';
-  document.body.appendChild(compass);
+  const CompassControl = L.Control.extend({ options: { position: 'bottomright' }, onAdd: () => compass });
+  new CompassControl().addTo(map);
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
 
   /* ----------------------------------------------------------------------- *
    * MARKERS
@@ -327,7 +330,16 @@
    * LEGEND  (key + filter)
    * ----------------------------------------------------------------------- */
   const legendEl = document.getElementById('legend');
-  legendEl.innerHTML = '<h2 class="legend__title">Key</h2>';
+  legendEl.innerHTML = '';   // the "Legend" toggle above it is the title
+
+  // Collapsed by default; the toggle (top right) opens and closes it, as does Esc.
+  const keyToggle = document.getElementById('key-toggle');
+  function setKeyOpen(open) {
+    legendEl.hidden = !open;
+    keyToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  keyToggle.addEventListener('click', () => setKeyOpen(legendEl.hidden));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !legendEl.hidden) setKeyOpen(false); });
 
   // A group = items column on the left + a rotated heading down the right edge.
   function legendGroup(headingText) {

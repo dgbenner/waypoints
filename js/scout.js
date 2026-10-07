@@ -65,7 +65,7 @@
       '<div class="scout-slot__text">' +
         '<span class="scout-slot__label">Pin Scout</span>' +
         '<span class="scout-slot__status" aria-live="polite">' +
-          esc(busyHere ? run.status : busyElsewhere ? 'Busy ' + scopeText() : 'Places worth a detour near here') +
+          (busyHere ? statusHtml(run.status) : esc(busyElsewhere ? 'Busy ' + scopeText() : 'Places worth a detour near here')) +
         '</span>' +
       '</div>';
     $('.scout-btn', slot).addEventListener('click', () => {
@@ -78,14 +78,16 @@
   const scopeText = () => run ? (run.mode === 'area' ? 'across ' : 'around ') + run.anchor.name : '';
 
   /* ---------------------- Area Scout: the map button ---------------------- */
-  // Always on the map, under the zoom control and compass. Scouts the view.
+  // Always on the map, top left under the title. Scouts the view. Caption sits to his right.
   const mapBtn = document.createElement('div');
   mapBtn.className = 'scout-map';
   mapBtn.innerHTML =
     '<button type="button" class="scout-btn" aria-label="Scout this area" title="Scout this area">' +
       iconHtml() + '<span class="scout-btn__stop">Stop</span></button>' +
-    '<span class="scout-map__status" aria-live="polite" hidden></span>' +
-    '<button type="button" class="scout-map__last" hidden></button>';
+    '<div class="scout-map__text">' +
+      '<span class="scout-map__status" aria-live="polite" hidden></span>' +
+      '<button type="button" class="scout-map__last" hidden></button>' +
+    '</div>';
   document.body.appendChild(mapBtn);
   $('.scout-btn', mapBtn).addEventListener('click', async () => {
     if (run && run.running) { stopRun(); return; }
@@ -113,7 +115,7 @@
     const tip = mine ? 'Stop Area Scout' : other ? label() + ' is busy ' + scopeText() : 'Scout this area';
     b.title = tip; b.setAttribute('aria-label', tip);
     st.hidden = !mine;
-    if (mine) st.textContent = run.status;
+    if (mine) st.innerHTML = statusHtml(run.status);
   }
 
   // The view Dan is looking at: its bounds plus a name. If the active flag's
@@ -142,12 +144,19 @@
     return { name: name || 'the map view', country, bounds, center: { lat: c.lat, lng: c.lng }, zoom: z };
   }
 
+  // Status text with its trailing "…" swapped for three dots that pulse while Scout works.
+  function statusHtml(text) {
+    const t = String(text || ''), base = t.replace(/(…|\.\.\.)$/, '');
+    const animate = run && run.running && base !== t;
+    return esc(base) + (animate ? '<span class="scout-dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>' : '');
+  }
+
   function setStatus(text) {
     if (!run) return;
     run.status = text;
     const slot = $('#p-scout');
     if (slot && slot.isConnected) {
-      const st = $('.scout-slot__status', slot); if (st) st.textContent = text;
+      const st = $('.scout-slot__status', slot); if (st) st.innerHTML = statusHtml(text);
     }
     renderMapBtn();
     // Pin Scout: the pill stands in for the panel's status line when the panel is closed.
@@ -156,7 +165,7 @@
     const panel = document.getElementById('panel');
     pill.hidden = !run.running || run.mode === 'area' ||
       (panel && panel.classList.contains('is-open') && slot && slot.dataset.pin === run.anchor.id);
-    $('.scout-pill__text', pill).textContent = text;
+    $('.scout-pill__text', pill).innerHTML = statusHtml(text);
   }
 
   let _pill;
@@ -607,8 +616,10 @@
 
   function renderTray() {
     const r = run.result;
-    tray.fun.textContent = run.error && !r ? run.error : run.fun;
-    $('.scout-tray__label', tray.el).textContent = label();
+    // Area Scout: a plain count ("Area Scout found (6)") instead of the fun line
+    const plain = run.mode === 'area' && r;
+    tray.fun.textContent = run.error && !r ? run.error : plain ? '' : run.fun;
+    $('.scout-tray__label', tray.el).textContent = plain ? label() + ' found (' + r.suggestions.length + ')' : label();
     tray.mode.textContent = (run.mode === 'area' ? 'Across ' : 'Around ') + run.anchor.name;
     const nS = r ? r.suggestions.length : 0, nR = r ? r.rejected.length : 0;
     const [bS, bR] = tray.seg.querySelectorAll('button');
@@ -727,9 +738,8 @@
         REJECT_CHIPS.map(c => '<button type="button" class="scout-chip scout-chip--reason-pick" data-reason="' + esc(c) + '">' + esc(c) + '</button>').join('') +
         '</div>'
       : '';
+    // No photo here (it's on the card). Name + actions are a fixed header; the rest scrolls.
     tray.detail.innerHTML =
-      photoHtml(s, 'scout-detail__img') +
-      // name + small actions stay pinned at the top while the inspector scrolls
       '<div class="scout-detail__bar">' +
         '<div class="scout-detail__barrow">' +
           '<h3 class="scout-detail__name">' + esc(it.name) + '</h3>' +
@@ -744,7 +754,7 @@
         (fits ? '<h4>Fits your pins</h4><div class="scout-fits">' + fits + '</div>' : '') +
         (sources ? '<details class="scout-sources"><summary>Sources (' + s.evidence.length + ')</summary><ul>' + sources + '</ul></details>' : '') +
       '</div>';
-    tray.detail.scrollTop = 0;
+    $('.scout-detail__pad', tray.detail).scrollTop = 0;
 
     tray.detail.querySelectorAll('[data-pin]').forEach(b => b.addEventListener('click', () => W().flyTo(b.dataset.pin)));
     wireActions($('.scout-detail__actions', tray.detail), it, tray.selected);

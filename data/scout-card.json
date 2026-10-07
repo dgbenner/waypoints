@@ -1,7 +1,7 @@
 {
   "_note": "Scout's agent card. Rendered by js/scout-card.js in the Scout Agent modal. When Scout's behaviour changes, update this file and AGENT-CARD.md together and add a changelog line.",
   "name": "Scout",
-  "kicker": "Agent card · Waypoints",
+  "kicker": "Agent card · Scout Rules",
   "job": "Finds places worth adding to your map, checks them, and explains why each one fits your taste.",
   "updated": "Oct 6, 2026",
   "glance": [
