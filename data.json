@@ -6657,5 +6657,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-06"
+  },
+  {
+    "id": "scotland-s-secret-bunker",
+    "name": "Scotland's Secret Bunker",
+    "macroRegion": "uk",
+    "region": "Scotland",
+    "subregion": "Fife",
+    "country": "United Kingdom",
+    "lat": 56.2703811,
+    "lng": -2.6975296,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Cold War nuclear command bunker hidden 100ft underground beneath a Fife farmhouse near Crail.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "scotland-s-secret-bunker.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-07"
   }
 ]
