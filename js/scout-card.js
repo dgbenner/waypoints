@@ -3,8 +3,12 @@
  * Content lives in data/scout-card.json; the live numbers come from
  * scout-log.jsonl through /api/scout (action: cardstats, public, counts only).
  *
- * Open it from another page with a link to  /?card=scout  on this site,
- * or call window.ScoutCard.open() from a script on this page.
+ * Two views behind the tabs in the header: Scout Rules (the parameters) and
+ * Agent Story (purpose, permissions, limits, success test, plus the template).
+ *
+ * Open it from another page with a link to  /?card=scout  on this site
+ * (add &view=story to open on the Agent Story), or call window.ScoutCard.open()
+ * / window.ScoutCard.open('story') from a script on this page.
  * ========================================================================== */
 (function () {
   'use strict';
@@ -20,6 +24,7 @@
   const backdrop = document.getElementById('sa-backdrop');
   const body = document.getElementById('sa-body');
   let card = null, openStep = 0;   // opens on the first step, Reads
+  let view = 'rules';              // 'rules' | 'story'
 
   const STEP_ICONS = [
     '<path d="M4 5h11a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3z"/><path d="M8 9h6M8 13h6"/>',
@@ -37,7 +42,8 @@
   };
 
   /* ------------------------------ open / close ---------------------------- */
-  async function open() {
+  async function open(which) {
+    view = which === 'story' ? 'story' : 'rules';
     if (window.Waypoints && window.Waypoints.closePanel) window.Waypoints.closePanel();
     modal.hidden = false; backdrop.hidden = false;
     tab.setAttribute('aria-expanded', 'true');
@@ -48,7 +54,6 @@
     }
     render();
     modal.focus();
-    loadStats();
   }
   function close() {
     if (modal.hidden) return;
@@ -56,17 +61,19 @@
     tab.setAttribute('aria-expanded', 'false');
     tab.focus();
     // opened from a ?card=scout link: drop the flag so a refresh shows the plain map
-    if (/[?&]card=scout\b/.test(location.search) || location.hash === '#scout-card') {
+    if (/[?&]card=scout\b/.test(location.search) || /^#scout-card/.test(location.hash)) {
       history.replaceState(null, '', location.pathname);
     }
   }
-  tab.addEventListener('click', open);
+  tab.addEventListener('click', () => open('rules'));
   backdrop.addEventListener('click', close);
   document.getElementById('sa-close').addEventListener('click', close);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) close(); });
 
   window.ScoutCard = { open, close };
-  if (/[?&]card=scout\b/.test(location.search) || location.hash === '#scout-card') open();
+  if (/[?&]card=scout\b/.test(location.search) || /^#scout-card/.test(location.hash)) {
+    open(/[?&]view=story\b/.test(location.search) || location.hash === '#scout-card-story' ? 'story' : 'rules');
+  }
 
   /* -------------------------------- render -------------------------------- */
   function render() {
@@ -75,14 +82,54 @@
       '<div class="sa-top">' +
       '<header class="sa-head">' +
         '<span class="sa-badge"><img src="images/scout-icon.png" alt=""></span>' +
-        '<div class="sa-head__text"><span class="sa-sc">' + esc(c.kicker) + '</span>' +
+        '<div class="sa-head__text">' +
+          '<div class="sa-tabs" role="tablist" aria-label="Card views">' +
+            tabBtn('rules', 'Scout Rules') + '<span class="sa-tabs__dot" aria-hidden="true">·</span>' + tabBtn('story', 'Agent Story') +
+          '</div>' +
           '<h2 class="aw-h" id="sa-title">' + esc(c.name) + '</h2><p>' + esc(c.job) + '</p></div>' +
         '<div class="sa-status"><span class="sa-chip sa-chip--live">Live</span><span class="sa-chip">Updated ' + esc(c.updated) + '</span></div>' +
       '</header>' +
 
-      '<div class="sa-glance">' + c.glance.map(g => '<div class="sa-g"><b>' + esc(g.n) + '</b><span>' + esc(g.label) + '</span></div>').join('') + '</div>' +
+      (view === 'rules' ? '<div class="sa-glance">' + c.glance.map(g => '<div class="sa-g"><b>' + esc(g.n) + '</b><span>' + esc(g.label) + '</span></div>').join('') + '</div>' : '') +
       '</div>' +
-      '<div class="sa-scroll" tabindex="-1">' +
+      '<div class="sa-scroll" tabindex="-1" role="tabpanel">' +
+      (view === 'story' ? storyHtml(c) + '</div>' : rulesHtml(c));
+
+    body.querySelectorAll('.sa-tab').forEach(b => b.addEventListener('click', () => {
+      if (b.dataset.view === view) return;
+      view = b.dataset.view; render();
+      const t = body.querySelector('.sa-tab[data-view="' + view + '"]'); if (t) t.focus();
+    }));
+    if (view === 'rules') wireRules();
+  }
+
+  function tabBtn(v, label) {
+    return '<button type="button" role="tab" class="sa-tab" data-view="' + v + '" aria-selected="' + (view === v) + '">' + esc(label) + '</button>';
+  }
+
+  /* ----------------------------- Agent Story view ------------------------- */
+  // "**when**" inside a template line marks an inline label
+  const inlineLabels = t => esc(t).replace(/\*\*(.+?)\*\*/g, '<b class="sa-lbl">$1</b>');
+  function storyHtml(c) {
+    const st = c.story, tp = c.template;
+    return '<div class="sa-story">' +
+      '<p class="sa-story__intro">' + esc(st.intro) + '</p>' +
+      '<p class="sa-story__lead"><b class="sa-lbl">As</b> ' + esc(st.as) + ', <b class="sa-lbl">when</b> ' + esc(st.when) +
+        ', <b class="sa-lbl">I want</b> ' + esc(st.want) + ', <b class="sa-lbl">so that</b> ' + esc(st.so_that) + '.</p>' +
+      '<dl class="sa-story__rows">' + st.rows.map(r => '<div><dt class="sa-lbl">' + esc(r.label) + '</dt><dd>' + esc(r.text) + '</dd></div>').join('') + '</dl>' +
+      '</div>' +
+      // the template, laid out exactly like the real story above, with [placeholders]
+      '<section class="sa-template"><h3 class="sa-template__title">Agent Story Template</h3>' +
+        '<p class="sa-story__lead sa-story__lead--blank"><b class="sa-lbl">' + esc(tp.lines[0].label) + '</b> ' + inlineLabels(tp.lines[0].text) + '</p>' +
+        '<dl class="sa-story__rows sa-story__rows--blank">' + tp.lines.slice(1).map(r => '<div><dt class="sa-lbl">' + esc(r.label) + '</dt><dd>' + inlineLabels(r.text) + '</dd></div>').join('') + '</dl>' +
+        '<h4 class="sa-template__h">How to Use It</h4>' +
+        '<ul class="sa-log">' + tp.howto.map(h => '<li>' + esc(h) + '</li>').join('') + '</ul>' +
+      '</section>';
+  }
+
+  /* ----------------------------- Scout Rules view ------------------------- */
+  function rulesHtml(c) {
+    return '' +
 
       section('How a Run Works', 'Click a step.',
         '<div class="sa-pipe">' + c.steps.map((s, i) =>
@@ -122,7 +169,9 @@
       '</div>' +
       '<div class="sa-foot"><span>Spec: ' + esc(c.foot.spec) + '</span><span>Owner: ' + esc(c.foot.owner) + '</span></div>' +
       '</div>';
+  }
 
+  function wireRules() {
     body.querySelectorAll('.sa-node').forEach(n => n.addEventListener('click', () => { openStep = +n.dataset.i; renderStep(); }));
     body.querySelectorAll('.sa-it').forEach(b => b.addEventListener('click', () => {
       const more = $('.sa-it__more', b), opening = more.hidden;
@@ -130,6 +179,7 @@
       $('.sa-it__plus', b).textContent = opening ? '−' : '+';
     }));
     renderStep();
+    loadStats();
   }
 
   function section(title, aside, inner) {

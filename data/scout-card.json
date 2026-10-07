@@ -1,9 +1,8 @@
 {
-  "_note": "Scout's agent card. Rendered by js/scout-card.js in the Scout Agent modal. When Scout's behaviour changes, update this file and AGENT-CARD.md together and add a changelog line.",
+  "_note": "Scout's agent card. Rendered by js/scout-card.js in the Scout Rules modal (two views: Scout Rules and Agent Story). When Scout's behaviour changes, update this file, AGENT-CARD.md and AGENT-STORIES.md together and add a changelog line.",
   "name": "Scout",
-  "kicker": "Agent card · Scout Rules",
   "job": "Finds places worth adding to your map, checks them, and explains why each one fits your taste.",
-  "updated": "Oct 6, 2026",
+  "updated": "Oct 7, 2026",
   "glance": [
     {
       "n": "2",
@@ -156,6 +155,7 @@
     "Submit findings · the only way to finish"
   ],
   "changelog": [
+    "Oct 7, 2026 · Added the Agent Story view: Scout's purpose, permissions, limits and success test in one place.",
     "Oct 6, 2026 · Reject works in one press; status lines rotate while Scout works; the button pulses by opacity only.",
     "Oct 5, 2026 · Tray actions on every card; the last run survives a refresh; Title Case names, no ampersands.",
     "Oct 5, 2026 · Launched Pin Scout (Nearby) and Area Scout. Single-user; Jill's map retired."
@@ -163,5 +163,68 @@
   "foot": {
     "spec": "_source/waypoints-scout-spec-v2.md",
     "owner": "Dan Benner"
+  },
+  "story": {
+    "intro": "A user story extended for agents. The first line is the concept. The lines after it force the technical decisions into the open, so they're made on purpose instead of downstream.",
+    "as": "a traveler with specific interests",
+    "when": "I press Scout on a pin or on the area I'm looking at",
+    "want": "places I haven't found yet",
+    "so_that": "I can plan trips around what I care about",
+    "rows": [
+      {
+        "label": "It may",
+        "text": "search the web, read my pins, look up coordinates, measure distances, and check for duplicates and past decisions."
+      },
+      {
+        "label": "It must never",
+        "text": "add a pin, guess a location, or re-suggest something I've already accepted or rejected."
+      },
+      {
+        "label": "It decides",
+        "text": "what fits my taste and what's worth showing."
+      },
+      {
+        "label": "It stops when",
+        "text": "it has up to 3 strong finds near a pin (10 for an area), or none are good enough; or at its limits of 8 searches (12 for an area) and 20 steps; or when I press Stop."
+      },
+      {
+        "label": "I'll know it works when",
+        "text": "I accept at least a third of what it shows."
+      }
+    ]
+  },
+  "template": {
+    "lines": [
+      {
+        "label": "As",
+        "text": "[who], **when** [trigger], **I want** [goal], **so that** [outcome]."
+      },
+      {
+        "label": "It may",
+        "text": "[the actions and tools it gets]"
+      },
+      {
+        "label": "It must never",
+        "text": "[hard rules, enforced in code]"
+      },
+      {
+        "label": "It decides",
+        "text": "[what's left to the model's judgment]"
+      },
+      {
+        "label": "It stops when",
+        "text": "[what counts as done, plus limits]"
+      },
+      {
+        "label": "I'll know it works when",
+        "text": "[the test and the number]"
+      }
+    ],
+    "howto": [
+      "Write the first line before anything else. If you can't, the agent isn't defined yet.",
+      "Ask whether it needs to be an agent at all. If the steps are always the same, a fixed pipeline is simpler and more reliable. (Adding a pin is a pipeline, not an agent, for exactly this reason.)",
+      "\"It must never\" and \"It decides\" are the boundary between code and model. Every \"never\" should be enforced in code, not only stated in the prompt.",
+      "Update the story whenever the agent changes, and add a line to the changelog."
+    ]
   }
 }

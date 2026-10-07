@@ -1,10 +1,11 @@
 # Agent Card: Scout
 
-**Project:** Waypoints · **Owner:** Dan Benner · **Last updated:** 2026-10-06
+**Project:** Waypoints · **Owner:** Dan Benner · **Last updated:** 2026-10-07
 **Status:** Live. Pin Scout (Nearby) and Area Scout built and in use. Connections not built yet.
 
-The same content renders in the app's **Scout Agent** tab from `data/scout-card.json`.
-When Scout's behaviour changes, update both files and add a changelog line.
+The same content renders in the app's **Scout Rules** card (Scout Rules view) from `data/scout-card.json`;
+its Agent Story view matches `AGENT-STORIES.md`. When Scout's behaviour changes, update all three
+and add a changelog line.
 
 ## Job
 Finds places worth adding to Dan's map that fit his taste, checks them, and explains why.
@@ -72,6 +73,7 @@ Test set for tuning: 10 pins (3 music, 2 film, 2 castles, 2 modern, 1 nature) an
 (UK, London, one EU city).
 
 ## Changelog
+- 2026-10-07: Added the Agent Story view (see AGENT-STORIES.md).
 - 2026-10-06: Reject works in one press; status lines rotate while Scout works; opacity-only pulse; per-run log lines feed the card.
 - 2026-10-05: Tray actions on every card; the last run survives a refresh; Title Case names, no ampersands.
 - 2026-10-05: Launched Pin Scout (Nearby) and Area Scout. Jill's map retired; Scout is single-user.

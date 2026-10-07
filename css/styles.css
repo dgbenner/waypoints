@@ -814,13 +814,43 @@ html, body {
 .sa-loading, .sa-muted { font-size: 13px; color: var(--ink-soft); margin: 0; }
 .sa-head { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 14px; align-items: center; margin: 0 26px 18px 0; }
 .sa-badge {
-  width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: var(--cream);
+  /* flex, not grid: a grid item's % height resolved against the wrong box and sat the figure low */
+  width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; background: var(--cream);
   border: 1px solid rgba(58,50,38,0.30); outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
 }
-.sa-badge img { width: 70%; height: 70%; object-fit: contain; transform: scaleX(-1); }   /* faces right */
+.sa-badge img { height: 69%; width: auto; display: block; transform: scaleX(-1); }   /* faces right; height sets the size */
 .sa-head__text p { margin: 2px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-soft); }
 .sa-head .aw-h { margin: 0; font-size: 26px; }
-.sa-sc { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); }
+/* header tabs: Scout Rules · Agent Story (active one underlined) */
+.sa-tabs { display: flex; align-items: baseline; gap: 8px; }
+.sa-tab {
+  appearance: none; background: none; border: 0; padding: 0 0 2px; cursor: pointer;
+  font-family: var(--serif); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-soft); border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s;
+}
+.sa-tab:hover { color: var(--ink); }
+.sa-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.sa-tab:focus-visible { outline: 2px solid var(--line); outline-offset: 2px; }
+.sa-tabs__dot { font-size: 10px; color: var(--ink-soft); }
+
+/* Agent Story view */
+.sa-lbl { font: 600 10.5px var(--serif); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
+.sa-story { margin-top: 20px; }
+.sa-story__intro { margin: 0 0 16px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+.sa-story__lead {
+  margin: 0 0 14px; padding: 14px 16px; font-size: 16px; line-height: 1.6;
+  background: var(--paper); border-left: 2px solid var(--line); border-radius: 0 4px 4px 0;
+}
+.sa-story__lead .sa-lbl { font-size: 11px; }
+.sa-story__rows { margin: 0; }
+.sa-story__rows > div { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-top: 1px solid rgba(58,50,38,0.12); align-items: baseline; }
+.sa-story__rows dt { margin: 0; }
+.sa-story__rows dd { margin: 0; font-size: 14px; line-height: 1.5; }
+.sa-story__rows--blank dd { color: var(--ink-soft); }
+.sa-template { margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(58,50,38,0.16); }
+.sa-template__title { margin: 0 0 12px; font-size: 17px; font-weight: 600; }
+.sa-story__lead--blank { color: var(--ink-soft); }
+.sa-template__h { margin: 14px 0 6px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; color: var(--ink-soft); }
 .sa-status { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
 .sa-chip { font: 11px var(--mono); padding: 3px 7px; border-radius: 3px; background: var(--paper-deep); color: var(--ink-soft); white-space: nowrap; }
 .sa-chip--live { background: rgba(90,125,79,0.16); color: var(--c-nature); }
@@ -917,6 +947,7 @@ html, body {
   .sa-pipe { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 8px; }
   .sa-pipe::before { display: none; }
   .sa-modes { grid-template-columns: 1fr; }
+  .sa-story__rows > div { grid-template-columns: 1fr; gap: 2px; }
 }
 
 /* Tablet & down: drop the title/tagline; the flag strip stands alone top-left */
