@@ -26,3 +26,4 @@
 {"at":"2026-10-06T19:23:27.895Z","mode":"area","scope":"United Kingdom","name":"Goonhilly Earth Station","lat":50.0490966,"lng":-5.183317,"decision":"accepted","reason":""}
 {"at":"2026-10-07T05:23:22.448Z","decision":"run","mode":"area","scope":"United Kingdom","considered":9,"rejected_rule":0,"rejected_judgment":1,"shown":6,"searches":9,"tokens_in":139504,"tokens_out":4931,"cost_usd":0.218}
 {"at":"2026-10-07T05:47:20.811Z","mode":"area","scope":"United Kingdom","name":"Scotland's Secret Bunker","lat":56.2703811,"lng":-2.6975296,"decision":"accepted","reason":""}
+{"at":"2026-10-07T05:48:52.104Z","mode":"area","scope":"United Kingdom","name":"Rosslyn Chapel","lat":55.8553873,"lng":-3.1599363,"decision":"accepted","reason":""}
