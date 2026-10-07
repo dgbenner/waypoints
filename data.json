@@ -6713,5 +6713,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-07"
+  },
+  {
+    "id": "glenfinnan-viaduct",
+    "name": "Glenfinnan Viaduct",
+    "macroRegion": "uk",
+    "region": "Scotland",
+    "subregion": "Highlands",
+    "country": "United Kingdom",
+    "lat": 56.8758236,
+    "lng": -5.4293199,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "industrial"
+    ],
+    "prominence": "signature",
+    "blurb": "Curved 21-arch railway viaduct over Glenfinnan, famous from the Harry Potter films' Hogwarts Express scenes.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "glenfinnan-viaduct.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-07"
   }
 ]
