@@ -6849,5 +6849,33 @@
     "source": "manual",
     "status": "want-to-see",
     "addedAt": "2026-10-08"
+  },
+  {
+    "id": "trosky-castle",
+    "name": "Trosky Castle",
+    "macroRegion": "eu",
+    "region": "Liberec",
+    "subregion": "Bohemian Paradise",
+    "country": "Czech Republic",
+    "lat": 50.5164024,
+    "lng": 15.2302531,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Ruined 14th-century castle perched on two basalt volcanic plugs, an iconic Bohemian Paradise landmark.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "trosky-castle.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-08"
   }
 ]
