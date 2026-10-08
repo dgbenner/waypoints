@@ -36,3 +36,4 @@
 {"at":"2026-10-07T13:23:58.171Z","decision":"run","mode":"pin","scope":"bodiam-castle","considered":4,"rejected_rule":0,"rejected_judgment":3,"shown":1,"searches":8,"tokens_in":122530,"tokens_out":2144,"cost_usd":0.1658}
 {"at":"2026-10-08T15:59:01.246Z","decision":"run","mode":"pin","scope":"czech-jet-vr4u-europe","considered":2,"rejected_rule":0,"rejected_judgment":0,"shown":2,"searches":4,"tokens_in":76542,"tokens_out":2015,"cost_usd":0.1109}
 {"at":"2026-10-08T15:59:50.749Z","mode":"pin","scope":"czech-jet-vr4u-europe","name":"Trosky Castle","lat":50.5164024,"lng":15.2302531,"decision":"accepted","reason":""}
+{"at":"2026-10-08T16:00:08.928Z","mode":"pin","scope":"czech-jet-vr4u-europe","name":"Ještěd Tower","lat":50.7327738,"lng":14.9839199,"decision":"accepted","reason":""}
