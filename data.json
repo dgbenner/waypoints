@@ -6877,5 +6877,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-08"
+  },
+  {
+    "id": "jested-tower",
+    "name": "Ještěd Tower",
+    "macroRegion": "eu",
+    "region": "Liberec Region",
+    "subregion": "Liberec",
+    "country": "Czech Republic",
+    "lat": 50.7327738,
+    "lng": 14.9839199,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "mountain"
+    ],
+    "prominence": "signature",
+    "blurb": "Hyperboloid concrete TV tower and hotel crowning the Ještěd summit above Liberec, a Karel Hubáček modernist icon.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "jested-tower.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-08"
   }
 ]
