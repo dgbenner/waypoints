@@ -6824,5 +6824,30 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-08"
+  },
+  {
+    "id": "czech-jet-vr4u-europe",
+    "name": "Czech-Jet VR4U Europe",
+    "macroRegion": "eu",
+    "region": "Liberec Region",
+    "subregion": "Liberec",
+    "country": "Czech Republic",
+    "lat": 50.7663,
+    "lng": 15.0566,
+    "approx": true,
+    "category": "modern",
+    "themes": [
+      "industrial"
+    ],
+    "prominence": "signature",
+    "blurb": "VR4U Europe office at Zelezna 830/12a in Liberec, associated with Czech-Jet.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [],
+    "source": "manual",
+    "status": "want-to-see",
+    "addedAt": "2026-10-08"
   }
 ]
