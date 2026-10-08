@@ -34,3 +34,4 @@
 {"at":"2026-10-07T05:51:22.757Z","mode":"area","scope":"Northumberland","name":"Norham Castle","lat":55.7214244,"lng":-2.1511112,"decision":"rejected","reason":""}
 {"at":"2026-10-07T05:53:30.244Z","decision":"run","mode":"area","scope":"Mitte","considered":9,"rejected_rule":0,"rejected_judgment":3,"shown":5,"searches":12,"tokens_in":107101,"tokens_out":4716,"cost_usd":0.2285}
 {"at":"2026-10-07T13:23:58.171Z","decision":"run","mode":"pin","scope":"bodiam-castle","considered":4,"rejected_rule":0,"rejected_judgment":3,"shown":1,"searches":8,"tokens_in":122530,"tokens_out":2144,"cost_usd":0.1658}
+{"at":"2026-10-08T15:59:01.246Z","decision":"run","mode":"pin","scope":"czech-jet-vr4u-europe","considered":2,"rejected_rule":0,"rejected_judgment":0,"shown":2,"searches":4,"tokens_in":76542,"tokens_out":2015,"cost_usd":0.1109}
