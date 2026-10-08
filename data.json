@@ -6797,5 +6797,32 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-07"
+  },
+  {
+    "id": "halnaker-tree-tunnel",
+    "name": "Halnaker Tree Tunnel",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "West Sussex",
+    "country": "United Kingdom",
+    "lat": 50.8738,
+    "lng": -0.7147,
+    "approx": true,
+    "category": "nature",
+    "themes": [
+      "mountain"
+    ],
+    "prominence": "signature",
+    "blurb": "Atmospheric tunnel of overarching trees along an ancient byway and Roman road near Halnaker, leading to a historic windmill.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "halnaker-tree-tunnel.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-08"
   }
 ]
