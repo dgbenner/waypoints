@@ -6905,5 +6905,32 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-08"
+  },
+  {
+    "id": "curia-julia",
+    "name": "Curia Julia",
+    "macroRegion": "eu",
+    "region": "Lazio",
+    "subregion": "Rome",
+    "country": "Italy",
+    "lat": 41.8929598,
+    "lng": 12.4853978,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Ancient Roman Senate house in the Roman Forum, remarkably well-preserved near the Arch of Septimius Severus.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "curia-julia.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-09"
   }
 ]
