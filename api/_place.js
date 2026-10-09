@@ -195,10 +195,12 @@ async function findDuplicate(name, lat, lng) {
 }
 
 /* --------------------------------- helpers -------------------------------- */
+// A string, a list, or several links in one block of text (Shortcuts joins them
+// with line breaks): use the first http(s) link.
 function firstUrl(u) {
-  const v = Array.isArray(u) ? u[0] : u;
-  const s = String(v || '').trim();
-  return /^https?:\/\/\S+$/i.test(s) ? s : '';
+  const all = (Array.isArray(u) ? u : [u]).map(v => String(v || '')).join(' ');
+  const m = all.match(/https?:\/\/\S+/i);
+  return m ? m[0] : '';
 }
 
 async function fetchPage(url) {

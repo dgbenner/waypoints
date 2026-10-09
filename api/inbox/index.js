@@ -104,10 +104,6 @@ function summarize(draft) {
   return draft.status === 'possible_duplicate' ? base + ' Possible duplicate of ' + draft.duplicate_name + '.' : base;
 }
 
-function firstUrlOf(u) {
-  const v = Array.isArray(u) ? u[0] : u;
-  const s = String(v || '').trim();
-  return /^https?:\/\/\S+$/i.test(s) ? s : '';
-}
+const firstUrlOf = require('../_place').firstUrl;
 
 module.exports.createDraft = createDraft;
