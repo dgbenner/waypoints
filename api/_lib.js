@@ -162,4 +162,12 @@ async function reverseGeocode(lat, lng, mapZoom) {
   } catch (e) { return { name: '', country: '' }; }
 }
 
-module.exports = { github, appendJsonl, readJsonl, readBody, findImage, geocode, reverseGeocode };
+// Inbox callers (Shortcut, later the Claude connector) send their own token,
+// separate from the access key the site uses.
+function inboxAuthorized(req) {
+  const token = process.env.INBOX_TOKEN;
+  const h = String((req.headers && (req.headers.authorization || req.headers.Authorization)) || '');
+  return !!token && h === 'Bearer ' + token;
+}
+
+module.exports = { github, appendJsonl, readJsonl, readBody, findImage, geocode, reverseGeocode, inboxAuthorized };

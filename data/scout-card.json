@@ -127,7 +127,7 @@
     {
       "name": "Area Scout",
       "icon": "area",
-      "where": "The round button on the map, under the compass.",
+      "where": "The round button on the map, top left under the title.",
       "d": "Searches the area on screen. Zoom sets the area: the active flag's country when it fills the view, otherwise the view itself.",
       "lanes": [
         {

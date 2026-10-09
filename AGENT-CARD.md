@@ -12,7 +12,7 @@ Finds places worth adding to Dan's map that fit his taste, checks them, and expl
 
 ## Trigger
 - **Pin Scout:** the round Scout button inside an open pin's panel.
-- **Area Scout:** the round Scout button on the map, under the compass. Always on. Scouts the area
+- **Area Scout:** the round Scout button on the map, top left under the title. Always on. Scouts the area
   on screen: the active flag's country when it fills the view, otherwise the view itself.
 
 ## Reads

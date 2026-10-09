@@ -232,7 +232,21 @@
       open();
       textEl.value = o.text || '';
       scoutPrefill = { lat: o.lat, lng: o.lng, imageUrl: o.imageUrl || '', onCommitted: o.onCommitted };
-      setStatus(status1, 'From Pin Scout. Location and photo are kept; review the draft before adding.');
+      if (o.record && typeof o.record.lat === 'number') {
+        // An inbox draft is already identified, located and photographed: go straight
+        // to the preview, nothing re-run. Its screenshot (if any) becomes the pin's photo.
+        currentRecord = Object.assign({}, o.record);
+        suggestedImageUrl = o.imageUrl || '';
+        if (o.imageDataUrl) {
+          dropped = { base64: o.imageDataUrl.split(',')[1], mediaType: 'image/webp', name: 'upload.webp', dataUrl: o.imageDataUrl };
+        }
+        renderPreview();
+        showStep('preview');
+        setStatus(status2, 'From your inbox. Check it, then add it to the map.');
+        return;
+      }
+      setStatus(status1, o.fromInbox ? 'From your inbox. Waypoints couldn’t place this one: edit the text, then draft it.'
+        : 'From Pin Scout. Location and photo are kept; review the draft before adding.');
     }
   };
 

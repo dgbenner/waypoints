@@ -189,7 +189,33 @@ html, body {
   padding: 9px 11px 11px;
   outline: 1px solid rgba(58,50,38,0.18); outline-offset: 3px;
 }
-.lower-left__stack { display: flex; flex-direction: column; gap: 10px; width: 172px; }
+.lower-left__stack { display: flex; flex-direction: column; gap: 10px; width: 172px; position: relative; }
+
+/* Inbox count: a rose circle above Add Waypoint, the number reversed out.
+   Only Dan sees it (needs the access key), and only when drafts are waiting. */
+.inbox-badge {
+  align-self: flex-start; width: 22px; height: 22px; padding: 0; cursor: pointer;
+  margin: 4px 0 4px 4px;   /* shrunk from 30px about the same centre point */
+  display: flex; align-items: center; justify-content: center;
+  appearance: none; border: none; border-radius: 50%;
+  background: var(--c-personal); color: var(--cream);
+  box-shadow: var(--shadow-soft); transition: background 0.15s, transform 0.15s;
+}
+.inbox-badge:hover { background: #9a2f5e; transform: scale(1.06); }
+.inbox-badge:focus-visible { outline: 2px solid var(--line); outline-offset: 2px; }
+.inbox-badge__n { font-family: var(--serif); font-size: 11px; font-weight: 600; line-height: 1; }
+.inbox-badge[hidden] { display: none; }
+
+/* Inbox tray extras (the tray itself reuses the Scout tray styles) */
+.inbox-via { margin: 0 12px; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
+.inbox-card.is-review .scout-card__name { color: var(--ink-soft); font-style: italic; }
+.inbox-noimg { background: var(--paper-deep); }
+.inbox-note { margin: 8px 0 0 !important; padding: 7px 10px; font-size: 12.5px !important; background: rgba(178,58,110,0.07); border-left: 2px solid var(--c-personal); border-radius: 0 3px 3px 0; }
+.inbox-when { margin-top: 12px !important; font-size: 11px !important; color: var(--ink-soft); }
+.scout-muted { color: var(--ink-soft); }
+.inbox-tray .scout-tray__close { margin-left: auto; }
+.inbox-key__row { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+.inbox-key__row .aw-key { margin: 0; width: 220px; }
 
 /* Key: collapsed toggle in the top-right corner, opens downward */
 .key-box {

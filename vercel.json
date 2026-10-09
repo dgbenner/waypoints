@@ -1,6 +1,11 @@
 {
   "functions": {
-    "api/scout.js": { "maxDuration": 300 }
+    "api/scout.js": {
+      "maxDuration": 300
+    },
+    "api/inbox/index.js": {
+      "maxDuration": 60
+    }
   },
   "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)scout-log.jsonl'"
 }

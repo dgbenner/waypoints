@@ -538,6 +538,7 @@
 
   function openTray(restoring) {
     if (!tray) tray = buildTray();
+    if (window.InboxUI) window.InboxUI.close();   // one tray at a time
     const r = run.result;
     if (!restoring || !run.fun) {
       run.outcome = r && r.suggestions.length ? 'found' : 'nothing';
@@ -562,6 +563,8 @@
     saveRun(false);
     renderMapBtn(true);
   }
+
+  window.ScoutUI = { closeTray: () => closeTray() };
 
   /* ===================== keep the last run across reloads ================= */
   // Per-browser convenience: the last run (results, decisions so far, log) is
