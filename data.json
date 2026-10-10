@@ -6960,5 +6960,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-10"
+  },
+  {
+    "id": "pieta-milan-cathedral",
+    "name": "Pietà, Milan Cathedral",
+    "macroRegion": "eu",
+    "region": "Lombardy",
+    "subregion": "Milan",
+    "country": "Italy",
+    "lat": 45.4642,
+    "lng": 9.1919,
+    "approx": true,
+    "category": "heritage",
+    "themes": [
+      "art",
+      "cathedral"
+    ],
+    "prominence": "signature",
+    "blurb": "A Pietà sculpture housed within the Gothic Milan Cathedral (Duomo di Milano), one of the world's largest churches.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "pieta-milan-cathedral.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-10"
   }
 ]
