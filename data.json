@@ -6932,5 +6932,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-09"
+  },
+  {
+    "id": "southern-cemetery",
+    "name": "Southern Cemetery",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Greater Manchester",
+    "country": "United Kingdom",
+    "lat": 53.4291789,
+    "lng": -2.2590361,
+    "approx": false,
+    "category": "personal",
+    "themes": [
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Manchester's largest cemetery, resting place of music legends including Tony Wilson of Factory Records.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "southern-cemetery.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-10"
   }
 ]
