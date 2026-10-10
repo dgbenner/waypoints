@@ -6988,5 +6988,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-10"
+  },
+  {
+    "id": "braccio-nuovo",
+    "name": "Braccio Nuovo",
+    "macroRegion": "eu",
+    "region": "Vatican City",
+    "subregion": "Vatican Museums",
+    "country": "Vatican City",
+    "lat": 41.9065,
+    "lng": 12.4536,
+    "approx": true,
+    "category": "heritage",
+    "themes": [
+      "art",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Neoclassical gallery in the Vatican Museums housing Roman sculptures including the famous Augustus of Prima Porta.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "braccio-nuovo.png"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-10"
   }
 ]
