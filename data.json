@@ -7016,5 +7016,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-10"
+  },
+  {
+    "id": "staglieno-monumental-cemetery",
+    "name": "Staglieno Monumental Cemetery",
+    "macroRegion": "eu",
+    "region": "Liguria",
+    "subregion": "Genoa",
+    "country": "Italy",
+    "lat": 44.4356,
+    "lng": 8.9558,
+    "approx": true,
+    "category": "personal",
+    "themes": [
+      "music",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "The Appiani and Ribaudo family tombs here appear on Joy Division's 'Closer' album and 'Love Will Tear Us Apart' single covers.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "staglieno-monumental-cemetery.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-12"
   }
 ]
