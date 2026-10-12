@@ -7044,5 +7044,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-12"
+  },
+  {
+    "id": "abbazia-di-san-fruttuoso",
+    "name": "Abbazia di San Fruttuoso",
+    "macroRegion": "eu",
+    "region": "Liguria",
+    "subregion": "Genoa",
+    "country": "Italy",
+    "lat": 44.3164853,
+    "lng": 9.1751912,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "coast"
+    ],
+    "prominence": "signature",
+    "blurb": "Cliff-bound medieval abbey in a secluded cove reachable only by boat or on foot, housing the Doria family tombs.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "abbazia-di-san-fruttuoso.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-12"
   }
 ]
