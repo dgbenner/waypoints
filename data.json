@@ -7072,5 +7072,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-12"
+  },
+  {
+    "id": "lanterna-di-genova",
+    "name": "Lanterna di Genova",
+    "macroRegion": "eu",
+    "region": "Liguria",
+    "subregion": "Genoa",
+    "country": "Italy",
+    "lat": 44.4045519,
+    "lng": 8.9046428,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "coast"
+    ],
+    "prominence": "signature",
+    "blurb": "Genoa's historic harbour lighthouse, among the world's oldest still working, with a small museum and panoramic walkway.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "lanterna-di-genova.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-12"
   }
 ]
