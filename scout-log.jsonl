@@ -39,3 +39,4 @@
 {"at":"2026-10-08T16:00:08.928Z","mode":"pin","scope":"czech-jet-vr4u-europe","name":"Ještěd Tower","lat":50.7327738,"lng":14.9839199,"decision":"accepted","reason":""}
 {"at":"2026-10-12T16:13:54.507Z","decision":"run","mode":"pin","scope":"staglieno-cemetery","considered":3,"rejected_rule":0,"rejected_judgment":1,"shown":2,"searches":8,"tokens_in":97419,"tokens_out":2775,"cost_usd":0.1731}
 {"at":"2026-10-12T16:14:10.373Z","mode":"pin","scope":"staglieno-cemetery","name":"Abbazia di San Fruttuoso","lat":44.3164853,"lng":9.1751912,"decision":"accepted","reason":""}
+{"at":"2026-10-12T16:14:21.294Z","mode":"pin","scope":"staglieno-cemetery","name":"Lanterna di Genova","lat":44.4045519,"lng":8.9046428,"decision":"accepted","reason":""}
