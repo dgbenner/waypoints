@@ -7100,5 +7100,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-12"
+  },
+  {
+    "id": "admont-abbey-library",
+    "name": "Admont Abbey Library",
+    "macroRegion": "eu",
+    "region": "Styria",
+    "subregion": "Admont",
+    "country": "Austria",
+    "lat": 47.5744,
+    "lng": 14.4619,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "literary",
+      "art"
+    ],
+    "prominence": "signature",
+    "blurb": "World's largest monastic library, a Baroque masterpiece with ceiling frescoes by Bartolomeo Altomonte.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "admont-abbey-library.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-15"
   }
 ]
