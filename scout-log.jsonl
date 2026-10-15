@@ -41,3 +41,4 @@
 {"at":"2026-10-12T16:14:10.373Z","mode":"pin","scope":"staglieno-cemetery","name":"Abbazia di San Fruttuoso","lat":44.3164853,"lng":9.1751912,"decision":"accepted","reason":""}
 {"at":"2026-10-12T16:14:21.294Z","mode":"pin","scope":"staglieno-cemetery","name":"Lanterna di Genova","lat":44.4045519,"lng":8.9046428,"decision":"accepted","reason":""}
 {"at":"2026-10-15T19:32:48.686Z","decision":"run","mode":"pin","scope":"admont-abbey-library","considered":3,"rejected_rule":0,"rejected_judgment":2,"shown":1,"searches":6,"tokens_in":79016,"tokens_out":1892,"cost_usd":0.13}
+{"at":"2026-10-15T19:34:01.859Z","mode":"pin","scope":"admont-abbey-library","name":"Erzberg Open-Pit Mine, Eisenerz","lat":47.5242554,"lng":14.9117535,"decision":"accepted","reason":""}
