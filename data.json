@@ -7128,5 +7128,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-15"
+  },
+  {
+    "id": "erzberg-open-pit-mine",
+    "name": "Erzberg Open-Pit Mine",
+    "macroRegion": "eu",
+    "region": "Styria",
+    "subregion": "Eisenerz",
+    "country": "Austria",
+    "lat": 47.5242554,
+    "lng": 14.9117535,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "mountain"
+    ],
+    "prominence": "signature",
+    "blurb": "Giant stepped iron-ore mine worked for over 1,300 years, with tours aboard a massive haul truck.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "erzberg-open-pit-mine.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-15"
   }
 ]
