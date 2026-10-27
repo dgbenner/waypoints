@@ -7156,5 +7156,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-15"
+  },
+  {
+    "id": "cite-de-carcassonne",
+    "name": "Cité de Carcassonne",
+    "macroRegion": "eu",
+    "region": "Occitanie",
+    "subregion": "Aude",
+    "country": "France",
+    "lat": 43.2063289,
+    "lng": 2.3640453,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Medieval fortified city with double walls and 52 towers, a UNESCO World Heritage site in southern France.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "cite-de-carcassonne.webp"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-10-27"
   }
 ]
