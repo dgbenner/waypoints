@@ -7184,5 +7184,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-10-27"
+  },
+  {
+    "id": "bolton-priory",
+    "name": "Bolton Priory",
+    "macroRegion": "uk",
+    "region": "Yorkshire",
+    "subregion": "Wharfedale",
+    "country": "England",
+    "lat": 53.983787,
+    "lng": -1.8881836,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "cathedral"
+    ],
+    "prominence": "signature",
+    "blurb": "Ruined 12th-century Augustinian priory on the River Wharfe in the Yorkshire Dales, its nave still in use as a church.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "bolton-priory.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-08"
   }
 ]
