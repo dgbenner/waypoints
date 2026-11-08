@@ -44,3 +44,4 @@
 {"at":"2026-10-15T19:34:01.859Z","mode":"pin","scope":"admont-abbey-library","name":"Erzberg Open-Pit Mine, Eisenerz","lat":47.5242554,"lng":14.9117535,"decision":"accepted","reason":""}
 {"at":"2026-11-08T16:31:34.267Z","decision":"run","mode":"area","scope":"United Kingdom","considered":8,"rejected_rule":0,"rejected_judgment":3,"shown":4,"searches":9,"tokens_in":143156,"tokens_out":4364,"cost_usd":0.2134}
 {"at":"2026-11-08T16:31:49.850Z","mode":"area","scope":"United Kingdom","name":"Dover Castle Secret Wartime Tunnels","lat":51.1289759,"lng":1.3228764,"decision":"accepted","reason":""}
+{"at":"2026-11-08T16:31:54.678Z","mode":"area","scope":"United Kingdom","name":"Sifters Records, Burnage","lat":53.4213503,"lng":-2.2168399,"decision":"rejected","reason":""}
