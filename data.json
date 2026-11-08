@@ -7212,5 +7212,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-11-08"
+  },
+  {
+    "id": "dover-castle-secret-wartime-tunnels",
+    "name": "Dover Castle Secret Wartime Tunnels",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Kent",
+    "country": "United Kingdom",
+    "lat": 51.1289759,
+    "lng": 1.3228764,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "monument",
+      "castle"
+    ],
+    "prominence": "signature",
+    "blurb": "Tunnels beneath Dover Castle that coordinated the Dunkirk evacuation (Operation Dynamo) in 1940.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "dover-castle-secret-wartime-tunnels.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-08"
   }
 ]
