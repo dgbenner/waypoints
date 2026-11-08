@@ -7240,5 +7240,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-11-08"
+  },
+  {
+    "id": "giant-s-causeway",
+    "name": "Giant's Causeway",
+    "macroRegion": "uk",
+    "region": "Northern Ireland",
+    "subregion": "Causeway Coast and Glens",
+    "country": "United Kingdom",
+    "lat": 55.2407478,
+    "lng": -6.5115492,
+    "approx": false,
+    "category": "nature",
+    "themes": [
+      "coast",
+      "music"
+    ],
+    "prominence": "signature",
+    "blurb": "Interlocking basalt columns from ancient volcanic activity; its formations inspired Led Zeppelin's Houses of the Holy cover.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "giant-s-causeway.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-08"
   }
 ]
