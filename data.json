@@ -7268,5 +7268,34 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-11-08"
+  },
+  {
+    "id": "orford-ness-national-nature-reserve",
+    "name": "Orford Ness National Nature Reserve",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Suffolk",
+    "country": "United Kingdom",
+    "lat": 52.087016,
+    "lng": 1.5591039,
+    "approx": false,
+    "category": "nature",
+    "themes": [
+      "coast",
+      "wildlife",
+      "industrial"
+    ],
+    "prominence": "signature",
+    "blurb": "Shingle spit and former secret military weapons-testing site, home to Cold War 'pagoda' test labs and rare coastal wildlife.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "orford-ness-national-nature-reserve.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-08"
   }
 ]
