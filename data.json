@@ -7297,5 +7297,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-11-08"
+  },
+  {
+    "id": "saint-nicolas-church",
+    "name": "Saint-Nicolas Church",
+    "macroRegion": "eu",
+    "region": "Fribourg",
+    "subregion": "Hérémence",
+    "country": "Switzerland",
+    "lat": 46.4875854,
+    "lng": 7.2062456,
+    "approx": false,
+    "category": "modern",
+    "themes": [
+      "cathedral",
+      "industrial"
+    ],
+    "prominence": "signature",
+    "blurb": "Brutalist concrete church designed by Walter Maria Förderer, completed 1971, a sculptural monument of modern sacred architecture.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "saint-nicolas-church.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-10"
   }
 ]
