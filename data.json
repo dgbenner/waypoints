@@ -7325,5 +7325,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-11-10"
+  },
+  {
+    "id": "oscar-wilde-s-grave",
+    "name": "Oscar Wilde's Grave",
+    "macroRegion": "eu",
+    "region": "Île-de-France",
+    "subregion": "Paris",
+    "country": "France",
+    "lat": 48.8614,
+    "lng": 2.3933,
+    "approx": true,
+    "category": "personal",
+    "themes": [
+      "literary",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Tomb of writer Oscar Wilde at Père Lachaise Cemetery, marked by Jacob Epstein's modernist winged sphinx monument.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "oscar-wilde-s-grave.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-17"
   }
 ]
