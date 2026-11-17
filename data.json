@@ -7353,5 +7353,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-11-17"
+  },
+  {
+    "id": "nick-drake-s-grave-church-of-st-mary-magdalene",
+    "name": "Nick Drake's Grave, Church of St Mary Magdalene",
+    "macroRegion": "uk",
+    "region": "England",
+    "subregion": "Warwickshire",
+    "country": "United Kingdom",
+    "lat": 52.3376,
+    "lng": -1.8486,
+    "approx": true,
+    "category": "personal",
+    "themes": [
+      "music",
+      "literary"
+    ],
+    "prominence": "signature",
+    "blurb": "Burial place of folk musician Nick Drake in the churchyard of St Mary Magdalene in Tanworth-in-Arden.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "nick-drake-s-grave-church-of-st-mary-magdalene.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-17"
   }
 ]
