@@ -7381,5 +7381,33 @@
     "source": "screenshot",
     "status": "want-to-see",
     "addedAt": "2026-11-17"
+  },
+  {
+    "id": "les-espaces-d-abraxas",
+    "name": "Les Espaces d'Abraxas",
+    "macroRegion": "eu",
+    "region": "Île-de-France",
+    "subregion": "Noisy-le-Grand",
+    "country": "France",
+    "lat": 48.8411,
+    "lng": 2.5527,
+    "approx": true,
+    "category": "modern",
+    "themes": [
+      "industrial",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Monumental postmodern housing complex by Ricardo Bofill, known for its theatrical colonnades and film appearances.",
+    "timeGated": false,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "les-espaces-d-abraxas.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-19"
   }
 ]
