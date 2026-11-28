@@ -7434,5 +7434,33 @@
     "source": "manual",
     "status": "want-to-see",
     "addedAt": "2026-11-23"
+  },
+  {
+    "id": "chateau-de-la-mothe-chandeniers",
+    "name": "Château de la Mothe-Chandeniers",
+    "macroRegion": "eu",
+    "region": "Nouvelle-Aquitaine",
+    "subregion": "Vienne",
+    "country": "France",
+    "lat": 47.0923715,
+    "lng": 0.032587,
+    "approx": false,
+    "category": "heritage",
+    "themes": [
+      "castle",
+      "monument"
+    ],
+    "prominence": "signature",
+    "blurb": "Romantic ivy-covered ruined château crowdfunded in 2017 by thousands of co-owners near Les Trois-Moutiers.",
+    "timeGated": true,
+    "hours": "",
+    "officialUrl": "",
+    "link": "",
+    "images": [
+      "chateau-de-la-mothe-chandeniers.jpg"
+    ],
+    "source": "screenshot",
+    "status": "want-to-see",
+    "addedAt": "2026-11-28"
   }
 ]
